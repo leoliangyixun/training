@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.kerwinyang.training</groupId>
+  <artifactId>kerwin-training</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <name>Maven</name>
+  <url>http://maven.apache.org/</url>
+  <inceptionYear>2001</inceptionYear>
+
+  <distributionManagement>
+    <site>
+      <id>website</id>
+      <url>scp://webhost.company.com/www/website</url>
+    </site>
+  </distributionManagement>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <locales>en,fr</locales>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <packaging>pom</packaging>
+  <modules>
+ 	<module>kerwin-training-activiti</module>
+    <module>kerwin-training-spring</module>
+    <module>kerwin-training-dao</module>
+    <module>kerwin-training-springmvc</module>
+    <module>metaq</module>
+    <module>generic</module>
+    <module>webapp</module>
+    <module>test</module>
+    <module>curator</module>
+  </modules>
+</project>
