@@ -11,14 +11,12 @@ public class MyCommand implements Command {
 
 
 	public MyCommand() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
-	/* (non-Javadoc)
-	 * @see generic.Command#execute(java.lang.Object)
-	 */
+
 	@Override
-	public User  execute(User u) {
+	public <T> T execute(T t) {
 		// TODO Auto-generated method stub
 		return null;
 	}

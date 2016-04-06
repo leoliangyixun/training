@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.curator.recipes;
+package com.training.curator.recipes;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -27,9 +27,9 @@ import org.apache.curator.utils.CloseableUtils;
  * -----------------------------------------------------------------------------------
  * 2016年4月1日       jiqingchuan          1.0             Why & What is modified
  */
-public class InterProcessMutexTest {
+public class InterProcessMutexExample {
     private static final String PATH = "/examples/locks";
-	public InterProcessMutexTest() {
+	public InterProcessMutexExample() {
 		
 	}
 
@@ -37,19 +37,26 @@ public class InterProcessMutexTest {
         final FakeLimitedResource resource = new FakeLimitedResource();
         ExecutorService service = Executors.newFixedThreadPool(5);
         final TestingServer server = new TestingServer();
+        server.start();
+/*        final CuratorFramework client = CuratorFrameworkFactory.newClient(server.getConnectString(), new ExponentialBackoffRetry(1000, 3));
+        client.start();*/
         try {
             for (int i = 0; i < 5; ++i) {
                 final int index = i;
+				final int x = (index % 2 == 0 ? 0 : 1);
                 Callable<Void> task = new Callable<Void>() {
                     @Override
                     public Void call() throws Exception {
-                        CuratorFramework client = CuratorFrameworkFactory.newClient(server.getConnectString(), new ExponentialBackoffRetry(1000, 3));
-                        
+                    	CuratorFramework client = null;
+                    
                         try {
+                        
+                        	client = CuratorFrameworkFactory.newClient(server.getConnectString(), new ExponentialBackoffRetry(1000, 3));
                             client.start();
-                            final ExampleClientThatLocks2 example = new ExampleClientThatLocks2(client, PATH, resource, "Client " + index);
+                            final ExampleClientThatLocks2 example = new ExampleClientThatLocks2(client, PATH+x, resource, "Client " + index);
                             for (int j = 0; j < 2; ++j) {
-                                example.doWork(j,1, TimeUnit.SECONDS);
+                               // example.doWork(j,1, TimeUnit.SECONDS);
+                                example.doWork(j);
                             }
                         } catch (Throwable e) {
                            System.out.println("exception:" + e.getMessage());

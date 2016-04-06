@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.curator.recipes;
+package com.training.curator.recipes;
 
 /**
  * @description:
