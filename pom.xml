@@ -42,5 +42,7 @@
     <module>webapp</module>
     <module>test</module>
     <module>curator</module>
+    <module>jdbc</module>
+    <module>retrofit</module>
   </modules>
 </project>
