@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.curator.recipes;
+package com.training.curator.recipes;
 
 import java.util.concurrent.TimeUnit;
 
@@ -36,7 +36,7 @@ public class ExampleClientThatLocks {
         lock = new InterProcessMutex(client, lockPath);
     }
 
-    public synchronized void doWork(int j, long time, TimeUnit unit) throws Exception {
+    public  void doWork(int j, long time, TimeUnit unit) throws Exception {
         if (lock.acquire(time, unit)) {
             try {
                 System.out.println(clientName + " has the lock at loop" + j);

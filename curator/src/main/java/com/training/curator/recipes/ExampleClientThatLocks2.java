@@ -1,8 +1,10 @@
 /**
  * 
  */
-package com.curator.recipes;
+package com.training.curator.recipes;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.curator.framework.CuratorFramework;
@@ -36,9 +38,9 @@ public class ExampleClientThatLocks2 {
         lock = new InterProcessMutex(client, lockPath);
     }
 
-    public synchronized void doWork(int j, long time, TimeUnit unit) throws Exception {
+    public  void doWork(int j, long time, TimeUnit unit) throws Exception {
+    	this.printNodes();
         if (!lock.acquire(time, unit)) {
-
         	 throw new IllegalStateException(clientName + " could not acquire the lock at loop" + j);
         }
        
@@ -49,6 +51,34 @@ public class ExampleClientThatLocks2 {
             System.out.println(clientName + " releasing the locklock at loop" + j);
             lock.release(); // always release the lock in a finally block
         }
+    }
+    
+    public  void doWork(int j) throws Exception {
+    	//this.printNodes();
+    	lock.acquire();
+
+        try {
+            System.out.println(clientName + " has the lock at loop" + j);
+            resource.use(clientName); //access resource exclusively
+        } finally {
+            System.out.println(clientName + " releasing the locklock at loop" + j);
+            lock.release(); // always release the lock in a finally block
+        }
+    }
+    public  void doWork() throws Exception {
+    	lock.acquire();
+
+        try {
+            System.out.println(clientName + " has the lock" );
+            resource.use(clientName); //access resource exclusively
+        } finally {
+            System.out.println(clientName + " releasing the locklock");
+            lock.release(); // always release the lock in a finally block
+        }
+    }
+    
+    public void  printNodes() throws Exception {
+    	 System.out.println(lock.getParticipantNodes());
     }
 
 }
