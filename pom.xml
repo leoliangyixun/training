@@ -44,5 +44,6 @@
     <module>curator</module>
     <module>jdbc</module>
     <module>retrofit</module>
+    <module>blog</module>
   </modules>
 </project>
