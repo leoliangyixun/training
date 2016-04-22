@@ -1,26 +1,344 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>com.kerwinyang.training</groupId>
   <artifactId>kerwin-training</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-
   <name>Maven</name>
   <url>http://maven.apache.org/</url>
   <inceptionYear>2001</inceptionYear>
-
+      <properties>
+    	<compiler.source>1.7</compiler.source>
+		<compiler.target>1.7</compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+		<maven-compile-plugin.version>3.1</maven-compile-plugin.version>
+		<maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
+		<maven-resources-plugin.version>2.5</maven-resources-plugin.version>
+        <maven.test.skip>false</maven.test.skip>
+        <log4j.version>1.2.16</log4j.version>
+        <hibernate.version>4.2.15.Final</hibernate.version>
+        <persistence-api.version>1.0.2</persistence-api.version>
+        <hibernate-jpa-api.version>1.0.0.Final</hibernate-jpa-api.version>
+        <metaq-client.version>1.4.6.2</metaq-client.version>
+        <commons-collections.version>3.2</commons-collections.version>
+		<guava.version>18.0</guava.version>
+		<commons-httpclient.version>3.1</commons-httpclient.version>
+		<commons.lang.version>2.6</commons.lang.version>
+		<commons-lang3.version>3.3.1</commons-lang3.version>
+		<commons-codec.version>1.8</commons-codec.version>
+		<slf4j.version>1.6.1</slf4j.version>
+		<slf4j-logfj12.version>1.7.12</slf4j-logfj12.version>
+		<log4j.version>1.2.16</log4j.version>
+		<spymemcached.version>2.7.3</spymemcached.version>
+		<servlet-api.version>2.5</servlet-api.version>
+		<jsp-api.version>2.2</jsp-api.version>
+		<activemq-client.version>5.9.1</activemq-client.version>
+		<metamorphosis-client.version>1.4.6.2</metamorphosis-client.version>
+		<junit.version>4.12</junit.version>
+		<aspectjweaver.version>1.7.3</aspectjweaver.version>
+		<spring.version>4.2.5.RELEASE</spring.version>
+		<mysql.version>5.1.25</mysql.version>
+		<druid.version>1.0.15</druid.version>
+		<jackson.version>1.9.13</jackson.version>
+		<fastjson.version>1.1.29</fastjson.version>
+		<commons-fileupload.version>1.3.1</commons-fileupload.version>
+		<zkclient.version>0.4</zkclient.version>
+		<zookeeper.version>3.4.3</zookeeper.version>
+		<jetty.version>6.1.26</jetty.version>
+		<curator.version>2.8.0</curator.version>
+		<mybatis.version>3.2.8</mybatis.version>
+		<mybatis-spring.version>1.2.3</mybatis-spring.version>
+        <mapper.version>3.3.3</mapper.version>
+    </properties>
+  <repositories>
+      <repository>
+          <id>B5M-public</id>
+          <name>b5m public maven respository</name>
+          <url>http://nexus.izene.com/content/groups/public/</url>
+      </repository>
+  </repositories>
   <distributionManagement>
     <site>
       <id>website</id>
       <url>scp://webhost.company.com/www/website</url>
     </site>
   </distributionManagement>
+    <dependencyManagement>
+        <dependencies>
+            <!-- hibernate -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+	         <dependency>
+				<groupId>javax.persistence</groupId>
+				<artifactId>persistence-api</artifactId>
+				<version>${persistence-api.version}</version>
+			</dependency>
+	        <dependency>
+				<groupId>org.hibernate.javax.persistence</groupId>
+				<artifactId>hibernate-jpa-2.1-api</artifactId>
+				<version>${hibernate-jpa-api.version}</version>
+			</dependency>
+            <!-- METAQ Client -->
+            <dependency>
+                <groupId>com.taobao.metamorphosis</groupId>
+                <artifactId>metamorphosis-client</artifactId>
+                <version>${metaq-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taobao.metamorphosis</groupId>
+                <artifactId>metamorphosis-client-extension</artifactId>
+                <version>${metaq-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taobao.metamorphosis</groupId>
+                <artifactId>metamorphosis-commons</artifactId>
+                <version>${metaq-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>${commons-collections.version}</version>
+            </dependency>
+            <!-- Curator -->
+            <dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-framework</artifactId>
+				<version>${curator.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-recipes</artifactId>
+				<version>${curator.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-test</artifactId>
+				<version>${curator.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-client</artifactId>
+				<version>${curator.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>${commons.lang.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>${commons-codec.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons-lang3.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+			<!-- json path -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-mapper-asl</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<!-- slf4j log4j -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-nop</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j-logfj12.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+			<!-- memcached 相关的依赖库 -->
+			<dependency>
+				<groupId>spy</groupId>
+				<artifactId>spymemcached</artifactId>
+				<version>${spymemcached.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>jettison</artifactId>
+						<groupId>org.codehaus.jettison</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>commons-httpclient</groupId>
+				<artifactId>commons-httpclient</artifactId>
+				<version>${commons-httpclient.version}</version>
+			</dependency>
+			<!-- jsp -->
+			<!-- servlet 2.5 -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>${servlet-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet.jsp</groupId>
+				<artifactId>jsp-api</artifactId>
+				<version>${jsp-api.version}</version>
+			</dependency>
+			
+			<!-- activemq -->
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-client</artifactId>
+				<version>${activemq-client.version}</version>
+			</dependency>
+			<!-- metamorphosis -->
+			<dependency>
+				<groupId>com.taobao.metamorphosis</groupId>
+				<artifactId>metamorphosis-client</artifactId>
+				<version>${metamorphosis-client.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-asm</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-expression</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${aspectjweaver.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- spring end -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>${druid.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>${commons-fileupload.version}</version>
+			</dependency>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-
+			<dependency>
+				<groupId>org.apache.zookeeper</groupId>
+				<artifactId>zookeeper</artifactId>
+				<version>${zookeeper.version}</version>
+			</dependency>
+			<!-- mybatis -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+				<version>${mybatis-spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>${mybatis.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>tk.mybatis</groupId>
+				<artifactId>mapper</artifactId>
+				<version>${mapper.version}</version>
+			</dependency>
+        </dependencies>
+    </dependencyManagement>
   <build>
     <plugins>
       <plugin>
@@ -44,5 +362,7 @@
     <module>curator</module>
     <module>jdbc</module>
     <module>retrofit</module>
+    <module>validator</module>
+    <module>mybatis-cache</module>
   </modules>
 </project>
