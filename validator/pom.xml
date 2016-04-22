@@ -5,6 +5,12 @@
     <artifactId>kerwin-training</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>com.kerwinyang.training.dao</groupId>
-  <artifactId>kerwin-training-dao</artifactId>
+  <artifactId>validator</artifactId>
+  <dependencies>
+  	<dependency>
+	    <groupId>com.baidu.unbiz</groupId>
+	    <artifactId>fluent-validator</artifactId>
+	    <version>1.0.5</version>
+    </dependency>
+  </dependencies>
 </project>

@@ -33,10 +33,9 @@
   </build>
   <packaging>pom</packaging>
   <modules>
- 	<module>kerwin-training-activiti</module>
-    <module>kerwin-training-spring</module>
-    <module>kerwin-training-dao</module>
-    <module>kerwin-training-springmvc</module>
+ 	<module>activiti</module>
+    <module>spring</module>
+    <module>springmvc</module>
     <module>metaq</module>
     <module>generic</module>
     <module>webapp</module>
@@ -44,5 +43,6 @@
     <module>curator</module>
     <module>jdbc</module>
     <module>retrofit</module>
+    <module>validator</module>
   </modules>
 </project>
