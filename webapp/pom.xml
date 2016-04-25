@@ -7,10 +7,11 @@
     <artifactId>kerwin-training</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
+  <groupId>com.kerwinyang.training</groupId>
   <artifactId>webapp</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>webapp</name>
+  <name>webapp Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>

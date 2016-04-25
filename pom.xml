@@ -356,12 +356,12 @@
     <module>springmvc</module>
     <module>metaq</module>
     <module>generic</module>
-    <module>webapp</module>
     <module>test</module>
     <module>curator</module>
     <module>jdbc</module>
     <module>retrofit</module>
     <module>validator</module>
     <module>mybatis-cache</module>
+    <module>webapp</module>
   </modules>
 </project>
