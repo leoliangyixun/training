@@ -363,5 +363,6 @@
     <module>validator</module>
     <module>mybatis-cache</module>
     <module>webapp</module>
+    <module>blog</module>
   </modules>
 </project>
