@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <html>
 <body>
 <h2>Hello World!</h2>
@@ -12,8 +13,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Insert title here</title>
 </head>
+=======
+<html>
+>>>>>>> branch_validator
 <body>
-<h1>hello world</h1>
+<h2>Hello World!</h2>
 </body>
 </html>
+<<<<<<< HEAD
 >>>>>>> branch_springmvc
+=======
+>>>>>>> branch_validator
