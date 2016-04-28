@@ -10,7 +10,7 @@
 
 <body>
 <div>
-<div id="nav"><jsp:include page="include/top.jsp" flush="true"></jsp:include></div>
+<div id="nav"><jsp:include page="../include/top.jsp" flush="true"></jsp:include></div>
 <div id="content">
 <div id="menu_up">
 <div id="menu">
@@ -65,7 +65,7 @@
 </div>
 <div style="clear:both"></div>
 </div>
-<jsp:include page="include/bottom.html" flush="true"></jsp:include>
+<jsp:include page="../include/bottom.html" flush="true"></jsp:include>
 </div>
 </body>
 </html>
