@@ -5,6 +5,9 @@ package com.training.springmvc.model;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
 /**
  * @description:
  * Copyright 2011-2015 B5M.COM. All rights reserved
@@ -16,41 +19,34 @@ import java.io.Serializable;
  * -----------------------------------------------------------------------------------
  * 2016年4月28日       jiqingchuan          1.0             Why & What is modified
  */
+@XmlType(propOrder = { "name", "projectManager"})
 public class Project implements Serializable {
 
     private static final long serialVersionUID = -7488878482005938865L;
     private String name;
     private String projectManager;
     public Project() {
-        // TODO Auto-generated constructor stub
+     
     }
-    /**
-     * @return the name
-     */
+    
+    @XmlElement
     public String getName() {
         return name;
     }
-    /**
-     * @param name the name to set
-     */
+
     public void setName(String name) {
         this.name = name;
     }
-    /**
-     * @return the projectManager
-     */
+    
+    @XmlElement
     public String getProjectManager() {
         return projectManager;
     }
-    /**
-     * @param projectManager the projectManager to set
-     */
+
     public void setProjectManager(String projectManager) {
         this.projectManager = projectManager;
     }
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -58,9 +54,7 @@ public class Project implements Serializable {
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

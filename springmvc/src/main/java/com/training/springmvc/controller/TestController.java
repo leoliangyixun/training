@@ -4,7 +4,9 @@
 package com.training.springmvc.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -57,6 +59,33 @@ public class TestController {
         model.addAttribute("employee2", "employee2");
         model.addAttribute("employee3", e);
     }
+    @RequestMapping(value="/find3", method= RequestMethod.GET)
+    public void find3(HttpServletRequest request, Model model) {
+        Employee e1 = new Employee();
+        Company c = new Company();
+
+        c.setName("B5M");
+        c.setAddress("pudong south road 1118");
+        e1.setName("eryue");
+
+        e1.setCompany(c);
+        Employee e2 = new Employee();
+        e2.setName("taogengxian");
+  
+        e2.setCompany(c);
+        Employee e3 = new Employee();
+        e3.setName("yutianhe");
+     
+        e3.setCompany(c);
+        List<Employee> staffs = new ArrayList<Employee>();
+        staffs.add(e1);
+        staffs.add(e2);
+        staffs.add(e3);
+        List<Employee> employees = new ArrayList<Employee>();
+        employees.add(e1); employees.add(e2); employees.add(e3);
+        model.addAttribute("employee", employees);
+
+    }
 
     private Employee initData() {
         Employee e = new Employee();
@@ -69,9 +98,8 @@ public class TestController {
         e.setName("jiqingchuan");
         e.setAge(28);
         e.setCompany(c);
-        e.setProject(p);
         
-        Employee staff1 = new Employee();
+/*        Employee staff1 = new Employee();
         staff1.setName("eryue");
         staff1.setProject(p);
         staff1.setCompany(c);
@@ -87,7 +115,24 @@ public class TestController {
         staffs.add(staff1);
         staffs.add(staff2);
         staffs.add(staff3);
-        e.setStaffs(staffs);
+        e.setStaffs(staffs);*/
+        List<Project> projects = new ArrayList<Project>();
+        Project p1 = new  Project();
+        p1.setName("rebate order");
+        p1.setProjectManager("tianlei");
+        Project p2 = new  Project();
+        p2.setName("ucenter");
+        p2.setProjectManager("xxx");
+        Project p3 = new  Project();
+        p3.setName("payment");
+        p3.setProjectManager("yyy");
+        projects.add(p1); projects.add(p2); projects.add(p3);
+        e.setProjects(projects);
+        
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("company", c);
+        map.put("project", p);
+       // e.setMap(map);
         return e;
     }
 

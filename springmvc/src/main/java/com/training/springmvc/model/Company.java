@@ -5,7 +5,9 @@ package com.training.springmvc.model;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * @description:
@@ -18,41 +20,34 @@ import javax.xml.bind.annotation.XmlRootElement;
  * -----------------------------------------------------------------------------------
  * 2016年4月28日       jiqingchuan          1.0             Why & What is modified
  */
+@XmlType(propOrder = { "name", "address"})
 public class Company implements Serializable {
 
 	private static final long serialVersionUID = 5375635454452026841L;
 	private String name;
     private String address;
 	public Company() {
-		// TODO Auto-generated constructor stub
+	
 	}
-	/**
-	 * @return the name
-	 */
+	
+    @XmlElement
 	public String getName() {
 		return name;
 	}
-	/**
-	 * @param name the name to set
-	 */
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	/**
-	 * @return the address
-	 */
+	
+    @XmlElement
 	public String getAddress() {
 		return address;
 	}
-	/**
-	 * @param address the address to set
-	 */
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -60,9 +55,7 @@ public class Company implements Serializable {
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

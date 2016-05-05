@@ -20,24 +20,34 @@ import com.traing.spring.bean.model.Employee;
  */
 public class EmployeeFactoryBean implements FactoryBean<Employee> {
     
-    private 
+    private String employeeInfo;
 
     @Override
     public Employee getObject() throws Exception {
-        // TODO Auto-generated method stub
-        return null;
+        Employee e = new Employee();
+        String[] infos = this.employeeInfo.split(",");
+        e.setName(infos[0]);
+        e.setAge(Integer.parseInt(infos[1]));
+        return e;
     }
 
     @Override
     public Class<?> getObjectType() {
-        // TODO Auto-generated method stub
-        return null;
+        return Employee.class;
     }
 
     @Override
     public boolean isSingleton() {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
+
+    public String getEmployeeInfo() {
+        return employeeInfo;
+    }
+
+    public void setEmployeeInfo(String employeeInfo) {
+        this.employeeInfo = employeeInfo;
+    }
+    
 
 }

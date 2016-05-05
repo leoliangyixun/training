@@ -5,11 +5,15 @@ package com.training.springmvc.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * @description:
@@ -22,89 +26,74 @@ import javax.xml.bind.annotation.XmlRootElement;
  * -----------------------------------------------------------------------------------
  * 2016年4月27日       jiqingchuan          1.0             Why & What is modified
  */
-@XmlRootElement(name="e")
+@XmlRootElement(name = "employee")
+@XmlType(propOrder = { "name", "age", "company","projects" })
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 1127159722025777772L;
-	private String name;
-	private Integer age;
-	private Company company;
-	private Project project;
-	private List<Employee> staffs;
+
+    private String name;
+
+    private Integer age;
+
+    private Company company;
+
+    private List<Project> projects;
+/*	private List<Employee> staffs;*/
+	//@XmlJavaTypeAdapter
+	//private Map<String, Object> map;
 	public Employee() {
-		// TODO Auto-generated constructor stub
+		
 	}
-	/**
-	 * @return the name
-	 */
+
 	@XmlElement
 	public String getName() {
 		return name;
 	}
-	/**
-	 * @param name the name to set
-	 */
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	/**
-	 * @return the age
-	 */
-	@XmlElement
+	
+    @XmlElement
 	public Integer getAge() {
 		return age;
 	}
-	/**
-	 * @param age the age to set
-	 */
+
 	public void setAge(Integer age) {
 		this.age = age;
 	}
-	/**
-	 * @return the company
-	 */
-	@XmlElement
+	
+    @XmlElement
 	public Company getCompany() {
 		return company;
 	}
-	/**
-	 * @param company the company to set
-	 */
+
 	public void setCompany(Company company) {
 		this.company = company;
 	}
-    /**
-     * @return the project
-     */
-	@XmlElement
-    public Project getProject() {
-        return project;
+
+    @XmlElementWrapper(name="projects")
+    @XmlElement(name="project")
+    public List<Project> getProjects() {
+        return projects;
     }
-    /**
-     * @param project the project to set
-     */
-    public void setProject(Project project) {
-        this.project = project;
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
     }
-    /**
-     * @return the staffs
-     */
-  
+
+/*    @XmlElements({
+        @XmlElement(name = "staff", type = Employee.class)
+    })
     public List<Employee> getStaffs() {
         return staffs;
     }
-    /**
-     * @param staffs the staffs to set
-     */
-    @XmlElements({
-        @XmlElement(name = "staffs", type = Employee.class)
-    })
+ 
     public void setStaffs(List<Employee> staffs) {
         this.staffs = staffs;
-    }
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
+    }*/
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -113,9 +102,15 @@ public class Employee implements Serializable {
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
+
+/*    public Map<String, Object> getMap() {
+        return map;
+    }
+
+    public void setMap(Map<String, Object> map) {
+        this.map = map;
+    }*/
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
