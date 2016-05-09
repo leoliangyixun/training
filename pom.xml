@@ -395,5 +395,6 @@
     <module>blog</module>
     <module>springmvc</module>
     <module>spring</module>
+    <module>augmentum</module>
   </modules>
 </project>
