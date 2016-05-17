@@ -41,36 +41,32 @@ public class CompletionServiceTest {
     /**
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
         CompletionServiceTest test = new CompletionServiceTest();
         //ExecutorService是阻塞式的
         ExecutorService executor = Executors.newFixedThreadPool(5);
         //CompletionService是非阻塞式的
         CompletionService<String> completionService = new ExecutorCompletionService<String>(executor);
-        ExecutorServiceTest.Task task1 = new ExecutorServiceTest.Task("task1", 3000);
-        ExecutorServiceTest.Task task2 = new ExecutorServiceTest.Task("task2", 2000);
-        ExecutorServiceTest.Task task3 = new ExecutorServiceTest.Task("task3", 1000);
+        Task task1 = new Task("task1", 3000);
+        Task task2 = new Task("task2", 2000);
+        Task task3 = new Task("task3", 1000);
         Future<String> future1 = completionService.submit(task1);
         Future<String> future2 = completionService.submit(task2);
         Future<String> future3 = completionService.submit(task3);
 
-        test.printResult(future1);
-        test.printResult(future2);
-        test.printResult(future3);
+/*        System.out.println(completionService.take().get());
+        System.out.println(completionService.take().get());
+        System.out.println(completionService.take().get());*/
+/*
+        System.out.println(completionService.poll());
+        System.out.println(completionService.poll());
+        System.out.println(completionService.poll());*/
 
+        System.out.println(completionService.poll(200, TimeUnit.MILLISECONDS));
+        System.out.println(completionService.poll(200, TimeUnit.MILLISECONDS));
+        System.out.println(completionService.poll(200, TimeUnit.MILLISECONDS));
 
     }
 
-    public <T> void printResult(Future<T> future) {
-        T result = null;
-        try {
-            result = future.get();
-            System.out.println(result);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-    }
 
 }

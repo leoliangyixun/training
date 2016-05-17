@@ -42,7 +42,7 @@ public class ExecutorServiceTest {
     /**
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, ExecutionException{
 
         ExecutorService executor = Executors.newFixedThreadPool(5);
         Task task1 = new Task("task1", 3000);
@@ -52,40 +52,26 @@ public class ExecutorServiceTest {
         Future<String> future2 = executor.submit(task2);
         Future<String> future3 = executor.submit(task3);
 
-        new PrintResult(future1).print();
-        new PrintResult(future2).print();
-        new PrintResult(future3).print();
+        new Printer(future1).print();
+        new Printer(future2).print();
+        new Printer(future3).print();
     }
 
-    public <T> void printResult(Future<T> future) {
-        T result = null;
-        try {
-            result = future.get();
-            System.out.println(result);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+    public <T> void printResult(Future<T> future) throws InterruptedException, ExecutionException {
+        T result  = future.get();
+        System.out.println(result);
     }
 
-    public static class PrintResult {
+    public static class Printer {
         private Future<String> future;
 
-        public PrintResult(Future<String> future) {
+        public Printer(Future<String> future) {
             this.future = future;
         }
 
-        public void print() {
-            String result = null;
-            try {
-                result = future.get();
-                System.out.println(result);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+        public void print() throws InterruptedException, ExecutionException {
+            String result = future.get();
+            System.out.println(result);
         }
     }
 
