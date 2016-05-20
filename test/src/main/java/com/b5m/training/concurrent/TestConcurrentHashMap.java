@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class TestConcurrentHashMap {
     private static final String NUM = "num";
-    private static ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<String, Integer>(); 
+    private static ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<String, Integer>(100, 0.85f, 100); 
     static {
         map.put(NUM, 0);
     }
@@ -33,6 +33,8 @@ public class TestConcurrentHashMap {
                     //Integer num = map.get(NUM);
                    // System.out.println("Thread" + count + " before update:--------------------" + num + "--------------------");
                     map.put(NUM, count);
+                    
+                    
                     System.out.println("Thread" + count +" before update:--------------------" +map.get(NUM) + "--------------------");
                 }
             }.start();

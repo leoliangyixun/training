@@ -5,7 +5,6 @@ package com.b5m.training.concurrent;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @description:
@@ -20,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class TestHashMap {
     private static final String NUM = "num";
-    private static ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<String, Integer>(); 
+    private static Map<String, Integer> map = new HashMap<String, Integer>(); 
     static {
         map.put(NUM, 0);
     }

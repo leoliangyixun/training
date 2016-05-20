@@ -12,12 +12,12 @@ import java.util.Set;
 public class TestCollection {
 
     public static void  main(String[] args) {
-        Set<String> set = new HashSet<String>();
-        Iterator<String> it =set.iterator();
+/*        Set<String> set = new HashSet<String>();
+        Iterator<String> it =set.iterator();*/
         
     }
 
-    public static class Task extends Thread{
+    public static class Task extends Thread {
 
 
         @Override
@@ -25,4 +25,6 @@ public class TestCollection {
 
         }
     }
+    
+    private static class User
 }
