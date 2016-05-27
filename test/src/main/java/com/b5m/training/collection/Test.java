@@ -140,13 +140,8 @@ public class Test {
         }
         
     }
-    public static class Employee implements Comparator<Employee> {
+    public static class Employee {
 
-        @Override
-        public int compare(Employee o1, Employee o2) {
-            // TODO Auto-generated method stub
-            return 0;
-        }
         
     }
 
