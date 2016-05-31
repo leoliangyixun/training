@@ -5,9 +5,7 @@
     <artifactId>kerwin-training</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>com.kerwinyang.training.augmentun</groupId>
-  <artifactId>augmentum</artifactId>
-  <packaging>pom</packaging>
-  <name>augmentum</name>
-  <description>augmentun</description>
+  <artifactId>spring-data</artifactId>
+  <name>spring-data</name>
+  <description>spring-data training</description>
 </project>

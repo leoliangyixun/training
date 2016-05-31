@@ -26,5 +26,5 @@ public class TestCollection {
         }
     }
     
-    private static class User
+
 }

@@ -16,6 +16,7 @@
 		<maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
 		<maven-resources-plugin.version>2.5</maven-resources-plugin.version>
         <maven.test.skip>false</maven.test.skip>
+
         <log4j.version>1.2.16</log4j.version>
         <hibernate.version>4.2.15.Final</hibernate.version>
         <persistence-api.version>1.0.2</persistence-api.version>
@@ -37,7 +38,7 @@
 		<metamorphosis-client.version>1.4.6.2</metamorphosis-client.version>
 		<junit.version>4.12</junit.version>
 		<aspectjweaver.version>1.7.3</aspectjweaver.version>
-		<spring.version>4.2.5.RELEASE</spring.version>
+		<spring.version>4.1.5.RELEASE</spring.version>
 		<mysql.version>5.1.25</mysql.version>
 		<druid.version>1.0.15</druid.version>
 		<jackson.version>1.9.13</jackson.version>
@@ -68,64 +69,7 @@
   </distributionManagement>
     <dependencyManagement>
         <dependencies>
-            <!-- hibernate -->
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-core</artifactId>
-                <version>${hibernate.version}</version>
-            </dependency>
-	         <dependency>
-				<groupId>javax.persistence</groupId>
-				<artifactId>persistence-api</artifactId>
-				<version>${persistence-api.version}</version>
-			</dependency>
-	        <dependency>
-				<groupId>org.hibernate.javax.persistence</groupId>
-				<artifactId>hibernate-jpa-2.1-api</artifactId>
-				<version>${hibernate-jpa-api.version}</version>
-			</dependency>
-            <!-- METAQ Client -->
-            <dependency>
-                <groupId>com.taobao.metamorphosis</groupId>
-                <artifactId>metamorphosis-client</artifactId>
-                <version>${metaq-client.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.taobao.metamorphosis</groupId>
-                <artifactId>metamorphosis-client-extension</artifactId>
-                <version>${metaq-client.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.taobao.metamorphosis</groupId>
-                <artifactId>metamorphosis-commons</artifactId>
-                <version>${metaq-client.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-collections</groupId>
-                <artifactId>commons-collections</artifactId>
-                <version>${commons-collections.version}</version>
-            </dependency>
-            <!-- Curator -->
-            <dependency>
-				<groupId>org.apache.curator</groupId>
-				<artifactId>curator-framework</artifactId>
-				<version>${curator.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.curator</groupId>
-				<artifactId>curator-recipes</artifactId>
-				<version>${curator.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.curator</groupId>
-				<artifactId>curator-test</artifactId>
-				<version>${curator.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.curator</groupId>
-				<artifactId>curator-client</artifactId>
-				<version>${curator.version}</version>
-			</dependency>
+
 			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
@@ -185,6 +129,7 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
+
 			<dependency>
 				<groupId>commons-httpclient</groupId>
 				<artifactId>commons-httpclient</artifactId>
@@ -216,12 +161,15 @@
 				<artifactId>metamorphosis-client</artifactId>
 				<version>${metamorphosis-client.version}</version>
 			</dependency>
+			<!-- jnuit -->
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>${junit.version}</version>
 				<scope>test</scope>
 			</dependency>
+
+			<!-- spring framework -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
@@ -288,22 +236,25 @@
 	           <artifactId>spring-oxm</artifactId>
 	           <version>${spring.version}</version>
             </dependency>
-			<!-- spring end -->
+
 			<dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
                 <version>${aspectjweaver.version}</version>
             </dependency>
+
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
 				<version>${mysql.version}</version>
 			</dependency>
+
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid</artifactId>
 				<version>${druid.version}</version>
 			</dependency>
+
 			<dependency>
 				<groupId>commons-fileupload</groupId>
 				<artifactId>commons-fileupload</artifactId>
@@ -315,6 +266,7 @@
 				<artifactId>zookeeper</artifactId>
 				<version>${zookeeper.version}</version>
 			</dependency>
+
 			<!-- mybatis -->
 			<dependency>
 				<groupId>org.mybatis</groupId>
@@ -331,13 +283,14 @@
 				<artifactId>mapper</artifactId>
 				<version>${mapper.version}</version>
 			</dependency>
-			<!-- jackson  -->
+
+			<!-- fastjson  -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-            
+			<!-- jackson  -->
             <dependency>
 			    <groupId>org.codehaus.jackson</groupId>
 			    <artifactId>jackson-core-asl</artifactId>
@@ -368,11 +321,15 @@
 	            <artifactId>itext</artifactId>
 	            <version>${lowagie.version}</version>
 	        </dependency>
+
+			<!-- mongodb -->
 			<dependency>
 			    <groupId>org.mongodb</groupId>
 			    <artifactId>mongo-java-driver</artifactId>
 			    <version>3.2.2</version>
-			</dependency> 
+			</dependency>
+
+			<!-- spring data -->
 			<dependency>
 			    <groupId>org.springframework.data</groupId>
 			    <artifactId>spring-data-commons</artifactId>
@@ -382,7 +339,66 @@
 			    <groupId>org.springframework.data</groupId>
 			    <artifactId>spring-data-mongodb</artifactId>
 			    <version>1.9.1.RELEASE</version>
-			</dependency> 
+			</dependency>
+
+			<!-- hibernate -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.persistence</groupId>
+				<artifactId>persistence-api</artifactId>
+				<version>${persistence-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate.javax.persistence</groupId>
+				<artifactId>hibernate-jpa-2.1-api</artifactId>
+				<version>${hibernate-jpa-api.version}</version>
+			</dependency>
+			<!-- METAQ Client -->
+			<dependency>
+				<groupId>com.taobao.metamorphosis</groupId>
+				<artifactId>metamorphosis-client</artifactId>
+				<version>${metaq-client.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.taobao.metamorphosis</groupId>
+				<artifactId>metamorphosis-client-extension</artifactId>
+				<version>${metaq-client.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.taobao.metamorphosis</groupId>
+				<artifactId>metamorphosis-commons</artifactId>
+				<version>${metaq-client.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>${commons-collections.version}</version>
+			</dependency>
+			<!-- Curator -->
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-framework</artifactId>
+				<version>${curator.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-recipes</artifactId>
+				<version>${curator.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-test</artifactId>
+				<version>${curator.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-client</artifactId>
+				<version>${curator.version}</version>
+			</dependency>
         </dependencies>
     </dependencyManagement>
   <build>
@@ -409,7 +425,6 @@
     <module>webapp</module>
     <module>springmvc</module>
     <module>spring</module>
-    <module>augmentum</module>
     <module>mongodb</module>
   </modules>
 </project>

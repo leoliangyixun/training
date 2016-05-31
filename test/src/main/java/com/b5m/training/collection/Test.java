@@ -48,7 +48,7 @@ public class Test {
        System.out.println("---------" + map.get(new Person("xx", 20, "male"))+ "---------");
        System.out.println("---------" + map.get(p2)+ "---------");
        
-       Set<Person> set = new HashSet<>();
+       Set<Person> set = new HashSet<Person>();
        set.add(p1);
        set.add(p1);
        System.out.println("---------"  + set +" ---------" );
@@ -61,11 +61,11 @@ public class Test {
        treeSet.add(p3);
        treeSet.add(p4);
        System.out.println("--------------------------" + treeSet + "----------------------------" );
-       Collections
+
        
     }
-    
-    private static class Person {
+
+    public static class Person {
         private String name;
         private Integer age;
         private String sex;
@@ -130,24 +130,105 @@ public class Test {
         }
 
     }
-    
-    public static class User  implements Comparable<Employee> {
+
+    public static class User implements Comparable<User> {
+        private String name;
+        private Integer age;
+
+        public User(String name, Integer age) {
+            this.name = name;
+            this.age = age;
+        }
 
         @Override
-        public int compareTo(Employee o) {
-          
-            return 0;
+        public int compareTo(User o) {
+            if (this.age > o.age) {
+               return 1;
+            }
+
+            if (this.age == o.age) {
+                return 0;
+            }
+
+            return -1;
         }
-        
+
+        public Integer getAge() {
+            return age;
+        }
+
+        public void setAge(Integer age) {
+            this.age = age;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return "User{" +
+                    "name='" + name + '\'' +
+                    ", age=" + age +
+                    '}';
+        }
     }
-    public static class Employee implements Comparator<Employee> {
+
+    public static class Employee {
+        private String name;
+        private Integer age;
+
+        public Employee(String name, Integer age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getAge() {
+            return age;
+        }
+
+        public void setAge(Integer age) {
+            this.age = age;
+        }
 
         @Override
-        public int compare(Employee o1, Employee o2) {
-            // TODO Auto-generated method stub
-            return 0;
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Employee employee = (Employee) o;
+
+            if (!name.equals(employee.name)) return false;
+            return age.equals(employee.age);
+
         }
-        
+
+        @Override
+        public int hashCode() {
+            int result = name.hashCode();
+            result = 31 * result + age.hashCode();
+            return result;
+        }
+
+        @Override
+        public String toString() {
+            return "Employee{" +
+                    "name='" + name + '\'' +
+                    ", age=" + age +
+                    '}';
+        }
     }
 
 }

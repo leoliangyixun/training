@@ -2,9 +2,6 @@ package com.training.mongodb.dao.impl;
   
 import java.util.List;  
 import java.util.Set;  
-  
-
-  
 import org.slf4j.Logger;  
 import org.slf4j.LoggerFactory;  
 import org.springframework.beans.factory.annotation.Autowired;  
@@ -17,17 +14,18 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;  
 import org.springframework.stereotype.Repository;  
   
-import com.mongodb.DB;  
+import com.mongodb.DB;
+import com.training.mongodb.model.User;  
   
 @Repository  
-public class UserDaoImpl implements UserDao {  
+public class UserDaoImpl {  
   
     public static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);  
   
     @Autowired  
     private MongoTemplate mongoTemplate;  
   
-    @Override  
+    
     public void _test() {  
         Set<String> colls = this.mongoTemplate.getCollectionNames();  
         for (String coll : colls) {  
@@ -37,60 +35,60 @@ public class UserDaoImpl implements UserDao {
         logger.info("db=" + db.toString());  
     }  
   
-    @Override  
+     
     public void createCollection() {  
-        if (!this.mongoTemplate.collectionExists(UserEntity.class)) {  
-            this.mongoTemplate.createCollection(UserEntity.class);  
+        if (!this.mongoTemplate.collectionExists(User.class)) {  
+            this.mongoTemplate.createCollection(User.class);  
         }  
     }  
   
-    @Override  
-    public List<UserEntity> findList(int skip, int limit) {  
+     
+    public List<User> findList(int skip, int limit) {  
         Query query = new Query();  
         query.with(new Sort(new Order(Direction.ASC, "_id")));  
         query.skip(skip).limit(limit);  
-        return this.mongoTemplate.find(query, UserEntity.class);  
+        return this.mongoTemplate.find(query, User.class);  
     }  
   
-    @Override  
-    public List<UserEntity> findListByAge(int age) {  
+     
+    public List<User> findListByAge(int age) {  
         Query query = new Query();  
         query.addCriteria(new Criteria("age").is(age));  
-        return this.mongoTemplate.find(query, UserEntity.class);  
+        return this.mongoTemplate.find(query, User.class);  
     }  
   
-    @Override  
-    public UserEntity findOne(String id) {  
+     
+    public User findOne(String id) {  
         Query query = new Query();  
         query.addCriteria(new Criteria("_id").is(id));  
-        return this.mongoTemplate.findOne(query, UserEntity.class);  
+        return this.mongoTemplate.findOne(query, User.class);  
     }  
   
-    @Override  
-    public UserEntity findOneByUsername(String username) {  
+     
+    public User findOneByUsername(String username) {  
         Query query = new Query();  
         query.addCriteria(new Criteria("name.username").is(username));  
-        return this.mongoTemplate.findOne(query, UserEntity.class);  
+        return this.mongoTemplate.findOne(query, User.class);  
     }  
   
-    @Override  
-    public void insert(UserEntity entity) {  
-        this.mongoTemplate.insert(entity);  
+     
+    public void insert(User user) {  
+        this.mongoTemplate.insert(user);  
   
     }  
   
-    @Override  
-    public void update(UserEntity entity) {  
+     
+    public void update(User user) {  
         Query query = new Query();  
-        query.addCriteria(new Criteria("_id").is(entity.getId()));  
+        query.addCriteria(new Criteria("_id").is(user.getId()));  
         Update update = new Update();  
-        update.set("age", entity.getAge());  
-        update.set("password", entity.getPassword());  
-        update.set("regionName", entity.getRegionName());  
-        update.set("special", entity.getSpecial());  
-        update.set("works", entity.getWorks());  
-        update.set("name", entity.getName());  
-        this.mongoTemplate.updateFirst(query, update, UserEntity.class);  
+        update.set("age", user.getAge());  
+        update.set("password", user.getPassword());  
+        update.set("regionName", user.getRegionName());  
+        update.set("special", user.getSpecial());  
+        update.set("works", user.getWorks());  
+        update.set("name", user.getName());  
+        this.mongoTemplate.updateFirst(query, update, User.class);  
   
     }  
   
