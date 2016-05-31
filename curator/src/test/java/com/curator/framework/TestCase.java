@@ -8,6 +8,8 @@ import java.net.BindException;
 
 import org.apache.curator.test.TestingCluster;
 import org.apache.curator.test.TestingServer;
+import org.junit.After;
+import org.junit.Before;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -27,7 +29,7 @@ public class TestCase {
     protected TestingServer server;
     protected TestingCluster cluster;
     
-    @BeforeMethod
+    @Before
     public void setup() throws Exception {
         System.out.println("---------------------setup()----------------------");
         if (server == null) {
@@ -40,7 +42,7 @@ public class TestCase {
         }
     }
 
-    @AfterMethod
+    @After
     public void teardown() throws Exception {
         System.out.println("---------------------teardown()----------------------");
         if (server != null) {
