@@ -5,7 +5,7 @@ package com.curator.framework.recipes;
 
 import org.junit.Test;
 
-import com.curator.framework.TestCase;
+import com.curator.base.TestCase;
 
 /**
  * @description:

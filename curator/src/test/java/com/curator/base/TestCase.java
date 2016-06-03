@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.curator.framework;
+package com.curator.base;
 
 import java.io.IOException;
 import java.net.BindException;

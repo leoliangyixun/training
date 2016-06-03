@@ -1,6 +1,5 @@
 package com.curator.framework.recipes;
 
-import com.curator.framework.TestCase;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
@@ -9,6 +8,8 @@ import org.apache.curator.framework.recipes.locks.Revoker;
 import org.apache.curator.retry.RetryOneTime;
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.curator.base.TestCase;
 
 import java.util.Collection;
 import java.util.concurrent.*;

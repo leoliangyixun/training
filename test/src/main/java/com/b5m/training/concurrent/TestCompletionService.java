@@ -16,9 +16,9 @@ import java.util.concurrent.*;
  * -----------------------------------------------------------------------------------
  * 2016年5月13日       jiqingchuan          1.0             Why & What is modified
  */
-public class CompletionServiceTest {
+public class TestCompletionService {
 
-    public CompletionServiceTest() {
+    public TestCompletionService() {
 
     }
 
@@ -42,7 +42,7 @@ public class CompletionServiceTest {
      * @param args
      */
     public static void main(String[] args) throws InterruptedException, ExecutionException {
-        CompletionServiceTest test = new CompletionServiceTest();
+        TestCompletionService test = new TestCompletionService();
         //ExecutorService是阻塞式的
         ExecutorService executor = Executors.newFixedThreadPool(5);
         //CompletionService是非阻塞式的

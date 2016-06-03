@@ -426,5 +426,7 @@
     <module>springmvc</module>
     <module>spring</module>
     <module>mongodb</module>
+    <module>guava</module>
+    <module>concurrent</module>
   </modules>
 </project>

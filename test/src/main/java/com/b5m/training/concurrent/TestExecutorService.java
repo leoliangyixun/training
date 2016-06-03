@@ -16,9 +16,9 @@ import java.util.concurrent.*;
  * -----------------------------------------------------------------------------------
  * 2016年5月13日       jiqingchuan          1.0             Why & What is modified
  */
-public class ExecutorServiceTest {
+public class TestExecutorService {
 
-    public ExecutorServiceTest() {
+    public TestExecutorService() {
 
     }
 

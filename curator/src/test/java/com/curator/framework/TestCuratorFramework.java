@@ -10,6 +10,8 @@ import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.framework.state.ConnectionStateListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.retry.RetryOneTime;
+import org.apache.curator.test.InstanceSpec;
+import org.apache.curator.test.TestingCluster;
 import org.apache.curator.test.Timing;
 import org.apache.curator.utils.CloseableUtils;
 import org.apache.zookeeper.WatchedEvent;
@@ -18,6 +20,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.curator.base.TestCase;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
@@ -244,6 +248,25 @@ public class TestCuratorFramework extends TestCase {
         {
             CloseableUtils.closeQuietly(client);
         }
+    }
+    
+    @Test
+    public void testCluster() throws Exception {
+        String connectionString = "127.0.0.1:62754,127.0.0.1:62757,127.0.0.1:62760";
+        CuratorFramework client = null;
+        TestingCluster cluster = new TestingCluster(3);
+        cluster.start();
+        client = CuratorFrameworkFactory.newClient(connectionString, new RetryOneTime(1));
+        client.start();
+        System.out.println(client);
+        for (InstanceSpec instanceSpec : cluster.getInstances()) {
+            client = CuratorFrameworkFactory.newClient(instanceSpec.getConnectString(), new RetryOneTime(1));
+            System.out.println(instanceSpec.getConnectString());
+            client.start();
+            Stat stat = client.checkExists().forPath("/");
+            System.out.println("stat:  " + stat);
+        }
+
     }
 
 
