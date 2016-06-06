@@ -22,7 +22,7 @@ public class TestExecutorService {
 
     }
 
-    public static class Task implements Callable<String>{
+    public static class Task implements Callable<String> {
         private String name;
         private Long time;
         public Task(String name, long time){
@@ -30,13 +30,9 @@ public class TestExecutorService {
             this.time = time;
         }
 
-        @Override
         public String call() throws Exception {
-            Thread.sleep(time);
-            System.out.println(Thread.currentThread().getName() + "-->" + this.name + "执行完任务,花费时间" + time + "ms");
-            return this.name + "任务已完成.";
+            return null;
         }
-
     }
 
     /**
