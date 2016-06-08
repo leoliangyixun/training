@@ -10,13 +10,15 @@ import static com.b5m.training.collection.Test.*;
  */
 public class TestHashMap {
     public static void main(String[] args) {
-        Map<Employee, String> map = new HashMap<>();
+/*        Map<Employee, String> map = new HashMap<>();
 
         Employee u1 = new Employee("yangkai", 28);
         Employee u2 = new Employee("yangkai", 28);
         map.put(u1, "xxx");
         map.put(u2, "yyy");
-        System.out.println(map);
+        System.out.println(map);*/
+
+        System.out.println(1024 & 1024);
 
     }
 

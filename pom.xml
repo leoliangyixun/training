@@ -428,5 +428,6 @@
     <module>mongodb</module>
     <module>guava</module>
     <module>concurrent</module>
+    <module>jdk</module>
   </modules>
 </project>
