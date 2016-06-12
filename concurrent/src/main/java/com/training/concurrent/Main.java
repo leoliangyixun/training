@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.training.concurrent.base;
+package com.training.concurrent;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
@@ -33,7 +33,7 @@ public class Main {
         //task1.start();//throw  java.lang.IllegalThreadStateException
         task2.start();
         
-        FutureTask<V>
+       
     
 
     }
