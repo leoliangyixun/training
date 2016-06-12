@@ -33,6 +33,7 @@ public class TestCase {
         if (server == null) {
             try {
                 server = new TestingServer();
+                cluster = new TestingCluster(5);
             } catch (BindException e) {
                 e.printStackTrace();
                 server = null;
@@ -46,10 +47,12 @@ public class TestCase {
         if (server != null) {
             try {
                 server.close();
+                cluster.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             server = null;
+            cluster = null;
         }
 
     }
