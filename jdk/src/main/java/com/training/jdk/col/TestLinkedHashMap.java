@@ -3,6 +3,8 @@
  */
 package com.training.jdk.col;
 
+import java.util.LinkedHashMap;
+
 /**
  * @description:
  * Copyright 2011-2015 B5M.COM. All rights reserved
@@ -19,7 +21,8 @@ public class TestLinkedHashMap {
 
     public static void main(String[] args) {
      
-
+        LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+        map.put(key, value);
     }
 
 }
