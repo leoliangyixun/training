@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.b5m.training.concurrent;
+package com.training.concurrent;
 
 import java.util.concurrent.*;
 

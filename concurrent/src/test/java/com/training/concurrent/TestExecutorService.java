@@ -1,35 +1,21 @@
 package com.training.concurrent;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-
+import com.sun.org.apache.xalan.internal.utils.FeatureManager;
 import org.junit.Test;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.*;
 
 public class TestExecutorService {
-    
     @Test
-    public void test () {
-        
+    public void test() throws InterruptedException {
         ExecutorService executor = Executors.newCachedThreadPool();
-        
-     
-        executor.submit(new Task2());
-        executor.submit(new Task2());
-        executor.submit(new Task2());
-        
-        
-    
-        
-        String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date());
-       
+        Future<Void> f = executor.submit(new Task2());
+       // executor.submit(new Task2());
+       // executor.submit(new Task2());
+        executor.awaitTermination(5, TimeUnit.SECONDS);
+        executor.shutdown();
     }
     
     public static class Task1 implements Runnable{
@@ -41,7 +27,6 @@ public class TestExecutorService {
                 Thread.sleep(100);
                 
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             System.out.println(Thread.currentThread().getName() + " end run ......");
@@ -59,7 +44,6 @@ public class TestExecutorService {
                 Thread.sleep(100);
                 
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             System.out.println(Thread.currentThread().getName() + " end run ......");
