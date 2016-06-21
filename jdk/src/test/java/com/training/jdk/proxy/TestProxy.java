@@ -22,7 +22,8 @@ public class TestProxy {
         MyInvocationHandler h = new MyInvocationHandler();
         h.setTarget(target);
         Class<?>[] clazzes = target.getClass().getInterfaces();
-        Service service = (Service) Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(), h);
+        Object obj = Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(), h);
+        Service service = (Service) obj;
         
         
         service.exec();

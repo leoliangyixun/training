@@ -4,8 +4,6 @@
 package com.training.jdk.base;
 
 
-import org.junit.Test;
-
 /**
  * @description:
  * Copyright 2011-2015 B5M.COM. All rights reserved

@@ -11,7 +11,7 @@ public class Fuck {
     private static final ReentrantLock lock = new ReentrantLock();
     private static final Condition cond = lock.newCondition();
     private static boolean letterPrinterStop = true;
-    
+
     private static final BlockingQueue<Printer> completionQueue = new ArrayBlockingQueue<Printer>(2);
 
     @Test
@@ -38,11 +38,12 @@ public class Fuck {
         t2.start();
 
     }
-    
+
     public static abstract class Printer {
         public abstract void print();
     }
-    private static class LetterPrinter extends Printer{
+
+    private static class LetterPrinter extends Printer {
         private String[] letters;
         private int continuous;
 
@@ -68,7 +69,7 @@ public class Fuck {
                         letterPrinterStop = true;
                         cond.signal();
                     }
-                } 
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
@@ -77,7 +78,7 @@ public class Fuck {
         }
     }
 
-    private static class NumberPrinter  extends Printer{
+    private static class NumberPrinter extends Printer {
         private int begin;
         private int end;
         private int continuous;
@@ -87,7 +88,7 @@ public class Fuck {
             this.end = end;
             this.continuous = continuous;
         }
-        
+
         @Override
         public void print() {
             int curr = begin;
