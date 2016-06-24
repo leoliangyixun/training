@@ -7,7 +7,7 @@
   </parent>
   <artifactId>concurrent</artifactId>
   <name>concurrent</name>
-    <dependencies>
+  <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
