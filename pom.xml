@@ -445,5 +445,6 @@
     <module>hibernate</module>
     <module>orm</module>
     <module>zookeeper</module>
+    <module>dubbo</module>
   </modules>
 </project>
