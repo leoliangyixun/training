@@ -54,13 +54,19 @@
         <mapper.version>3.3.3</mapper.version>
         <lowagie.version>2.1.7</lowagie.version>
     </properties>
-  <repositories>
-      <repository>
-          <id>B5M-public</id>
-          <name>b5m public maven respository</name>
-          <url>http://nexus.izene.com/content/groups/public/</url>
-      </repository>
-  </repositories>
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>local public nexus</name>
+			<url>http://nexus.izene.com/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
   <distributionManagement>
     <site>
       <id>website</id>
@@ -414,14 +420,33 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>2.1</version>
           <configuration>
-              <source>1.7</source>
-              <target>1.7</target>
+              <source>${compiler.source}</source>
+              <target>${compiler.target}</target>
           </configuration>
       </plugin>
       <plugin>
 		<groupId>org.apache.maven.plugins</groupId>
 		<artifactId>maven-resources-plugin</artifactId>
 	  </plugin>
+<!-- 	  <plugin>
+		<groupId>org.zeroturnaround</groupId>
+		<artifactId>jrebel-maven-plugin</artifactId>
+		<version>1.1.5</version>
+		<configuration>
+			<addResourcesDirToRebelXml>true</addResourcesDirToRebelXml>
+			<alwaysGenerate>true</alwaysGenerate>
+			<showGenerated>true</showGenerated>
+		</configuration>
+		<executions>
+			<execution>
+				<id>generate-rebel-xml</id>
+				<phase>process-resources</phase>
+				<goals>
+					<goal>generate</goal>
+				</goals>
+			</execution>
+		</executions>
+	  </plugin> -->
     </plugins>
   </build>
   <packaging>pom</packaging>
@@ -446,5 +471,6 @@
     <module>orm</module>
     <module>zookeeper</module>
     <module>dubbo</module>
+    <module>collection</module>
   </modules>
 </project>
