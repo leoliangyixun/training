@@ -15,6 +15,10 @@ import org.junit.Test;
  *              modified
  */
 public class TestSynchronized {
+    
+    
+    
+    
 
     @Test
     public void test() throws InterruptedException {
@@ -119,6 +123,127 @@ public class TestSynchronized {
            return null;
 
         }
+    }
+    
+    @Test
+    public void test2() {
+        final Resource r = new Resource();
+        final Resource r2 = new Resource();
+/*        new Thread(new Runnable() {
+            
+            @Override
+            public void run() {
+               r.add();
+                
+            }
+        }).start();
+        
+
+        
+        new Thread(new Runnable() {
+            
+            @Override
+            public void run() {
+               r.remove();
+                
+            }
+        }).start();*/
+        
+/*        new Thread(new Runnable() {
+            
+            @Override
+            public void run() {
+               r.show();
+                
+            }
+        }).start();*/
+        
+        new Thread(new Runnable() {
+            
+            @Override
+            public void run() {
+               r.get();
+                
+            }
+        }).start();
+        new Thread(new Runnable() {
+            
+            @Override
+            public void run() {
+               r.pop();
+                
+            }
+        }).start();
+
+        // 保证前面的线程都执行完
+        while (Thread.activeCount() > 1) { 
+            Thread.yield();
+        }
+    }
+    
+    static class Resource {
+        public synchronized void add() {
+            System.out.println("begin add");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println("end add");
+            
+        }
+        
+        public synchronized void remove() {
+            System.out.println("begin remove");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println("end remove");
+        }
+        
+        public void show () {
+            System.out.println("begin show");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println("end show");
+        }
+        
+        public synchronized static void get () {
+            System.out.println("begin get");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println("end get");
+        }
+        
+        public synchronized static void pop () {
+            System.out.println("begin pop");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println("end pop");
+        }
+        
+
+    }
+    
+    @Test
+    public void test3() {
+
     }
 
 }
