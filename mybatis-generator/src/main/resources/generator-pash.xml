@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry
+            location="C:\Users\yangshenghan\.m2\repository\mysql\mysql-connector-java\5.1.30\mysql-connector-java-5.1.30.jar"/>
+
+    <context id="Mysql" targetRuntime="MyBatis3">
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="com.pajk.frame.mybatis.plugin.CommonPlugin"/>
+        <plugin type="com.pajk.frame.mybatis.plugin.CreateTimePlugin">
+            <!-- 数据库中创建时间列名 -->
+            <property name="columnName" value="create_time"/>
+            <!-- 应用系统中创建时间属性名 -->
+            <property name="fieldName" value="createTime"/>
+        </plugin>
+        <plugin type="com.pajk.frame.mybatis.plugin.PaginationPlugin">
+            <property name="pagination" value="com.pajk.pash.model.Pagination"/>
+        </plugin>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/pash" userId="pash"
+                        password="pash">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <javaModelGenerator targetPackage="com.pajk.pash.model" targetProject="${targetProject}"/>
+        <sqlMapGenerator targetPackage="com.pajk.pash.mapper" targetProject="${targetProject}"/>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.pajk.pash.mapper" targetProject="${targetProject}"/>
+
+        <!--<table schema="pash" tableName="hugo_host" domainObjectName="Host"/>-->
+        <!--<table schema="pash" tableName="hugo_role" domainObjectName="Role"/>-->
+        <!--<table schema="pash" tableName="hugo_role_host" domainObjectName="RoleHost"/>-->
+        <!--<table schema="pash" tableName="hugo_shell" domainObjectName="Shell"/>-->
+        <!--<table schema="pash" tableName="hugo_user" domainObjectName="User"/>-->
+        <!--<table schema="pash" tableName="hugo_user_role" domainObjectName="UserRole"/>-->
+        <!--<table schema="pash" tableName="pash_pin" domainObjectName="Pin"/>-->
+        <!--<table schema="pash" tableName="pash_task" domainObjectName="Task"/>-->
+        <!--<table schema="pash" tableName="pash_task_log" domainObjectName="TaskLog"/>-->
+        <!--<table schema="pash" tableName="pash_job_detail" domainObjectName="JobDetail"/>-->
+        <table schema="pash" tableName="qrtz_job_details" domainObjectName="QuartzJobDetail"/>
+    </context>
+</generatorConfiguration>

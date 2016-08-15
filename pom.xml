@@ -54,19 +54,65 @@
         <mapper.version>3.3.3</mapper.version>
         <lowagie.version>2.1.7</lowagie.version>
     </properties>
+    
 	<repositories>
 		<repository>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<id>public</id>
+			<name>Public Repositories</name>
+			<url>http://nexus.yeshj.com/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>oschina Releases</id>
+			<name>oschina Releases</name>
+			<url>http://maven.oschina.net/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>springsource-repo</id>
+			<name>SpringSource Repository</name>
+			<url>http://repo.spring.io/release/</url>
+		</repository>
+		<repository>
+			<id>springsource-repo-snapshot</id>
+			<name>SpringSource Repository</name>
+			<url>http://repo.spring.io/snapshot/</url>
+		</repository>
+		<repository>
+			<id>central</id>
+			<name>Maven Repository Switchboard</name>
+			<layout>default</layout>
+			<url>http://repo.maven.apache.org/maven2</url>
+		</repository>
+	</repositories>
+	
+	<pluginRepositories>
+		<pluginRepository>
 			<id>nexus</id>
-			<name>local public nexus</name>
-			<url>http://nexus.izene.com/content/groups/public/</url>
+			<name>nexus</name>
+			<url>http://nexus.yeshj.com/nexus/content/groups/public/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-		</repository>
-	</repositories>
+		</pluginRepository>
+		
+		<pluginRepository>
+			<id>oschina Releases</id>
+			<name>oschina Releases</name>
+			<url>http://maven.oschina.net/content/groups/public</url>
+		</pluginRepository>
+			
+		<pluginRepository>
+			<id>maven2-repo</id>
+			<name>maven2 Repository</name>
+			<url>http://repo1.maven.org/maven2/</url>
+		</pluginRepository>
+	</pluginRepositories>
+	
   <distributionManagement>
     <site>
       <id>website</id>
@@ -459,10 +505,11 @@
     <module>jdbc</module>
     <module>retrofit</module>
     <module>validator</module>
-    <module>mybatis-cache</module>
+    <module>mybatis</module>
     <module>webapp</module>
     <module>springmvc</module>
     <module>spring</module>
+    <module>spring-data</module>
     <module>mongodb</module>
     <module>guava</module>
     <module>concurrent</module>
@@ -472,5 +519,6 @@
     <module>zookeeper</module>
     <module>dubbo</module>
     <module>collection</module>
+    <module>mybatis-generator</module>
   </modules>
 </project>
