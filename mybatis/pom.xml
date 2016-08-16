@@ -5,9 +5,9 @@
     <artifactId>training</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>mybatis-cache</artifactId>
-  <name>mybatis-cache</name>
-  <description>mybatis-cache</description>
+  <artifactId>mybatis</artifactId>
+  <name>mybatis</name>
+  <description>mybatis</description>
   <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>1.6.1</slf4j.version>

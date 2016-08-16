@@ -10,16 +10,25 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   </parent>
   <artifactId>activiti</artifactId>
   <dependencies>
+	<!-- https://mvnrepository.com/artifact/org.activiti/activiti-engine -->
 	<dependency>
-		<groupId>org.activiti</groupId>
-		<artifactId>activiti-engine</artifactId>
-		<version>5.20.0</version>
+	    <groupId>org.activiti</groupId>
+	    <artifactId>activiti-engine</artifactId>
+	    <version>5.20.0</version>
 	</dependency>
+
 	<dependency>
 		<groupId>org.activiti</groupId>
 		<artifactId>activiti-spring</artifactId>
 		<version>5.20.0</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.activiti/activiti-rest -->
+	<dependency>
+	    <groupId>org.activiti</groupId>
+	    <artifactId>activiti-rest</artifactId>
+	    <version>5.20.0</version>
+	</dependency>
+	
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
