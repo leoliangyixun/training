@@ -49,18 +49,25 @@
          <groupId>org.springframework</groupId>
          <artifactId>spring-context-support</artifactId>
      </dependency>
+
+	<!-- mongodb -->
 	<dependency>
 	    <groupId>org.mongodb</groupId>
 	    <artifactId>mongo-java-driver</artifactId>
-	</dependency> 
+	    <version>3.2.2</version>
+	</dependency>
+  	<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-commons -->
 	<dependency>
 	    <groupId>org.springframework.data</groupId>
 	    <artifactId>spring-data-commons</artifactId>
+	    <version>1.12.2.RELEASE</version>
 	</dependency>
+	  <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-mongodb -->
 	<dependency>
 	    <groupId>org.springframework.data</groupId>
 	    <artifactId>spring-data-mongodb</artifactId>
-	</dependency> 
+	    <version>1.9.2.RELEASE</version>
+	</dependency>
 	<!-- slf4j log4j -->
 	<dependency>
 		<groupId>org.slf4j</groupId>

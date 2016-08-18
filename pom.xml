@@ -400,25 +400,6 @@
 	            <version>${lowagie.version}</version>
 	        </dependency>
 
-			<!-- mongodb -->
-			<dependency>
-			    <groupId>org.mongodb</groupId>
-			    <artifactId>mongo-java-driver</artifactId>
-			    <version>3.2.2</version>
-			</dependency>
-
-			<!-- spring data -->
-			<dependency>
-			    <groupId>org.springframework.data</groupId>
-			    <artifactId>spring-data-commons</artifactId>
-			    <version>1.12.1.RELEASE</version>
-			</dependency>
-			<dependency>
-			    <groupId>org.springframework.data</groupId>
-			    <artifactId>spring-data-mongodb</artifactId>
-			    <version>1.9.1.RELEASE</version>
-			</dependency>
-
 			<!-- hibernate -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -544,5 +525,6 @@
     <module>pajk-mybatis-generator</module>
     <module>ykgwj-service</module>
     <module>ykgwj-model</module>
+    <module>spring-boot</module>
   </modules>
 </project>
