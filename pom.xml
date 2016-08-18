@@ -519,6 +519,6 @@
     <module>zookeeper</module>
     <module>dubbo</module>
     <module>collection</module>
-    <module>mybatis-generator</module>
+    <module>pajk-mybatis-generator</module>
   </modules>
 </project>
