@@ -137,6 +137,42 @@
 				<artifactId>commons-lang3</artifactId>
 				<version>${commons-lang3.version}</version>
 			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
+			<dependency>
+			    <groupId>commons-logging</groupId>
+			    <artifactId>commons-logging</artifactId>
+			    <version>1.1.1</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+			<dependency>
+			    <groupId>commons-io</groupId>
+			    <artifactId>commons-io</artifactId>
+			    <version>2.4</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
+			<dependency>
+			    <groupId>commons-beanutils</groupId>
+			    <artifactId>commons-beanutils</artifactId>
+			    <version>1.8.3</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>${commons-collections.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>${commons-fileupload.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-httpclient</groupId>
+				<artifactId>commons-httpclient</artifactId>
+				<version>${commons-httpclient.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
@@ -182,11 +218,6 @@
 				</exclusions>
 			</dependency>
 
-			<dependency>
-				<groupId>commons-httpclient</groupId>
-				<artifactId>commons-httpclient</artifactId>
-				<version>${commons-httpclient.version}</version>
-			</dependency>
 			
 			<!-- servlet-api -->
 			<dependency>
@@ -307,11 +338,6 @@
 				<version>${druid.version}</version>
 			</dependency>
 
-			<dependency>
-				<groupId>commons-fileupload</groupId>
-				<artifactId>commons-fileupload</artifactId>
-				<version>${commons-fileupload.version}</version>
-			</dependency>
 
 			<dependency>
 				<groupId>org.apache.zookeeper</groupId>
@@ -374,25 +400,6 @@
 	            <version>${lowagie.version}</version>
 	        </dependency>
 
-			<!-- mongodb -->
-			<dependency>
-			    <groupId>org.mongodb</groupId>
-			    <artifactId>mongo-java-driver</artifactId>
-			    <version>3.2.2</version>
-			</dependency>
-
-			<!-- spring data -->
-			<dependency>
-			    <groupId>org.springframework.data</groupId>
-			    <artifactId>spring-data-commons</artifactId>
-			    <version>1.12.1.RELEASE</version>
-			</dependency>
-			<dependency>
-			    <groupId>org.springframework.data</groupId>
-			    <artifactId>spring-data-mongodb</artifactId>
-			    <version>1.9.1.RELEASE</version>
-			</dependency>
-
 			<!-- hibernate -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -425,11 +432,7 @@
 				<artifactId>metamorphosis-commons</artifactId>
 				<version>${metaq-client.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>commons-collections</groupId>
-				<artifactId>commons-collections</artifactId>
-				<version>${commons-collections.version}</version>
-			</dependency>
+
 			<!-- Curator -->
 			<dependency>
 				<groupId>org.apache.curator</groupId>
@@ -520,5 +523,8 @@
     <module>dubbo</module>
     <module>collection</module>
     <module>pajk-mybatis-generator</module>
+    <module>ykgwj-service</module>
+    <module>ykgwj-model</module>
+    <module>spring-boot</module>
   </modules>
 </project>

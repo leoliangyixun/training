@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 
 
 /**
@@ -109,5 +110,17 @@ public class StringTest {
         
         
     }
+    
+	@Test
+	public void testString() {
+		String str1 = "str";
+		String str2 = "str";
+		String str3 = new String("str");
+		System.out.println("str1 == str2 : " + (str1 == str2));
+		System.out.println("str1.equals(str2) :　" + str1.equals(str2));
+		
+		System.out.println("str1 == st3 : " + (str1 == str3));
+		System.out.println("str1.equals(str3) : " + str1.equals(str3));
+	}
 
 }
