@@ -5,9 +5,9 @@
     <artifactId>training</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>ykgwj-service</artifactId>
-  <name>ykgwj-service</name>
-  <description>ykgwj-service</description>
+  <artifactId>yk-service</artifactId>
+  <name>yk-service</name>
+  <description>yk-service</description>
   
     <dependencies>
  		<dependency>

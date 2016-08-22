@@ -5,7 +5,7 @@
     <artifactId>training</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>ykgwj-model</artifactId>
-  <name>ykgwj-model</name>
-  <description>ykgwj-model</description>
+  <artifactId>yk-model</artifactId>
+  <name>yk-model</name>
+  <description>yk-model</description>
 </project>
