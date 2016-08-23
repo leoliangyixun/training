@@ -1,4 +1,4 @@
-import java.util.StringJoiner;
+
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -23,11 +23,14 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//StringJoiner
+	
 		String[] ss = StringUtils.split("status,,,,,,createTime,updateTime", ",");
 		for (String s : ss) {
-		System.out.println(s);
+		    System.out.println(s);
 		}
+		String[] arr = {"stauts", "name", "alias"};
+		String string = StringUtils.join(arr, ":");
+		
 
 	}
 
