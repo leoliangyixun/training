@@ -1,5 +1,5 @@
 /**
- * 
+ *
  *//*
 package com.training.spring.boot.config;
 
@@ -28,6 +28,12 @@ import com.hujiang.basic.framework.rest.config.db.MybatisConfig;
  * @author yangkai
  *
  *//*
+*/
+/**
+ * @author yangkai
+ *
+ *//*
+
 @Configuration
 @ComponentScan({ "com.hujiang.mmp.prv.service" })
 @Import({MybatisConfig.class})

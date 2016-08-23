@@ -1,6 +1,12 @@
 /**
+<<<<<<< HEAD
  * 
  *//*
+=======
+ *
+ *//*
+
+>>>>>>> 246198150e21f4f23bf201208adaf084c0f21c15
 package com.training.spring.boot.config;
 
 import java.nio.charset.StandardCharsets;
@@ -28,6 +34,13 @@ import com.hujiang.basic.framework.rest.config.db.MybatisConfig;
  * @author yangkai
  *
  *//*
+
+*/
+/**
+ * @author yangkai
+ *
+ *//*
+
 @Configuration
 @ComponentScan({ "com.hujiang.mmp.prv.service" })
 @Import({MybatisConfig.class})
@@ -35,7 +48,7 @@ import com.hujiang.basic.framework.rest.config.db.MybatisConfig;
 public class MySQLDataSourceConfig3 {
     @Autowired
     private Environment environment;
-    
+
     @Bean
     public DataSource druidDataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
@@ -50,7 +63,8 @@ public class MySQLDataSourceConfig3 {
         }
         return druidDataSource;
     }
-    
-    
+
+
 }
 */
+

@@ -15,7 +15,7 @@ public class Generator {
 
     public static void main(String[] args) {
         if (args.length == 0) {
-            args = new String[]{"resource:generator-qilin.xml"};
+            args = new String[]{"resource:generator-mmp.xml"};
         }
         if (args.length == 1 && !isEmpty(args[0]) && !"-h".equalsIgnoreCase(args[0])) {
             String configFile = args[0];
