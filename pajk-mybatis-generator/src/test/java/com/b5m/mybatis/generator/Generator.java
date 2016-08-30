@@ -25,7 +25,7 @@ public class Generator {
 
             } else if (configFile.startsWith("resource:")) { // resource路径
                 String folder = String.format("%csrc%cmain%cresources%c", File.separatorChar, File.separatorChar, File.separatorChar, File.separatorChar);
-                configFile = new File("").getAbsolutePath() + folder + configFile.replace("resource:", "");
+                configFile = new File("").getAbsolutePath() +File.separatorChar + "pajk-mybatis-generator" + folder + configFile.replace("resource:", "");
             } else { // 当前目录
                 configFile = new File("").getAbsolutePath() + "\\" + configFile;
             }
