@@ -146,5 +146,24 @@
 	    <artifactId>pagehelper</artifactId>
 	    <version>4.1.6</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/com.googlecode.rapid-framework/rapid-core -->
+	<dependency>
+	    <groupId>com.googlecode.rapid-framework</groupId>
+	    <artifactId>rapid-core</artifactId>
+	    <version>4.0.5</version>
+	</dependency>
+		<!-- https://mvnrepository.com/artifact/com.googlecode.rapid-framework/rapid-generator -->
+	<dependency>
+	    <groupId>com.googlecode.rapid-framework</groupId>
+	    <artifactId>rapid-generator</artifactId>
+	    <version>4.0.5</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/com.googlecode.rapid-framework/rapid-generator-template -->
+	<dependency>
+	    <groupId>com.googlecode.rapid-framework</groupId>
+	    <artifactId>rapid-generator-template</artifactId>
+	    <version>4.0.5</version>
+	</dependency>
+
 	</dependencies>
 </project>
