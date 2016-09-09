@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.training.ykgwj.model;
+package com.training.yk.model.pagination;
 
 /**
  * @author yangkai

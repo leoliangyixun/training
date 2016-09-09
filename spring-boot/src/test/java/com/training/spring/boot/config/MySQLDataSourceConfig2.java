@@ -1,7 +1,6 @@
 /**
- * 
+ *
  *//*
-
 package com.training.spring.boot.config;
 
 import java.nio.charset.StandardCharsets;
@@ -25,6 +24,10 @@ import org.springframework.core.io.Resource;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.hujiang.basic.framework.rest.config.db.MybatisConfig;
 
+*//**
+ * @author yangkai
+ *
+ *//*
 */
 /**
  * @author yangkai

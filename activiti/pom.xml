@@ -89,6 +89,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<groupId>com.alibaba</groupId>
 		<artifactId>druid</artifactId>
 	</dependency>
+	<dependency>
+    	<groupId>com.kerwinyang.training</groupId>
+		<artifactId>yk-model</artifactId>
+	</dependency>
   </dependencies>
 
 </project>
