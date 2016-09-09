@@ -14,6 +14,7 @@ import org.junit.Test;
  */
 public class TestBlockingQueue {
 
+
     @Test
     public void test() {
         BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(3);
@@ -34,15 +35,15 @@ public class TestBlockingQueue {
     }
 
     public static class Producer implements Runnable {
-
+        
         BlockingQueue<Integer> queue = null;
         Integer i = null;
 
-        public Producer(BlockingQueue<Integer> queue, Integer i) {
+        public Producer(BlockingQueue<Integer> queue,Integer i) {
             this.queue = queue;
             this.i = i;
         }
-
+        
         @Override
         public void run() {
             try {
@@ -59,17 +60,17 @@ public class TestBlockingQueue {
 
     }
 
+    
     public static class Consumer implements Runnable {
-
+        
         BlockingQueue<Integer> queue = null;
-
         public Consumer(BlockingQueue<Integer> queue) {
             this.queue = queue;
         }
-
+        
         @Override
         public void run() {
-
+            
             try {
                 Integer i = queue.take();
                 System.out.println(Thread.currentThread().getName() + " take " + i);
@@ -80,7 +81,6 @@ public class TestBlockingQueue {
                 e.printStackTrace();
             }
         }
-
     }
 
 }
