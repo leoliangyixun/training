@@ -1,6 +1,9 @@
 /**
  *
  *//*
+
+ *
+ *//*
 package com.training.spring.boot.config;
 
 import java.nio.charset.StandardCharsets;
@@ -29,10 +32,7 @@ import com.hujiang.basic.framework.rest.config.db.MybatisConfig;
  *
  *//*
 */
-/**
- * @author yangkai
- *
- *//*
+/*
 
 @Configuration
 @ComponentScan({ "com.hujiang.mmp.prv.service" })
