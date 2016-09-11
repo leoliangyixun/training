@@ -119,9 +119,16 @@
       <url>scp://webhost.company.com/www/website</url>
     </site>
   </distributionManagement>
+  
     <dependencyManagement>
         <dependencies>
-
+			<dependency>
+		    	<groupId>com.kerwinyang.training</groupId>
+				<artifactId>yk-model</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			
+			
 			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
@@ -400,25 +407,6 @@
 	            <version>${lowagie.version}</version>
 	        </dependency>
 
-			<!-- mongodb -->
-			<dependency>
-			    <groupId>org.mongodb</groupId>
-			    <artifactId>mongo-java-driver</artifactId>
-			    <version>3.2.2</version>
-			</dependency>
-
-			<!-- spring data -->
-			<dependency>
-			    <groupId>org.springframework.data</groupId>
-			    <artifactId>spring-data-commons</artifactId>
-			    <version>1.12.1.RELEASE</version>
-			</dependency>
-			<dependency>
-			    <groupId>org.springframework.data</groupId>
-			    <artifactId>spring-data-mongodb</artifactId>
-			    <version>1.9.1.RELEASE</version>
-			</dependency>
-
 			<!-- hibernate -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -542,7 +530,9 @@
     <module>dubbo</module>
     <module>collection</module>
     <module>pajk-mybatis-generator</module>
-    <module>ykgwj-service</module>
-    <module>ykgwj-model</module>
+    <module>yk-service</module>
+    <module>yk-model</module>
+    <module>spring-boot</module>
+    <module>annotation</module>
   </modules>
 </project>
