@@ -35,7 +35,7 @@ public class TestValidator {
 
         private static final long serialVersionUID = 6040532265028967429L;
         
-        @NotEmpty(message = "name should not be empty")
+        @NotEmpty(values = {}, message = "name should not be empty")
         private String name;
 
         public String getName() {
