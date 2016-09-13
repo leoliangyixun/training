@@ -538,5 +538,6 @@
     <module>yk-model</module>
     <module>spring-boot</module>
     <module>annotation</module>
+    <module>redis</module>
   </modules>
 </project>
