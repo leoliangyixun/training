@@ -8,4 +8,8 @@
   <artifactId>spring-boot</artifactId>
   <name>spring-boot</name>
   <description>spring-boot</description>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>spring-boot-redis</module>
+  </modules>
 </project>

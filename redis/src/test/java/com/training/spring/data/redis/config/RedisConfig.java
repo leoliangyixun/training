@@ -3,12 +3,11 @@
  */
 package com.training.spring.data.redis.config;
 
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisNode;
 import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -18,22 +17,22 @@ import org.springframework.data.redis.core.RedisTemplate;
  *
  */
 @Configuration
-@EnableConfigurationProperties
-@ComponentScan({ "com.training.redis" })
 @PropertySource({ "classpath:redis.properties" })
 public class RedisConfig {
     
     @Bean
     public RedisConnectionFactory jedisConnectionFactory() {
-        RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration().sentinel("192.168.177.90", 7001);
+        RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration()
+                .master(new RedisNode("127.0.0.1", 6379))
+                .sentinel("127.0.0.1", 6380);
         return new JedisConnectionFactory(sentinelConfig);
     }
     
     @Bean
-    RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory connectionFactory){
+    RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory jedisConnectionFactory){
         
         RedisTemplate<?, ?> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(connectionFactory);
+        redisTemplate.setConnectionFactory(jedisConnectionFactory);
         return redisTemplate;
     }
 
