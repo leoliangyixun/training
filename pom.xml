@@ -56,7 +56,7 @@
     </properties>
     
 	<repositories>
-		<repository>
+<!--		<repository>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
@@ -64,6 +64,7 @@
 			<name>Public Repositories</name>
 			<url>http://nexus.yeshj.com/nexus/content/groups/public/</url>
 		</repository>
+		-->
 		<repository>
 			<id>oschina Releases</id>
 			<name>oschina Releases</name>
@@ -88,7 +89,7 @@
 	</repositories>
 	
 	<pluginRepositories>
-		<pluginRepository>
+<!--		<pluginRepository>
 			<id>nexus</id>
 			<name>nexus</name>
 			<url>http://nexus.yeshj.com/nexus/content/groups/public/</url>
@@ -98,7 +99,7 @@
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-		</pluginRepository>
+		</pluginRepository>-->
 		
 		<pluginRepository>
 			<id>oschina Releases</id>
@@ -127,8 +128,6 @@
 				<artifactId>yk-model</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
-			
-			
 			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
@@ -224,8 +223,6 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-
-			
 			<!-- servlet-api -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
@@ -238,7 +235,6 @@
 				<artifactId>jsp-api</artifactId>
 				<version>${jsp-api.version}</version>
 			</dependency>
-			
 			<!-- activemq -->
 			<dependency>
 				<groupId>org.apache.activemq</groupId>
@@ -258,7 +254,6 @@
 				<version>${junit.version}</version>
 				<scope>test</scope>
 			</dependency>
-
 			<!-- spring framework -->
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -330,32 +325,26 @@
 	           <artifactId>spring-oxm</artifactId>
 	           <version>${spring.version}</version>
             </dependency>
-
 			<dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
                 <version>${aspectjweaver.version}</version>
             </dependency>
-
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
 				<version>${mysql.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid</artifactId>
 				<version>${druid.version}</version>
 			</dependency>
-
-
 			<dependency>
 				<groupId>org.apache.zookeeper</groupId>
 				<artifactId>zookeeper</artifactId>
 				<version>${zookeeper.version}</version>
 			</dependency>
-
 			<!-- mybatis -->
 			<dependency>
 				<groupId>org.mybatis</groupId>
@@ -372,7 +361,6 @@
 				<artifactId>mapper</artifactId>
 				<version>${mapper.version}</version>
 			</dependency>
-
 			<!-- fastjson  -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -410,7 +398,6 @@
 	            <artifactId>itext</artifactId>
 	            <version>${lowagie.version}</version>
 	        </dependency>
-
 			<!-- hibernate -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -443,7 +430,6 @@
 				<artifactId>metamorphosis-commons</artifactId>
 				<version>${metaq-client.version}</version>
 			</dependency>
-
 			<!-- Curator -->
 			<dependency>
 				<groupId>org.apache.curator</groupId>
@@ -539,5 +525,7 @@
     <module>spring-boot</module>
     <module>annotation</module>
     <module>redis</module>
+    <module>dao</module>
+    <module>hibernate-jpa</module>
   </modules>
 </project>
