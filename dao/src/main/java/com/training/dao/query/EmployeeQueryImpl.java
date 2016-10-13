@@ -3,6 +3,8 @@
  */
 package com.training.dao.query;
 
+import com.training.dao.model.Employee;
+
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
  * @author yangkai
  *
  */
-public class EmployeeQueryImpl extends AbstractQuery implements EmployeeQuery {
+public class EmployeeQueryImpl extends AbstractQuery<EmployeeQuery, Employee> implements EmployeeQuery {
 
     private String nameLike;
     private String level;

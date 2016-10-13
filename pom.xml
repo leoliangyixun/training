@@ -541,5 +541,6 @@
     <module>redis</module>
     <module>dao</module>
     <module>hibernate-jpa</module>
+    <module>logging</module>
   </modules>
 </project>
