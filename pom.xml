@@ -8,8 +8,8 @@
   <url>http://maven.apache.org/</url>
   <inceptionYear>2001</inceptionYear>
       <properties>
-    	<compiler.source>1.7</compiler.source>
-		<compiler.target>1.7</compiler.target>
+    	<compiler.source>1.8</compiler.source>
+		<compiler.target>1.8</compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven-source-plugin.version>2.2.1</maven-source-plugin.version>
 		<maven-compile-plugin.version>3.1</maven-compile-plugin.version>
