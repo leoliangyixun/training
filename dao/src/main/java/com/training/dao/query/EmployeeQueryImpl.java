@@ -4,6 +4,7 @@
 package com.training.dao.query;
 
 import com.training.dao.model.Employee;
+import org.hibernate.engine.spi.NamedQueryDefinitionBuilder;
 
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,8 @@ public class EmployeeQueryImpl extends AbstractQuery<EmployeeQuery, Employee> im
     private String level;
     private Date birthdayBefore;
     private Date birthdayAfter;
+
+    protected QueryBuilder queryBuilder;
 
     public EmployeeQueryImpl() {}
 

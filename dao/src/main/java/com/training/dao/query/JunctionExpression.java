@@ -12,17 +12,17 @@ public class JunctionExpression implements Expression {
     private static final String EMPTY_CONDITION = "1=1";
 
     private List<Expression> elements = new ArrayList<>();
-    private Operator operator;
+    private QueryOperator queryOperator;
 
-    public JunctionExpression(Operator operator) {
+    public JunctionExpression(QueryOperator queryOperator) {
 
-        this.operator = operator;
+        this.queryOperator = queryOperator;
     }
 
-    public JunctionExpression(List<Expression> elements, Operator operator) {
+    public JunctionExpression(List<Expression> elements, QueryOperator queryOperator) {
 
         this.elements = elements;
-        this.operator = operator;
+        this.queryOperator = queryOperator;
     }
 
     public JunctionExpression add(Expression element) {
@@ -39,17 +39,17 @@ public class JunctionExpression implements Expression {
         } else {
             Iterator<Expression> iterator = elements.iterator();
             StringBuilder buf = new StringBuilder();
-            buf.append(LEFT_PARENTHESES);
+            buf.append("(");
 
             while (iterator.hasNext()) {
-                buf.append(SPACE);
-                buf.append(iterator.next().interpret());
+                buf.append(" ");
+                buf.append(iterator.next().render());
 
                 if (iterator.hasNext()) {
-                    buf.append(operator);
+                    buf.append(queryOperator);
                 }
             }
-            buf.append(RIGHT_PARENTHESES);
+            buf.append(")");
             return buf.toString();
         }
     }

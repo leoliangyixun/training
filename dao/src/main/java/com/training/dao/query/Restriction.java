@@ -4,32 +4,32 @@ public class Restriction {
 
     public static Expression eq(QueryProperty property, Object value) {
 
-        return new PropertyExpression(property, value, Operator.EQ);
+        return new PropertyExpression(property, value, QueryOperator.EQ);
     }
 
     public static Expression nq(QueryProperty property, Object value) {
 
-        return new PropertyExpression(property, value, Operator.NQ);
+        return new PropertyExpression(property, value, QueryOperator.NQ);
     }
 
     public static Expression lt(QueryProperty property, Object value) {
 
-        return new PropertyExpression(property, value, Operator.LT);
+        return new PropertyExpression(property, value, QueryOperator.LT);
     }
 
     public static Expression gt(QueryProperty property, Object value) {
 
-        return new PropertyExpression(property, value, Operator.GT);
+        return new PropertyExpression(property, value, QueryOperator.GT);
     }
 
     public static Expression and(Expression left, Expression right) {
 
-        return new LogicalExpression(left, right, Operator.AND);
+        return new LogicalExpression(left, right, QueryOperator.AND);
     }
 
     public static Expression or(Expression left, Expression right) {
 
-        return new LogicalExpression(left, right, Operator.OR);
+        return new LogicalExpression(left, right, QueryOperator.OR);
     }
 
     public static Expression like(QueryProperty property, Object value) {
@@ -50,15 +50,15 @@ public class Restriction {
 
     public static JunctionExpression conjunction() {
 
-        return new JunctionExpression(Operator.AND);
+        return new JunctionExpression(QueryOperator.AND);
     }
 
     public static JunctionExpression disjunction() {
 
-        return new JunctionExpression(Operator.OR);
+        return new JunctionExpression(QueryOperator.OR);
     }
 
-    public static enum Operator {
+    public static enum QueryOperator {
         AND(" AND "),
         OR(" OR "),
         EQ(" = "),
@@ -71,7 +71,7 @@ public class Restriction {
 
         private String operator;
 
-        private Operator(String operator) {
+        private QueryOperator(String operator) {
             this.operator = operator;
         }
 

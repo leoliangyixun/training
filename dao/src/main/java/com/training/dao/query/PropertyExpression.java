@@ -1,13 +1,13 @@
 package com.training.dao.query;
-
+import static com.training.dao.query.Restriction.*;
 
 public class PropertyExpression implements Expression {
 
-    private OrderedProperty property;
+    private QueryProperty property;
     private Object value;
-    private Operato operator;
+    private QueryOperator operator;
 
-    public PropertyExpression(OrderedProperty property, Object value, Operator operator) {
+    public PropertyExpression(QueryProperty property, Object value, QueryOperator operator) {
 
         this.property = property;
         this.value = value;
@@ -24,9 +24,8 @@ public class PropertyExpression implements Expression {
         return buf.toString();
     }
 
-    ////////////// Getters //////////////
 
-    public OrderedProperty getProperty() {
+    public QueryProperty getProperty() {
 
         return property;
     }
@@ -36,7 +35,7 @@ public class PropertyExpression implements Expression {
         return value;
     }
 
-    public Operator getOperator() {
+    public QueryOperator getOperator() {
 
         return operator;
     }
