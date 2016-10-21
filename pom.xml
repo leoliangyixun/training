@@ -529,5 +529,6 @@
     <module>hibernate-jpa</module>
     <module>logging</module>
     <module>spring-boot-activiti</module>
+    <module>yk-spring-boot</module>
   </modules>
 </project>
