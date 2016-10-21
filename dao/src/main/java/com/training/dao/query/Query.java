@@ -15,7 +15,7 @@ public interface Query<T extends Query<?, ?>, U extends Entity> {
 
     long count();
 
-    U singleResult();
+    U single();
 
     List<U> list();
 

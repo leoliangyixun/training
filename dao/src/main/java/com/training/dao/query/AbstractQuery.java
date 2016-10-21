@@ -177,7 +177,7 @@ public class AbstractQuery<T extends Query<?,?>, U extends Entity> implements Qu
         return 0;
     }
 
-    public U singleResult() {
+    public U single() {
         return null;
     }
 

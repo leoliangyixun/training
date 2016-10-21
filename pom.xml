@@ -4,6 +4,7 @@
   <groupId>com.kerwinyang.training</groupId>
   <artifactId>training</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+
   <name>Maven</name>
   <url>http://maven.apache.org/</url>
   <inceptionYear>2001</inceptionYear>
