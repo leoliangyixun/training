@@ -20,14 +20,6 @@ public class Main {
 	}
 
 
-	@Test
-
-	public void testMuitlDeclare() {
-		User u1,u2 = new User("alisa",27);
-		System.out.println(u1);
-		System.out.println(u2);
-	}
-
 
 	public static class User {
 		private String name;
