@@ -23,7 +23,7 @@ public class RedisConfig {
     @Bean
     public RedisConnectionFactory jedisConnectionFactory() {
         RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration()
-                .master(new RedisNode("127.0.0.1", 6379))
+                .master("mymaster")
                 .sentinel("127.0.0.1", 6380);
         return new JedisConnectionFactory(sentinelConfig);
     }

@@ -84,6 +84,15 @@ public class TestLambda {
 
     }
     
+    @Test
+    public void testLamdba() {
+    	Stream<User> stream = Stream.of(new User(1, "alisa"), new User(2, "kerwin"), new User(3, "annie"));
+    	Stream<String> ns = stream.map(user -> {
+    		return user.getName();
+    	});
+    	
+    }
+    
     
     
     public static class User implements Serializable {

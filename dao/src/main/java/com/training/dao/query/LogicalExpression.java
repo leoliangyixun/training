@@ -1,18 +1,16 @@
 package com.training.dao.query;
 
-import com.augmentum.rotation.constant.LogicOperator;
 
-import static com.augmentum.rotation.constant.SystemConstants.LEFT_PARENTHESES;
-import static com.augmentum.rotation.constant.SystemConstants.RIGHT_PARENTHESES;
+import static com.training.dao.query.Restriction.*;
 
 public class LogicalExpression implements Expression {
 
     private Expression leftExpression;
     private Expression rightExpression;
-    private LogicOperator operator;
+    private QueryOperator operator;
 
     public LogicalExpression(Expression leftExpression, Expression rightExpression,
-            LogicOperator operator) {
+            QueryOperator operator) {
 
         this.leftExpression = leftExpression;
         this.rightExpression = rightExpression;
@@ -20,14 +18,14 @@ public class LogicalExpression implements Expression {
     }
 
     @Override
-    public String interpret() {
+    public String render() {
 
         StringBuilder buf = new StringBuilder();
-        buf.append(LEFT_PARENTHESES);
-        buf.append(leftExpression.interpret());
+        buf.append("(");
+        buf.append(leftExpression.render());
         buf.append(getOperator());
-        buf.append(rightExpression.interpret());
-        buf.append(RIGHT_PARENTHESES);
+        buf.append(rightExpression.render());
+        buf.append(")");
         return buf.toString();
     }
 
@@ -43,7 +41,7 @@ public class LogicalExpression implements Expression {
         return rightExpression;
     }
 
-    public LogicOperator getOperator() {
+    public QueryOperator getOperator() {
 
         return operator;
     }

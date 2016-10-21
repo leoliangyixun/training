@@ -25,7 +25,7 @@ import com.training.spring.data.redis.config.RedisConfig;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {RedisConfig.class})
 //@Import(value = { RedisConfig.class })
-public class TestConnection {
+public class TestConnection extends TestCase {
 
     //@Autowired
     private RedisTemplate<?, ?> redisTemplate;

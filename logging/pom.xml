@@ -5,12 +5,6 @@
     <artifactId>training</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>spring-boot</artifactId>
-  <name>spring-boot</name>
-  <description>spring-boot</description>
-  <packaging>pom</packaging>
-  <modules>
-  	<module>spring-boot-redis</module>
-  	<module>spring-boot-test</module>
-  </modules>
+  <artifactId>logging</artifactId>
+  <name>logging</name>
 </project>

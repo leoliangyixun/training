@@ -18,7 +18,7 @@ public class LikeExpression implements Expression {
 
         StringBuilder buf = new StringBuilder();
         buf.append(property);
-        buf.append(Operator.LIKE);
+        buf.append(QueryOperator.LIKE);
         buf.append(value);
         return buf.toString();
     }

@@ -1,6 +1,7 @@
 package com.training.dao.query;
 
 import com.training.dao.model.Employee;
+import com.training.dao.model.Entity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +11,7 @@ import java.util.Map;
 /**
  * Created by yangkai on 16/10/9.
  */
-public class AbstractQuery<T extends Query<?,?>, U> implements Query<T, U>{
+public class AbstractQuery<T extends Query<?,?>, U extends Entity> implements Query<T, U>{
 
     protected String statement;
     protected Expression conditions;
@@ -21,41 +22,40 @@ public class AbstractQuery<T extends Query<?,?>, U> implements Query<T, U>{
     public T from(String statement) {
 
         this.statement = statement;
-        return this;
+        return (T) this;
     }
 
 
-    public MybatisQuery<E> where(Expression conditions) {
+    public T where(Expression conditions) {
 
         if (null == this.conditions) {
             this.conditions = conditions;
         } else {
             and(conditions);
         }
-        return this;
+        return (T) this;
     }
 
 
-    public MybatisQuery<E> and(Expression conditions) {
+    public T and(Expression conditions) {
 
         if (null == this.conditions) {
-            // TODO: error handling
             throw new RuntimeException();
         } else {
             this.conditions = Restriction.and(this.conditions, conditions);
-            return this;
+            return (T) this;
         }
     }
 
 
-    public MybatisQuery<E> or(Expression conditions) {
+    public T or(Expression conditions) {
 
         if (null == this.conditions) {
             // TODO: error handling.
             throw new RuntimeException();
         } else {
             this.conditions = Restriction.or(this.conditions, conditions);
-            return this;
+            return (T) this;
         }
     }
 
@@ -148,9 +148,7 @@ public class AbstractQuery<T extends Query<?,?>, U> implements Query<T, U>{
         return LIMIT + getStartIndex() + SystemConstants.COMMA + getPageLength();
     }
 
-    // //////////// Getters ////////////////
 
-    @Override
     public String getStatement() {
 
         return statement;
@@ -167,11 +165,11 @@ public class AbstractQuery<T extends Query<?,?>, U> implements Query<T, U>{
     }
 
 
-    public EmployeeQuery asc() {
+    public T asc() {
         return null;
     }
 
-    public EmployeeQuery desc() {
+    public T desc() {
         return null;
     }
 
@@ -179,15 +177,15 @@ public class AbstractQuery<T extends Query<?,?>, U> implements Query<T, U>{
         return 0;
     }
 
-    public Employee singleResult() {
+    public U singleResult() {
         return null;
     }
 
-    public List<Employee> list() {
+    public List<U> list() {
         return null;
     }
 
-    public List<Employee> listPage(int offset, int limit) {
+    public List<U> listPage(int offset, int limit) {
         return null;
     }
 }

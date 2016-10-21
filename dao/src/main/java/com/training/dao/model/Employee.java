@@ -6,11 +6,13 @@ package com.training.dao.model;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.io.Serializable;
+
 /**
  * @author yangkai
  *
  */
-public class Employee extends PersistentEntity {
+public class Employee extends PersistentEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String name;
