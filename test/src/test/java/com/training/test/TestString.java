@@ -3,6 +3,7 @@
  */
 package com.training.test;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
@@ -47,6 +48,15 @@ public class TestString {
     public void testStringFormat() {
         System.out.println(String.format("user is: %s", new User("name", 20)));
         
+    }
+    
+    
+    @Test
+    public void testMessageFormat() {
+    	String msg = "my name is {0}, I am {1} years old, work in {2}";
+    	Object[] args = new Object[]{"yangkai", 28, "hujiang"};
+    	String retnMsg = MessageFormat.format(msg, args);
+    	System.out.println(retnMsg);
     }
     
     public static class User {

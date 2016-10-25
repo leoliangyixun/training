@@ -1,6 +1,5 @@
 package com.training.dao.query;
 
-import com.training.dao.model.Employee;
 import com.training.dao.model.Entity;
 
 import java.util.ArrayList;
@@ -58,7 +57,7 @@ public class AbstractQuery<T extends Query<?,?>, U extends Entity> implements Qu
             return (T) this;
         }
     }
-
+/*
 
     public MybatisQuery<E> groupBy(QueryProperty property) {
 
@@ -146,7 +145,7 @@ public class AbstractQuery<T extends Query<?,?>, U extends Entity> implements Qu
     private String buildLimitClause() {
 
         return LIMIT + getStartIndex() + SystemConstants.COMMA + getPageLength();
-    }
+    }*/
 
 
     public String getStatement() {
