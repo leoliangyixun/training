@@ -21,5 +21,24 @@ public class TestInteger {
         System.out.println(a < c);
         
     }
+    
+    @Test
+    public void test2() {
+        int a = 0;
+        Integer x = new Integer(0);
+        Calculator calculator = new Calculator();
+        System.out.println(calculator.add(a));
+        System.out.println(a);
+        System.out.println(calculator.add(x));
+        System.out.println(x);
+       
+        
+    }
+    
+    public static class Calculator {
+        public int add(Integer i) {
+            return ++i;
+        }
+    }
 
 }

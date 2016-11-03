@@ -12,5 +12,15 @@
 	    <artifactId>fluent-validator</artifactId>
 	    <version>1.0.5</version>
     </dependency>
+    <dependency>
+	    <groupId>com.baidu.unbiz</groupId>
+	    <artifactId>fluent-validator-jsr303</artifactId>
+	    <version>1.0.5</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.baidu.unbiz</groupId>
+	    <artifactId>fluent-validator-spring</artifactId>
+	    <version>1.0.5</version>
+	</dependency>
   </dependencies>
 </project>

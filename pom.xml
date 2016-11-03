@@ -532,5 +532,6 @@
     <module>spring-boot-activiti</module>
     <module>yk-spring-boot</module>
     <module>spring-boot-rabbitmq</module>
+    <module>rabbitmq</module>
   </modules>
 </project>
