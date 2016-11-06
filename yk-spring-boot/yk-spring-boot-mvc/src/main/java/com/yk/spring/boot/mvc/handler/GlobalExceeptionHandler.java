@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 //@Slf4j
 @Log4j2
-@ControllerAdvice
+//@ControllerAdvice
 public class GlobalExceeptionHandler {
 
     @ExceptionHandler(value = Exception.class)
