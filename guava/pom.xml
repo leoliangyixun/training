@@ -9,21 +9,15 @@
   <name>guava</name>
   
 
-	<dependencies>
-	  	<dependency>
-	    	<groupId>com.kerwinyang.training</groupId>
-			<artifactId>yk-model</artifactId>
-		</dependency>
-
-		<dependency>
-		    <groupId>com.google.guava</groupId>
-		    <artifactId>guava</artifactId>
-		</dependency>
-		
-		<dependency>
-	      <groupId>junit</groupId>
-	      <artifactId>junit</artifactId>
-	      <scope>test</scope>
-	    </dependency>
-	</dependencies>
+  <dependencies>
+	<dependency>
+	    <groupId>com.google.guava</groupId>
+	    <artifactId>guava</artifactId>
+	</dependency>
+	<dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 </project>

@@ -3,14 +3,10 @@
  */
 package com.training.fluentvalidator.example;
 
-import com.baidu.unbiz.fluentvalidator.FluentValidator;
-import com.baidu.unbiz.fluentvalidator.Result;
-import com.baidu.unbiz.fluentvalidator.ResultCollector;
-import com.baidu.unbiz.fluentvalidator.ValidationResult;
+import com.baidu.unbiz.fluentvalidator.*;
 import com.training.fluentvalidator.validator.CarSeatCountValidator;
 import com.training.validator.model.Car;
-import static com.baidu.unbiz.fluentvalidator.ResultCollectors.toSimple;
-import static com.baidu.unbiz.fluentvalidator.ResultCollectors.toComplex;
+
 /**
  * @description:
  * Copyright 2011-2015 B5M.COM. All rights reserved
@@ -34,10 +30,10 @@ public class CarValidatorExample {
 		
 			Car car = new Car();
 			car.setSeatCount(0);
-			Result result =  FluentValidator.checkAll()
+			ComplexResult result =  FluentValidator.checkAll()
 					.on(car.getSeatCount(), new CarSeatCountValidator())
 					.doValidate()
-					.result(toSimple());
+					.result(ResultCollectors.toComplex());
 			System.out.println(result);
 	}
 
