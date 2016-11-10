@@ -10,6 +10,10 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,6 +26,124 @@ import com.alibaba.fastjson.serializer.SerializeConfig;
  *
  */
 public class TestJson {
+    
+    String key = null;
+    String value = null;
+    String jsonStr = "{\"study_tool\":{  \n" +
+            "  \"style\": \"grid/horizontal\",\n" +
+            "  \"display\": true,\n" +
+            "  \"items\":[  \n" +
+            "    {  \n" +
+            "      \"id\":\"hjclass\",\n" +
+            "      \"name\":\"??\",\n" +
+            "      \"scheme\":\"hujiangclass3://hjclass.hujiang.com/\",\n" +
+            "      \"icon\":\"http://www.qiniu.com/a.png\",\n" +
+            "      \"url\":\"https://itunes.apple.com/cn/app/hu-jiang-wang-xiao-wai-yu/id738227542?l=zh&ls=1&mt=8\",\n" +
+            "      \"subtitle\":\"????\"\n" +
+            "    },\n" +
+            "    {  \n" +
+            "      \"id\":\"cctalk\",\n" +
+            "      \"name\":\"???\",\n" +
+            "      \"scheme\":\"hujiangcctalk://\",\n" +
+            "      \"icon\":\"\",\n" +
+            "      \"url\":\"https://itunes.apple.com/cn/app/hu-jiangcctalk-hu-dong-zhi/id843666882?l=zh&ls=1&mt=8\",\n" +
+            "      \"subtitle\":\"??CCTalk\"\n" +
+            "    },\n" +
+            "    {  \n" +
+            "      \"id\":\"dict\",\n" +
+            "      \"name\":\"??\",\n" +
+            "      \"scheme\":\"hjdict://\",\n" +
+            "      \"icon\":\"\",\n" +
+            "      \"url\":\"https://itunes.apple.com/cn/app/hu-jiang-xiaod-ci-dian-ying/id481584414?l=zh&ls=1&mt=8\",\n" +
+            "      \"subtitle\":\"???D??\"\n" +
+            "    },\n" +
+            "    {  \n" +
+            "      \"id\":\"cichang\",\n" +
+            "      \"name\":\"??\",\n" +
+            "      \"scheme\":\"cichang://\",\n" +
+            "      \"icon\":\"\",\n" +
+            "      \"url\":\"https://itunes.apple.com/cn/app/hu-jiang-kai-xin-ci-chang/id635206028?l=zh&ls=1&mt=8\",\n" +
+            "      \"subtitle\":\"??????\"\n" +
+            "    }\n" +
+            "  ]\n" +
+            "}}]\n";
+    String jsonStrArr = "[{\"study_tool\":{  \n" +
+            "  \"style\": \"grid/horizontal\",\n" +
+            "  \"display\": true,\n" +
+            "  \"items\":[  \n" +
+            "    {  \n" +
+            "      \"id\":\"hjclass\",\n" +
+            "      \"name\":\"??\",\n" +
+            "      \"scheme\":\"hujiangclass3://hjclass.hujiang.com/\",\n" +
+            "      \"icon\":\"http://www.qiniu.com/a.png\",\n" +
+            "      \"url\":\"https://itunes.apple.com/cn/app/hu-jiang-wang-xiao-wai-yu/id738227542?l=zh&ls=1&mt=8\",\n" +
+            "      \"subtitle\":\"????\"\n" +
+            "    },\n" +
+            "    {  \n" +
+            "      \"id\":\"cctalk\",\n" +
+            "      \"name\":\"???\",\n" +
+            "      \"scheme\":\"hujiangcctalk://\",\n" +
+            "      \"icon\":\"\",\n" +
+            "      \"url\":\"https://itunes.apple.com/cn/app/hu-jiangcctalk-hu-dong-zhi/id843666882?l=zh&ls=1&mt=8\",\n" +
+            "      \"subtitle\":\"??CCTalk\"\n" +
+            "    },\n" +
+            "    {  \n" +
+            "      \"id\":\"dict\",\n" +
+            "      \"name\":\"??\",\n" +
+            "      \"scheme\":\"hjdict://\",\n" +
+            "      \"icon\":\"\",\n" +
+            "      \"url\":\"https://itunes.apple.com/cn/app/hu-jiang-xiaod-ci-dian-ying/id481584414?l=zh&ls=1&mt=8\",\n" +
+            "      \"subtitle\":\"???D??\"\n" +
+            "    },\n" +
+            "    {  \n" +
+            "      \"id\":\"cichang\",\n" +
+            "      \"name\":\"??\",\n" +
+            "      \"scheme\":\"cichang://\",\n" +
+            "      \"icon\":\"\",\n" +
+            "      \"url\":\"https://itunes.apple.com/cn/app/hu-jiang-kai-xin-ci-chang/id635206028?l=zh&ls=1&mt=8\",\n" +
+            "      \"subtitle\":\"??????\"\n" +
+            "    }\n" +
+            "  ]\n" +
+            "}}]\n";
+
+
+    String s = "{\n" +
+            "    \"style\": \"grid/horizontal\",\n" +
+            "    \"display\": true,\n" +
+            "    \"items\": [\n" +
+            "        {\n" +
+            "            \"id\": \"hjclass\",\n" +
+            "            \"name\": \"上课111\",\n" +
+            "            \"scheme\": \"hujiangclass3://hjclass.hujiang.com/\",\n" +
+            "            \"icon\": \"http://www.qiniu.com/a.png\",\n" +
+            "            \"url\": \"https://itunes.apple.com/cn/app/hu-jiang-wang-xiao-wai-yu/id738227542?l=zh&ls=1&mt=8\",\n" +
+            "            \"subtitle\": \"沪江网校\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"id\": \"cctalk\",\n" +
+            "            \"name\": \"直播课111\",\n" +
+            "            \"scheme\": \"hujiangcctalk://\",\n" +
+            "            \"icon\": \"\",\n" +
+            "            \"url\": \"https://itunes.apple.com/cn/app/hu-jiangcctalk-hu-dong-zhi/id843666882?l=zh&ls=1&mt=8\",\n" +
+            "            \"subtitle\": \"沪江CCTalk\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"id\": \"dict\",\n" +
+            "            \"name\": \"查词111\",\n" +
+            "            \"scheme\": \"hjdict://\",\n" +
+            "            \"icon\": \"\",\n" +
+            "            \"url\": \"https://itunes.apple.com/cn/app/hu-jiang-xiaod-ci-dian-ying/id481584414?l=zh&ls=1&mt=8\",\n" +
+            "            \"subtitle\": \"沪江小D词典\"\n" +
+            "        },\n" +
+            "        {\n" +
+            "            \"id\": \"cichang\",\n" +
+            "            \"name\": \"背词111\",\n" +
+            "            \"scheme\": \"cichang://\",\n" +
+            "            \n" +
+            "        }\n" +
+            "    ]\n" +
+            "}";
+    
     @Test
     public void test() {
        String s ="{\"study_tool\":{  \n" +
@@ -79,7 +201,7 @@ public class TestJson {
     
     @Test
     public void test1_1() {
-       String s ="{\"study_tool\":{  \n" +
+       String s ="          {\"study_tool\":{  \n" +
                "  \"style\": \"grid/horizontal\",\n" +
                "  \"display\": true,\n" +
                "  \"items\":[  \n" +
@@ -186,15 +308,43 @@ public class TestJson {
     }
     
     @Test
-    public void test7() {
+    public void testNumPattern() {
         
         Pattern pattern2 = Pattern.compile("^[0-9]*$");  
-        Matcher matcher2 = pattern2.matcher("012");  
+        Matcher matcher2 = pattern2.matcher("2a");  
         System.out.println(matcher2.matches());   
     }
     
+    @Test
+    public void testJSON() {
+        System.out.println(this.jsonStr.indexOf("{"));
+        System.out.println(this.jsonStr.lastIndexOf("}"));
+        System.out.println(this.jsonStr.length() - 1);
+        System.out.println("---------------------------------------------");
+        System.out.println(this.jsonStr.trim().indexOf("{"));
+        System.out.println(this.jsonStr.trim().lastIndexOf("}"));
+        System.out.println(this.jsonStr.trim().length() - 1);
+        System.out.println("---------------------------------------------");
+        System.out.println(this.jsonStr.startsWith("{",2));
+        System.out.println(this.jsonStr.trim().startsWith("{"));
+        System.out.println(this.jsonStrArr.trim().startsWith("["));
+    }
+
+    @Test
+    public void testFastjson() throws Exception {
+       JSONObject jo =  JSONObject.parseObject(jsonStr);
+        System.out.print(jo);
+    }
+
+    @Test
+    public void testJackson() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        // objectMapper.enable(DeserializationFeature.FAIL_ON_READING_DUP_TREE_KEY);
+        JsonNode jn = objectMapper.readTree(jsonStr);
+        System.out.print(jn);
 
 
+    }
     
     
 

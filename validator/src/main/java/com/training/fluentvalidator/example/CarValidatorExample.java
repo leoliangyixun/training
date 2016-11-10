@@ -29,11 +29,12 @@ public class CarValidatorExample {
 	public static void main(String[] args) {
 		
 			Car car = new Car();
-			car.setSeatCount(0);
+			car.setSeatCount(3);
 			ComplexResult result =  FluentValidator.checkAll()
 					.on(car.getSeatCount(), new CarSeatCountValidator())
 					.doValidate()
 					.result(ResultCollectors.toComplex());
+			
 			System.out.println(result);
 	}
 

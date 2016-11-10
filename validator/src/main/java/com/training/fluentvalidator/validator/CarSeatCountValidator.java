@@ -3,6 +3,7 @@
  */
 package com.training.fluentvalidator.validator;
 
+import com.baidu.unbiz.fluentvalidator.ValidationError;
 import com.baidu.unbiz.fluentvalidator.Validator;
 import com.baidu.unbiz.fluentvalidator.ValidatorContext;
 import com.baidu.unbiz.fluentvalidator.ValidatorHandler;
@@ -23,7 +24,11 @@ public class CarSeatCountValidator extends ValidatorHandler<Integer> implements 
 	@Override
     public boolean validate(ValidatorContext context, Integer t) {
         if (t < 2) {
-            context.addErrorMsg(String.format("Seat count is not valid, invalid value=%s", t));
+            //context.addErrorMsg(String.format("Seat count is not valid, invalid value=%s", t));
+            context.addError(ValidationError.create("invalid seat")
+                    .setErrorCode(50000)
+                    .setField("seat")
+                    .setInvalidValue(t));
             return false;
         }
         return true;
