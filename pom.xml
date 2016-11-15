@@ -535,5 +535,7 @@
     <module>design-pattern</module>
     <module>spring-boot-camel</module>
     <module>fluent-json</module>
+    <module>jooq</module>
+    <module>camel</module>
   </modules>
 </project>

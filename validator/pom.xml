@@ -13,12 +13,11 @@
 	    <version>1.0.5</version>
     </dependency>
     <dependency>
-<<<<<<< HEAD
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
-=======
+    <dependency>
 	    <groupId>com.baidu.unbiz</groupId>
 	    <artifactId>fluent-validator-jsr303</artifactId>
 	    <version>1.0.5</version>
@@ -28,6 +27,6 @@
 	    <artifactId>fluent-validator-spring</artifactId>
 	    <version>1.0.5</version>
 	</dependency>
->>>>>>> b07aee77ba4c4d070bb054269347960d9aa08263
+
   </dependencies>
 </project>
