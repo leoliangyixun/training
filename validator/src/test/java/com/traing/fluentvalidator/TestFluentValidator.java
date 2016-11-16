@@ -2,8 +2,10 @@ package com.traing.fluentvalidator;
 
 import static com.baidu.unbiz.fluentvalidator.ResultCollectors.toSimple;
 
+import static com.baidu.unbiz.fluentvalidator.ResultCollectors.toComplex;
 import org.junit.Test;
 
+import com.baidu.unbiz.fluentvalidator.ComplexResult;
 import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.Result;
 import com.training.fluentvalidator.validator.CarSeatCountValidator;
@@ -18,7 +20,7 @@ public class TestFluentValidator {
 	}
 	
 	@Test
-	public void test2() {
+	public void testSimpleResult() {
 		Car car = new Car();
 		car.setSeatCount(0);
 		Result result =  FluentValidator.checkAll()
@@ -27,5 +29,16 @@ public class TestFluentValidator {
 				.result(toSimple());
 		System.out.println(result);
 	}
+	
+	   @Test
+	    public void testComplexResult() {
+	        Car car = new Car();
+	        car.setSeatCount(0);
+	        ComplexResult result =  FluentValidator.checkAll()
+	                .on(car.getSeatCount(), new CarSeatCountValidator())
+	                .doValidate()
+	                .result(toComplex());
+	        System.out.println(result);
+	    }
 
 }

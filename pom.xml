@@ -124,11 +124,11 @@
   
     <dependencyManagement>
         <dependencies>
-			<dependency>
+<!-- 			<dependency>
 		    	<groupId>com.kerwinyang.training</groupId>
 				<artifactId>yk-model</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
+				<version>1.0</version>
+			</dependency> -->
 			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>

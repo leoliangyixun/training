@@ -1,5 +1,7 @@
 package com.training.test;
 
+import com.training.yk.model.processor.WechatMessage;
+
 /**
  * Created by yangkai on 2016/11/11.
  */
