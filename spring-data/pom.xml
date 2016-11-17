@@ -10,69 +10,41 @@
   <description>spring-data training</description>
   
   <dependencies>
-  
-  	<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-commons -->
 	<dependency>
 	    <groupId>org.springframework.data</groupId>
 	    <artifactId>spring-data-commons</artifactId>
 	    <version>1.12.2.RELEASE</version>
 	</dependency>
-	  <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-mongodb -->
 	<dependency>
 	    <groupId>org.springframework.data</groupId>
 	    <artifactId>spring-data-mongodb</artifactId>
 	    <version>1.9.2.RELEASE</version>
 	</dependency>
-	  <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
+
 	<dependency>
 	    <groupId>org.springframework.data</groupId>
 	    <artifactId>spring-data-jpa</artifactId>
 	    <version>1.10.1.RELEASE</version>
 	</dependency>
-	  <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jdbc-core -->
+	
 	<dependency>
 	    <groupId>org.springframework.data</groupId>
 	    <artifactId>spring-data-jdbc-core</artifactId>
 	    <version>1.2.1.RELEASE</version>
 	</dependency>
-	  <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis -->
+
 	<dependency>
 	    <groupId>org.springframework.data</groupId>
 	    <artifactId>spring-data-redis</artifactId>
 	    <version>1.7.2.RELEASE</version>
 	</dependency>
-	  <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-commons-core -->
-	<dependency>
+
+<!-- 	<dependency>
 	    <groupId>org.springframework.data</groupId>
 	    <artifactId>spring-data-commons-core</artifactId>
 	    <version>1.4.1.RELEASE</version>
-	</dependency>
-	  <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-rest-webmvc -->
-	<dependency>
-	    <groupId>org.springframework.data</groupId>
-	    <artifactId>spring-data-rest-webmvc</artifactId>
-	    <version>2.5.1.RELEASE</version>
-	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
-	<dependency>
-	    <groupId>org.springframework.boot</groupId>
-	    <artifactId>spring-boot-starter</artifactId>
-	    <version>1.4.0.RELEASE</version>
-	</dependency>
-		
-	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
-	<dependency>
-	    <groupId>org.springframework.boot</groupId>
-	    <artifactId>spring-boot-starter-data-jpa</artifactId>
-	    <version>1.4.0.RELEASE</version>
-	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb -->
-	<dependency>
-	    <groupId>org.springframework.boot</groupId>
-	    <artifactId>spring-boot-starter-data-mongodb</artifactId>
-	    <version>1.4.0.RELEASE</version>
-	</dependency>
-  
+	</dependency> -->
+ 
   
   </dependencies>
 </project>

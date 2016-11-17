@@ -8,32 +8,26 @@ package com.training.yk.model.processor;
  *
  */
 
-public class WechatMessage extends Message {
-    public WechatMessageBody body;
+public class QQMessage extends Message {
+    public QQMessageBody body;
 
     
-    public WechatMessage() {
+    public QQMessage() {
        super();
     }
     
 
-    public static class WechatMessageBody {
+    public static class QQMessageBody {
         
         private String touser;
-        private String template_id;
         private String url;        
         private String data;
+        
         public String getTouser() {
             return touser;
         }
         public void setTouser(String touser) {
             this.touser = touser;
-        }
-        public String getTemplate_id() {
-            return template_id;
-        }
-        public void setTemplate_id(String template_id) {
-            this.template_id = template_id;
         }
         public String getUrl() {
             return url;
@@ -53,11 +47,11 @@ public class WechatMessage extends Message {
     }
 
 
-    public WechatMessageBody getBody() {
+    public QQMessageBody getBody() {
         return body;
     }
 
-    public void setBody(WechatMessageBody body) {
+    public void setBody(QQMessageBody body) {
         this.body = body;
     }
     

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.training.service.processor4;
+package com.training.service.processor;
 
 import org.junit.Test;
 
@@ -9,11 +9,11 @@ import org.junit.Test;
  * @author yangkai
  *
  */
-public class TestProcessor {
+public class TestProcessor4 {
     
     @Test
     public void test() {
-        MessageProcessor<R, T>
+      //  MessageProcessor<R, T>
         
     }
 

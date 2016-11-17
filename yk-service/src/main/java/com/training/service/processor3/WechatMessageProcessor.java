@@ -40,7 +40,7 @@ public class WechatMessageProcessor extends AbstractMessageProcessor<WechatMessa
     @Override
     public void process(WechatMessage message) {
        MessageProcessor<?, ?> messageProcessor = this.getChoice();
-       messageProcessor.;
+
     }
 
 

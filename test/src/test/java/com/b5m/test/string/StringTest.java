@@ -122,5 +122,19 @@ public class StringTest {
 		System.out.println("str1 == st3 : " + (str1 == str3));
 		System.out.println("str1.equals(str3) : " + str1.equals(str3));
 	}
+	
+	
+    @Test
+    public void testSplit(){
+    
+        String[] ss = StringUtils.split("status,,,,,,createTime,updateTime", ",");
+        for (String s : ss) {
+            System.out.println(s);
+        }
+        String[] arr = {"stauts", "name", "alias"};
+        String str = StringUtils.join(arr, ":");
+        System.out.println(str);
+
+    }
 
 }
