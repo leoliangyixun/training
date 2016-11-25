@@ -5,6 +5,7 @@ package com.b5m.test.string;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -135,6 +136,44 @@ public class StringTest {
         String str = StringUtils.join(arr, ":");
         System.out.println(str);
 
+    }
+    
+    @Test
+    public void testSplit2(){
+    
+        String[] ss = StringUtils.split("x", ",");
+        for (String s : ss) {
+            System.out.println(s);
+        }
+        String[] arr = {"y","z"};
+        String str = StringUtils.join(arr, ":");
+        System.out.println(str);
+
+    }
+    
+    @Test
+    public void testSplit3() {
+            MessageBody body = new MessageBody();
+            body.setTouser("   1,   2,3");
+            System.out.println("---" + body.getTouser() + "---");
+
+    }
+    
+   public static class MessageBody {
+        private String touser;
+
+        public String getTouser() {
+            return touser;
+        }
+
+        public void setTouser(String touser) {
+            if (StringUtils.isNoneBlank(touser)) {
+                List<String> temptouser = new ArrayList<>();
+                Arrays.asList(touser.trim().split(",")).forEach(id -> temptouser.add(id.trim()));
+                touser = StringUtils.join(temptouser, ",");
+            }
+            this.touser = touser;
+        }
     }
 
 }

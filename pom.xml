@@ -57,7 +57,7 @@
     </properties>
     
 	<repositories>
-<!--		<repository>
+	<repository>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
@@ -65,7 +65,7 @@
 			<name>Public Repositories</name>
 			<url>http://nexus.yeshj.com/nexus/content/groups/public/</url>
 		</repository>
-		-->
+
 		<repository>
 			<id>oschina Releases</id>
 			<name>oschina Releases</name>
@@ -90,7 +90,7 @@
 	</repositories>
 	
 	<pluginRepositories>
-<!--		<pluginRepository>
+		<pluginRepository>
 			<id>nexus</id>
 			<name>nexus</name>
 			<url>http://nexus.yeshj.com/nexus/content/groups/public/</url>
@@ -100,7 +100,7 @@
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-		</pluginRepository>-->
+		</pluginRepository>
 		
 		<pluginRepository>
 			<id>oschina Releases</id>
@@ -537,5 +537,6 @@
     <module>fluent-json</module>
     <module>jooq</module>
     <module>camel</module>
+    <module>spring-boot-mvc</module>
   </modules>
 </project>
