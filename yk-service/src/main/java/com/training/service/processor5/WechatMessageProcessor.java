@@ -13,8 +13,7 @@ public class WechatMessageProcessor extends AbstractMessageProcessor<Command, We
 
     @Override
     public void process(WechatMessage message) {
-        // TODO Auto-generated method stub
-        
+
     }
 
 

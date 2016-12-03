@@ -3,6 +3,8 @@
  */
 package com.b5m.test.date;
 
+import org.junit.Test;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -64,5 +66,11 @@ public class CalendarTest {
     	    
 
     }
+
+    @Test
+	public void test() {
+		Date d = Calendar.getInstance().getTime();
+		System.out.println(d.getTime());
+	}
 
 }

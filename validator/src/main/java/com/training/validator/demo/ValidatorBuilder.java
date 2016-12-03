@@ -1,13 +1,12 @@
 /**
  * 
  */
-package com.training.fluentvalidator.demo.validator;
+package com.training.validator.demo;
 
 /**
  * @author yangkai
  *
  */
 public class ValidatorBuilder {
-	
 
 }

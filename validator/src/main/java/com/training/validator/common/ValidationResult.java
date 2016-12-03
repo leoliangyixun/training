@@ -1,4 +1,4 @@
-package com.training.fluentvalidator.demo.validator;
+package com.training.validator.common;
 
 import java.util.ArrayList;
 import java.util.List;

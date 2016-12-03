@@ -1,18 +1,21 @@
 /**
  * 
  */
-package com.training.fluentvalidator.demo.validator.impl;
+package com.training.validator.demo;
 
-import com.training.fluentvalidator.demo.validator.Caller;
-import com.training.fluentvalidator.demo.validator.Validator;
-import com.training.fluentvalidator.demo.validator.ValidatorContext;
+
+import java.util.List;
+
+import com.training.validator.common.Caller;
+import com.training.validator.common.ValidatorContext;
 import com.training.validator.model.Message;
+import com.training.validator.model.SysUser;
 
 /**
  * @author yangkai
  *
  */
-public class MessageValidator implements Validator<Message> {
+public class MessageValidator implements Validator<Message, List<SysUser>> {
 
 	@Override
 	public boolean accept(ValidatorContext context, Message t) {
@@ -21,7 +24,7 @@ public class MessageValidator implements Validator<Message> {
 	}
 
 	@Override
-	public boolean validate(ValidatorContext context, Message t, Caller<Message> caller) {
+	public boolean validate(ValidatorContext context, Message t, Caller<List<SysUser>> caller) {
 		// TODO Auto-generated method stub
 		return false;
 	}
