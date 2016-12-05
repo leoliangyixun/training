@@ -3,6 +3,8 @@ package com.b5m.training.collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Test;
+
 import static com.b5m.training.collection.Test.*;
 
 /**
@@ -20,6 +22,19 @@ public class TestHashMap {
 
         System.out.println(1024 & 1024);
 
+    }
+    
+    @Test
+    public void testContains() {
+        Map<String, Object> map = new HashMap<>();
+        String s1 = new String("yangkai");
+        String s2 = new String("yangkai");
+        String s3 = "yangkai";
+        map.put("yangkai", "xxxxxx");
+        System.out.println(s1 == s2);
+        System.out.println(s1.equals(s2));
+        System.out.println(map.containsKey(s3));
+        
     }
 
 }
