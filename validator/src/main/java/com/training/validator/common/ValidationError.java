@@ -1,4 +1,4 @@
-package com.training.fluentvalidator.demo.validator;
+package com.training.validator.common;
 
 public class ValidationError {
 

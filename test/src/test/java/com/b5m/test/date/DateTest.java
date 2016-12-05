@@ -7,6 +7,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.junit.Test;
+
 /**
  * @description: TODO
  * Copyright 2011-2015 B5M.COM. All rights reserved.
@@ -48,6 +50,12 @@ public class DateTest {
         System.out.println(a > b);*/
         System.out.println(s3.equals(s2));
         System.out.println(s2.compareTo(s3));
+    }
+    
+    @Test
+    public void testDate() {
+    	System.out.println(new Date().getTime());
+        new Date().getSeconds();
     }
 
 }

@@ -15,7 +15,7 @@ public class TestJoiner {
     
     @Test
     public void test() {
-        Joiner.on(null).
+        Joiner.on(null);
         
     }
 

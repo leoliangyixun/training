@@ -1,4 +1,4 @@
-package com.training.fluentvalidator.demo.validator;
+package com.training.fluentvalidator;
 
 import java.util.HashMap;
 import java.util.Map;

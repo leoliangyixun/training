@@ -345,6 +345,34 @@ public class TestJson {
 
 
     }
+
+
+    @Test
+    public void testWXPush() {
+        String msg = "{\n" +
+                "    \"Body\": {\n" +
+                "        \"batchid\": null,\n" +
+                "        \"touser\": \"4578993\",\n" +
+                "        \"template_id\": \"w0TEGQ0Axu99N6Xbh1t_y3hfeOZ8WuOoZF526cnV40M\",\n" +
+                "        \"data\": \"first:亲爱的沪江网校，你收到1条新回复,keyword1:foomfoom,keyword2:2016年11月18日14时32分,keyword3:你好~ “foomfoom”在《【召集令】同学会兼职管理团队招募ing》帖子里回复你啦！,remark:快去看看Ta说了些什么吧\",\n" +
+                "        \"url\": \"http://ms.hujiang.com/st/stat/WeixinClickStat.aspx?type=%e5%9b%9e%e5%a4%8d%e6%8f%90%e9%86%92&url=http%3a%2f%2fms.hujiang.com%2fst%2ftopic%2f1710600201470%2f19934259%2f%3fch_source%3dch_streply_hjwxgzh\",\n" +
+                "        \"topcolor\": null,\n" +
+                "        \"isopenid\": false,\n" +
+                "        \"TemplateType\": 0,\n" +
+                "        \"WechatAppID\": \"wx99bcf174724d0ae0\"\n" +
+                "    },\n" +
+                "    \"Initiator\": \"CRMSOA\",\n" +
+                "    \"InitiatorID\": 910,\n" +
+                "    \"ReceiverIDs\": null,\n" +
+                "    \"Receivers\": null,\n" +
+                "    \"Token\": \"4F676326-3E51-4555-B444-0D7CA02371CE\",\n" +
+                "    \"Topic\": null\n" +
+                "}";
+
+        JSONObject jo =  JSONObject.parseObject(msg);
+        System.out.print(jo);
+
+    }
     
     
 
