@@ -3,10 +3,6 @@ package com.b5m.training.collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
-
-import static com.b5m.training.collection.Test.*;
-
 /**
  * Created by yangkai on 16/5/22.
  */
@@ -24,7 +20,7 @@ public class TestHashMap {
 
     }
     
-    @Test
+
     public void testContains() {
         Map<String, Object> map = new HashMap<>();
         String s1 = new String("yangkai");

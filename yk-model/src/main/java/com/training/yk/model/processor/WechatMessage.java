@@ -23,6 +23,7 @@ public class WechatMessage extends Message {
         private String template_id;
         private String url;        
         private String data;
+        
         public String getTouser() {
             return touser;
         }

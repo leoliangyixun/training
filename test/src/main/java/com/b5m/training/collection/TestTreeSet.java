@@ -1,7 +1,7 @@
 package com.b5m.training.collection;
 
 import java.util.TreeSet;
-import static com.b5m.training.collection.Test.*;
+import static com.b5m.training.collection.TestCase.*;
 
 /**
  * Created by yangkai on 16/5/22.

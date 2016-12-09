@@ -11,16 +11,13 @@ import com.training.yk.model.processor.WechatMessage;
  */
 
 
-public class WechatMessageProcessor extends AbstractMessageProcessor<MessageProcessor, WechatMessage> {
+public class WechatMessageProcessor extends AbstractMessageProcessor<WechatMessageProcessor, WechatMessage> {
 
     
     public WechatMessageProcessor() {
         
     }
-    
 
-
-    
     public static class WechatPushChannel implements MessageChannel<WechatMessage> {
 
         @Override
@@ -28,14 +25,8 @@ public class WechatMessageProcessor extends AbstractMessageProcessor<MessageProc
           
             return false;
         }
-        
-        
-       
-        
+
     }
-
-
-
 
     @Override
     public void process(WechatMessage message) {
