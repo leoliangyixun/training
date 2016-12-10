@@ -16,7 +16,7 @@ public class TestGeneric {
 
     @Test
     public void testGeneric() {
-        CachePlugin<String, User> plugin = CachePlugin.getInstance().;
+        CachePlugin<String, User> plugin = CachePlugin.getInstance();
         //plugin.put("name", "yangkai");
         plugin.put("user", new User("yangkai"));
         System.out.println(plugin.get("user"));
@@ -46,6 +46,13 @@ public class TestGeneric {
             return "User[name=" + name + "]";
         }
         
+    }
+    
+    
+    public void testCacheBuilder() {
+    	
+    	
+    	
     }
     
 
