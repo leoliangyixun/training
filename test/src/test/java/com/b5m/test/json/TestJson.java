@@ -3,23 +3,30 @@
  */
 package com.b5m.test.json;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import javax.xml.soap.Text;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
+import org.jglue.fluentjson.JsonBuilderFactory;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.b5m.training.concurrent.TestCollection;
+import com.fasterxml.jackson.core.io.JsonStringEncoder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 
 /**
  * @author yangkai
@@ -372,6 +379,151 @@ public class TestJson {
         JSONObject jo =  JSONObject.parseObject(msg);
         System.out.print(jo);
 
+    }
+    
+    public boolean validate(String data) {
+        boolean valid = true;
+        if (StringUtils.isNotBlank(data)) {
+            for (String content : StringUtils.split(data, ",")){
+                if (StringUtils.split(content, ":").length !=2) {
+                    valid = false;
+                    break;
+                }
+            }
+        } else {
+            valid = false;
+        }
+        return  valid;
+    }
+    
+    @Test
+    public void testConvertJson() {
+      //  String data = "first:有小伙伴回复了你\r\n|||#000000,remark:快去看看吧|||#000000,keyword1:暗夜之白雪\r\n|||,keyword2:2016-12-06 14&colon;40\r\n|||,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制\r\n|||";
+     //   String data = "first:有小伙伴回复了你|||#000000,remark:快去看看吧|||#000000,keyword1:暗夜之白雪|||,keyword2:2016-12-06 14&colon;40|||,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制|||";
+      //  String data = "first:,remark:快去看看吧|||#000000,keyword1:暗夜之白雪|||,keyword2:2016-12-06 14&colon;40|||,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制|||";
+        String data = "first:,remark:快去看看吧|||#000000,keyword1:暗夜之白雪,keyword2:2016-12-06 14&colon;40,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制";
+/*       System.out.println(StringUtils.isNotBlank(data) && StringUtils.split(StringUtils.split(data, ",")[1], ":").length ==2);
+       System.out.println(StringUtils.isNotBlank(data) && StringUtils.split(StringUtils.split(data, ",")[0], ":").length ==2);*/
+        System.out.println(validate(data));
+        String[] ss1 = StringUtils.split(data, ",");
+        String[] ss2 = StringUtils.split(ss1[0], ":");
+
+        
+        String[] ss = StringUtils.split(data, ",");
+        List<String> elems = new ArrayList<>();
+        String blank = null;
+        Arrays.asList(ss).stream().forEach(content ->{
+            StringBuilder sb = new StringBuilder();
+            // content like this --> first:有小伙伴回复了你\r\n|||#000000
+            String[] text = StringUtils.split(content, ":");
+            sb.append("\"").append(text[0]).append("\"").append(": ");
+             if (text.length == 2) {
+                 //like this --> 有小伙伴回复了你\r\n|||#000000
+                 String[] pairs = StringUtils.split(text[1], "|||");
+                sb.append("{");
+                sb.append("\"value\"").append(": ").append("\"").append(pairs[0].replaceAll("&colon;", ":").replaceAll("&comma;", ",")).append("\"").append(",");
+                sb.append("\"color\"").append(": ");
+                if (pairs.length == 2) {
+                   sb.append("\"").append(pairs[1]).append("\"");
+                } else {
+                 // sb.append(blank);
+                    sb.append("\"\"");
+                }
+                sb.append("}");
+            } else {
+               // sb.append(blank);
+                sb.append("\"\"");
+            }
+             elems.add(sb.toString());
+        });
+        
+        System.out.println("{"+ StringUtils.join(elems, ",") + "}");
+    }
+    
+    @Test
+    public void testSplit() {
+/*        String data = "first:有小伙伴回复了你";
+        String[] ss = data.split(",");
+        String[] string  = ss[0].split(":");
+        System.out.println(ss);*/
+        
+/*        String str = "xxx";
+        String[] ss = str.split(",");
+        System.out.println(ss[1]);*/
+        
+        String str = "有小伙伴回复了你|||#000000";
+       // String[] ss =StringUtils.splitByWholeSeparator(str, "|||");
+        String[] ss =StringUtils.split(str, "|||");
+        //String[] ss = str.split("|||");
+        System.out.println(ss);
+    }
+    
+    @Test
+    public void testColl() {
+        String touser = "yangkai,kerwin,alisa";
+        Set<String> originUserIds = new HashSet<>(Arrays.asList(StringUtils.split(touser, ",")));
+        Set<String> unshieldedUserIds = new HashSet<>(Arrays.asList(StringUtils.split(touser, ",")));
+        originUserIds.remove("yangkai");
+        System.out.println(originUserIds);
+        System.out.println( unshieldedUserIds );
+    }
+    
+    @Test
+    public void testFluentJson() {
+        JsonObject jsonObject = 
+                JsonBuilderFactory.buildObject()
+                    .add("prop1", "1")
+                    .add("prop2", 2)
+                    .addNull("prop3")
+                    .add("prop4", (String)null)
+                    .addObject("prop5")
+                        .add("np1", 4)
+                        .end()
+                    .addArray("prop6")
+                        .addObject()
+                            .end()
+                        .add("ae1")
+                    .end()
+                .getJson();
+        
+        System.out.println(jsonObject.toString());
+    }
+    
+    @Test
+    public void testAllSplit() {
+        
+        String[] s1 = ":ab:cd:ef::".split(":");
+        String[] s2 = StringUtils.split(":ab:cd:ef::", ":");
+        String[] s3 = StringUtils.splitByWholeSeparator(":ab:cd:ef::", ":");
+        String[] s4 = StringUtils.splitPreserveAllTokens(":ab:cd:ef::", ":");
+        String[] s5 = StringUtils.split("ab:", ":");
+        System.out.println(":ab:cd:ef::".split(":").length);//末尾分隔符全部忽略    
+        System.out.println(":ab:cd:ef::".split(":",-1).length);//不忽略任何一个分隔符    
+        System.out.println(StringUtils.split(":ab:cd:ef::",":").length);//最前面的和末尾的分隔符全部都忽略,apache commons   
+        System.out.println(StringUtils.splitByWholeSeparator(":ab:cd:ef::",":").length);
+        System.out.println(StringUtils.splitPreserveAllTokens(":ab:cd:ef::",":").length);//不忽略任何一个分隔符 apache commons 
+    }
+    
+    @Test
+    public void testJoinObject() {
+        System.out.println(StringUtils.join(new User[]{new User("yk", 18),new User("gwj", 18)}, ","));
+
+    }
+    
+    
+    public class User {
+        private String name;
+        private Integer age;
+        public User(String name, Integer age) {
+            this.name = name;
+            this.age = age;
+        }
+        
+        @Override
+        public String toString() {
+            return "User[name: " + name + ", age: " + age + "]";
+        }
+        
     }
     
     
