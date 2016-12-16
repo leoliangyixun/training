@@ -2,10 +2,6 @@
  * 
  */
 package com.training.dao.model;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import java.io.Serializable;
 
 /**
@@ -69,11 +65,6 @@ public class Employee extends PersistentEntity implements Serializable {
     @Override
     public String namespace() {
         return "com.training.dao.model.Employee";
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
     public static enum Level {

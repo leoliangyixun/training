@@ -4,19 +4,20 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.0.RELEASE</version>
+		<version>1.4.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
   <artifactId>yk-spring-boot</artifactId>
   <name>yk-spring-boot</name>
   <description>yk-spring-boot</description>
   <packaging>pom</packaging>
-  
+    <version>0.0.1-SNAPSHOT</version>
   <dependencyManagement>
 	<dependencies></dependencies>
   </dependencyManagement>
+  
   <modules>
-
-  <module>yk-spring-boot-mvc</module>
+  	<module>yk-spring-boot-mvc</module>
+  	<module>yk-spring-boot-demo</module>
   </modules>
 </project>

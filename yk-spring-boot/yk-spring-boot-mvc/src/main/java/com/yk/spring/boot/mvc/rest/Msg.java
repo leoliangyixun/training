@@ -1,4 +1,4 @@
-package com.yk.spring.boot.mvc.result;
+package com.yk.spring.boot.mvc.rest;
 
 import java.io.Serializable;
 

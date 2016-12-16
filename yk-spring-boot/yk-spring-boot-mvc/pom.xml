@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>yk-spring-boot</artifactId>
-    <version>1.4.0.RELEASE</version>
+    <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>yk-spring-boot-mvc</artifactId>
   <name>yk-spring-boot-mvc</name>

@@ -91,8 +91,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	</dependency>
 	<dependency>
     	<groupId>com.kerwinyang.training</groupId>
-		<artifactId>yk-model</artifactId>
-	</dependency>
+        <artifactId>yk-model</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
 </project>

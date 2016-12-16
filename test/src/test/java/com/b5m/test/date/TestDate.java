@@ -5,6 +5,7 @@ package com.b5m.test.date;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Test;
@@ -21,12 +22,12 @@ import org.junit.Test;
  * -----------------------------------------------------------------------------------
  * 2016年1月25日      jiqingchuan         1.0             Why & What is modified
  */
-public class DateTest {
+public class TestDate {
 
     /**
      * //TODO
      */
-    public DateTest() {
+    public TestDate() {
         // TODO Auto-generated constructor stub
 
     }
@@ -56,6 +57,18 @@ public class DateTest {
     public void testDate() {
     	System.out.println(new Date().getTime());
         new Date().getSeconds();
+    }
+    
+    @Test
+    public void testInstant() {
+/*        Date date= new Date();
+        Calendar c = Calendar.getInstance();*/
+        Object obj = null;
+
+        String s = (String) null;
+        System.out.println(s);
+
+        
     }
 
 }

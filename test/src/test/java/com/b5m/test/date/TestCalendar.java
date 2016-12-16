@@ -14,12 +14,12 @@ import java.util.Date;
  * @author izene
  *
  */
-public class CalendarTest {
+public class TestCalendar {
 
     /**
      * 
      */
-    public CalendarTest() {
+    public TestCalendar() {
         // TODO Auto-generated constructor stub
     }
     

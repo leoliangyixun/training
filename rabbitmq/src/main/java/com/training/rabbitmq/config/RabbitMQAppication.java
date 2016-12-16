@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
 import com.hujiang.basic.framework.plugin.mq.MqConfig;
-import com.hujiang.basic.framework.rest.config.test.TestConfig;
+
 
 
 /**
@@ -20,7 +20,7 @@ import com.hujiang.basic.framework.rest.config.test.TestConfig;
 @SpringBootConfiguration
 @EnableAutoConfiguration
 @ComponentScan(value={"com.training.rabbitmq"})
-@Import(value={MqConfig.class,TestConfig.class})
+@Import(value={MqConfig.class})
 public class RabbitMQAppication {
 
     /**

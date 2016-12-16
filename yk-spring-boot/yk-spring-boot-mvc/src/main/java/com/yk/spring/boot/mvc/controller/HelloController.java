@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.yk.spring.boot.mvc.core.UserService;
-import com.yk.spring.boot.mvc.result.Msg;
+import com.yk.spring.boot.mvc.rest.Msg;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
