@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.b5m.test.string;
+package test;
 
 import java.text.MessageFormat;
 
@@ -24,6 +24,14 @@ public class TestMessageFormat {
 		 mf = new MessageFormat("{0}?access_token={1}");
 		 String url = mf.format(new Object[]{"https://api.weixin.qq.com/cgi-bin/message/template/send", "ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY"});
 		 System.out.println(url);
+
+
+	}
+
+	@Test
+	public void test2() {
+		String s = MessageFormat.format("hello:{0}", null);
+		System.out.println(s);//result: hello:{0}
 	}
 
 }

@@ -1,7 +1,7 @@
 /**
  * //TODO
  */
-package com.b5m.test.date;
+package test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
