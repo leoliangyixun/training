@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.b5m.test.date;
+package test;
 
 import org.junit.Test;
 

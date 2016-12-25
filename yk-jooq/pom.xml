@@ -5,8 +5,8 @@
     <artifactId>training</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>jooq</artifactId>
-  <name>jooq</name>
+  <artifactId>yk-jooq</artifactId>
+  <name>yk-jooq</name>
   <dependencies>
   <!-- https://mvnrepository.com/artifact/org.jooq/jooq -->
 	<dependency>
@@ -28,4 +28,4 @@
     </dependency>
 
   </dependencies>
-</project>˙
+</project>
