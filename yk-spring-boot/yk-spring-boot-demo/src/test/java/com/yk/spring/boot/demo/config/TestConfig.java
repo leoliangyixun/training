@@ -26,16 +26,14 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 public class TestConfig {
 
 
-    @Bean
+    //@Bean
     public ExecutorService threadPool() {
         return null;
     }
 
-    @Bean("taskScheduler")
-    public ThreadPoolTaskScheduler taskScheduler(){
-
+    //@Bean
+    public ThreadPoolTaskScheduler taskScheduler() {
         ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
-
         taskScheduler.setPoolSize(5);
         return  taskScheduler;
     }

@@ -21,10 +21,10 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ComponentScan({"com.yk.spring.boot"})
+@ComponentScan({"com.yk.spring.boot.demo"})
 @Import(value = {TestConfig.class})// can't work if not import
 public class SpringTestCase {
-   // public ApplicationContext ctx = new AnnotationConfigApplicationContext(TestConfig.class);
+    public ApplicationContext ctx = new AnnotationConfigApplicationContext(TestConfig.class);
 
 
     @Test

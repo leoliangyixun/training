@@ -106,8 +106,12 @@ public class TestStream {
             return "User[name=" + name + ", openid=" + openid + ", dept=" + dept + "]";
         }
         
-        
-        
+        @Test
+        public void test6() {
+            List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            numbers.parallelStream()
+                   .forEach(out::println);  
+        }
         
     }
 

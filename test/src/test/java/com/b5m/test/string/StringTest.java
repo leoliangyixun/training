@@ -175,5 +175,12 @@ public class StringTest {
             this.touser = touser;
         }
     }
+   
+   
+   @Test
+   public void testIntern() {
+       String s = "yangkai alisa";
+       System.out.println(s.intern());
+   }
 
 }
