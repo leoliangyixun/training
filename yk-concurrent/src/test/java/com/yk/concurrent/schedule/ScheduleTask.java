@@ -1,17 +1,13 @@
-package com.yk.spring.boot.demo.component;
 /**
  * 
  */
-
+package com.yk.concurrent.schedule;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -21,22 +17,22 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ScheduleTask {
-    private ExecutorService executor =Executors.newFixedThreadPool(10);
     
-    @Scheduled(cron = "*/1 * * * * ? ")
-    public void tete1() throws Exception{
-        this.test123();
-    }
+    private ExecutorService executor = Executors.newFixedThreadPool(6);
     
+    @Scheduled(cron = "*/5 * * * * ? ")
     @Async
-    public  void test123( )  throws Exception {
+    public void run() throws Exception {
         long start = System.currentTimeMillis();
         System.out.println("ScheduleTask Start------> thread name: " +  Thread.currentThread().getName());
+
         Thread.sleep(5000);
-         System.out.println("ScheduleTask End------>thread name: " +  Thread.currentThread().getName() + " costs[" + (System.currentTimeMillis() - start) + " ms]");
+ 
+        System.out.println("ScheduleTask End------>thread name: " +  Thread.currentThread().getName() + " costs[" + (System.currentTimeMillis() - start) + " ms]");
+
     }
     
-    //@Scheduled(cron = "*/5 * * * * ? ")
+   // @Scheduled(cron = "*/5 * * * * ? ")
     //@Async
     public void run2()  throws Exception {
         long start = System.currentTimeMillis();

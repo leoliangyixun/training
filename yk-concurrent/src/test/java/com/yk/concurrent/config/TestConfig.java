@@ -1,18 +1,14 @@
 /**
  * 
  */
-package com.yk.spring.boot.demo.config;
+package com.yk.concurrent.config;
 
 import java.util.concurrent.ExecutorService;
 
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 /**
@@ -22,19 +18,16 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 @Configuration
 @EnableScheduling
 @EnableAsync
-@ComponentScan({"com.yk.spring.boot.demo.component"})
+@PropertySource({ "classpath:application.properties" })
 public class TestConfig {
 
-    @Bean
-    public ThreadPoolTaskScheduler taskSchedulerxxx() {
+
+    //@Bean
+    public ThreadPoolTaskScheduler taskScheduler() {
         ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
         taskScheduler.setPoolSize(5);
-        taskScheduler.setThreadNamePrefix("com.yk.concurrent-scheduler");
         return  taskScheduler;
     }
-
-
-
 
         //don't work
 /*    @Bean
