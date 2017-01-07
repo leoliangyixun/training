@@ -216,5 +216,14 @@ public class TestString {
             this.touser = touser;
         }
     }
+    
+    @Test
+    public void testMutiStr() {
+    	String a = null,b = null,c = "test";
+    	System.out.println(a);
+    	System.out.println(b);
+    	System.out.println(c);
+    }
+    
 
 }
