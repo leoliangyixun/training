@@ -19,6 +19,7 @@ import org.junit.Test;
  *
  */
 public class TestString {
+	
     @Test
     public void testStringIndexOf() {
         String s = "  {\"name\": \"yangkai\",\"colleage\":{\"name\": \"wuhan\"}   }     ";

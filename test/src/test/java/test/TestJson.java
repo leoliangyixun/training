@@ -16,7 +16,6 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.xml.soap.Text;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jglue.fluentjson.JsonBuilderFactory;
 import org.junit.Test;
 
@@ -526,6 +525,21 @@ public class TestJson {
         }
         
     }
+    
+    public class Employee {
+        private String name;
+        private int age;
+        public Employee(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+        
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+        }
+        
+    } 
     
     
 
