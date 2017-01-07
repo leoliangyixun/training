@@ -538,5 +538,6 @@
     <module>yk-jooq</module>
     <module>camel</module>
     <module>spring-boot-mvc</module>
+    <module>yk-concurrent</module>
   </modules>
 </project>
