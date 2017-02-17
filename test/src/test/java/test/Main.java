@@ -46,5 +46,12 @@ public class Main {
 			this.age = age;
 		}
 	}
+	
+	@Test
+	public void test() {
+		Long a = null;
+		System.out.println(a == 0l);
+		System.out.println(a == 0);
+	}
 
 }

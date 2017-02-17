@@ -27,7 +27,7 @@
 		<guava.version>18.0</guava.version>
 		<commons-httpclient.version>3.1</commons-httpclient.version>
 		<commons.lang.version>2.6</commons.lang.version>
-		<commons-lang3.version>3.3.4</commons-lang3.version>
+		<commons-lang3.version>3.3.1</commons-lang3.version>
 		<commons-codec.version>1.8</commons-codec.version>
 		<slf4j.version>1.6.1</slf4j.version>
 		<slf4j-logfj12.version>1.7.12</slf4j-logfj12.version>
@@ -43,7 +43,7 @@
 		<mysql.version>5.1.25</mysql.version>
 		<druid.version>1.0.15</druid.version>
 		<jackson.version>1.9.13</jackson.version>
-		<fastjson.version>1.1.29</fastjson.version>
+		<fastjson.version>1.2.21</fastjson.version>
 		<fasterxml.version>2.6.3</fasterxml.version>
 		<commons-fileupload.version>1.3.1</commons-fileupload.version>
 		<zkclient.version>0.4</zkclient.version>
@@ -539,5 +539,6 @@
     <module>camel</module>
     <module>spring-boot-mvc</module>
     <module>yk-concurrent</module>
+    <module>file-upload</module>
   </modules>
 </project>

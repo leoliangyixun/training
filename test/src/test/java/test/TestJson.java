@@ -16,16 +16,21 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.xml.soap.Text;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jglue.fluentjson.JsonBuilderFactory;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.Feature;
 import com.b5m.training.concurrent.TestCollection;
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author yangkai
@@ -415,13 +420,13 @@ public class TestJson {
             StringBuilder sb = new StringBuilder();
             // content like this --> first:有小伙伴回复了你\r\n|||#000000
             String[] text = StringUtils.split(content, ":");
-            sb.append("\"").append(text[0]).append("\"").append(": ");
+            sb.append("\"").append(text[0]).append("\"").append(":");
              if (text.length == 2) {
                  //like this --> 有小伙伴回复了你\r\n|||#000000
                  String[] pairs = StringUtils.split(text[1], "|||");
                 sb.append("{");
-                sb.append("\"value\"").append(": ").append("\"").append(pairs[0].replaceAll("&colon;", ":").replaceAll("&comma;", ",")).append("\"").append(",");
-                sb.append("\"color\"").append(": ");
+                sb.append("\"value\"").append(":").append("\"").append(pairs[0].replaceAll("&colon;", ":").replaceAll("&comma;", ",")).append("\"").append(",");
+                sb.append("\"color\"").append(":");
                 if (pairs.length == 2) {
                    sb.append("\"").append(pairs[1]).append("\"");
                 } else {
@@ -511,7 +516,7 @@ public class TestJson {
     }
     
     
-    public class User {
+    public static class User {
         private String name;
         private Integer age;
         public User(String name, Integer age) {
@@ -526,20 +531,60 @@ public class TestJson {
         
     }
     
-    public class Employee {
+    @Data
+    @NoArgsConstructor
+    public static class Employee {
         private String name;
         private int age;
-        public Employee(String name, int age) {
-            this.name = name;
-            this.age = age;
-        }
-        
-        @Override
-        public String toString() {
-            return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-        }
-        
+        private long size;
     } 
+    
+    @Test
+    public void testParse() {
+    	String a = "{\"name\":\"yangkai\", \"age\":28, \"company\":\"hijaing\", \"size\":null}";
+    	
+    	Employee employee = JSONObject.parseObject(a, Employee.class);
+    	System.out.println(employee);
+    	
+    }
+    
+    @Test
+    public void testJsonFormat() {
+        //String data = "first:有小伙伴回复了你\r\n|||#000000,remark:快去看看吧|||#000000,keyword1:暗夜之白雪\r\n|||,keyword2:2016-12-06 14&colon;40\r\n|||,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制\r\n|||";
+        String data = "first:有小伙伴回复了你|||#000000,remark:快去看看吧|||#000000,keyword1:暗夜之白雪|||,keyword2:2016-12-06 14&colon;40|||,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制|||";
+        //String data = "first:,remark:快去看看吧|||#000000,keyword1:暗夜之白雪|||,keyword2:2016-12-06 14&colon;40|||,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制|||";
+        //String data = "first:,remark:快去看看吧|||#000000,keyword1:暗夜之白雪,keyword2:2016-12-06 14&colon;40,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制";
+        List<String> elems = new ArrayList<>();
+        Arrays.asList(StringUtils.split(data, ",")).stream().forEach(content -> {
+            StringBuilder sb = new StringBuilder();
+            //like this --> first:有小伙伴回复了你|||#000000
+            String[] text = StringUtils.split(content, ":");
+            sb.append("\"").append(text[0]).append("\"").append(":");
+            if (text.length == 2) {
+                //like this --> 有小伙伴回复了你|||#000000
+                String[] pairs = StringUtils.split(text[1], "|||");
+                sb.append("{");
+                sb.append("\"value\"").append(":").append("\"").append(pairs[0].replaceAll("&colon;", ":").replaceAll("&comma;", ",")).append("\"").append(",");
+                sb.append("\"color\"").append(":");
+                if (pairs.length == 2) {
+                    sb.append("\"").append(pairs[1]).append("\"");
+                } else {
+                    sb.append("\"\"");
+                }
+                sb.append("}");
+            } else {
+                sb.append("\"\"");
+            }
+            elems.add(sb.toString());
+        });
+        
+        System.out.println(StringUtils.join(elems, ",")); 
+        JSONObject jo = JSONObject.parseObject("{" + StringUtils.join(elems, ",") + "}", Feature.OrderedField);
+        JSONObject jo2 = jo.getJSONObject("first");
+        System.out.println(jo2);
+        System.out.println(jo.get("first"));
+    }
+    
     
     
 
