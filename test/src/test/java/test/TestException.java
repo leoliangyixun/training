@@ -56,5 +56,48 @@ public class TestException {
             System.out.println(i);
         }
     }
+    
+    
+    @Test
+    public void testEx() {
+    	UserProxy userProxy = new UserProxy();
+    	userProxy.exec();
+    	
+    	
+    }
+    
+    public static class UserProxy {
+    	private SmsService smsService = new SmsService();
+    	public void exec(){
+    		try {
+    			smsService.sendAll();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+    	}
+    }
+    
+   
+    public static class SmsService {
+    	public void sendAll(){
+    		for (int i = 0; i<10; i++) {
+    			try {
+    				send(i);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+    			
+    		}
+    	}
+    	
+    	public void send(int i){
+    		if(i == 5) {
+    			throw new RuntimeException("ERROR");
+    		}
+    		System.out.println(i);
+    	}
+    }
+    
+    
 
 }

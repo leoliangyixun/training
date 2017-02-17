@@ -19,6 +19,7 @@ import org.junit.Test;
  *
  */
 public class TestString {
+	
     @Test
     public void testStringIndexOf() {
         String s = "  {\"name\": \"yangkai\",\"colleage\":{\"name\": \"wuhan\"}   }     ";
@@ -216,5 +217,14 @@ public class TestString {
             this.touser = touser;
         }
     }
+    
+    @Test
+    public void testMutiStr() {
+    	String a = null,b = null,c = "test";
+    	System.out.println(a);
+    	System.out.println(b);
+    	System.out.println(c);
+    }
+    
 
 }

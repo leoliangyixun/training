@@ -70,5 +70,11 @@ public class TestDate {
 
         
     }
+    
+    @Test
+    public void testFormat() {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+    	System.out.println(sdf.format(new Date()));
+    }
 
 }

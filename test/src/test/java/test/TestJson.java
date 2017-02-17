@@ -16,7 +16,6 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.xml.soap.Text;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jglue.fluentjson.JsonBuilderFactory;
 import org.junit.Test;
 
@@ -399,9 +398,9 @@ public class TestJson {
     @Test
     public void testConvertJson() {
       //  String data = "first:有小伙伴回复了你\r\n|||#000000,remark:快去看看吧|||#000000,keyword1:暗夜之白雪\r\n|||,keyword2:2016-12-06 14&colon;40\r\n|||,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制\r\n|||";
-     //   String data = "first:有小伙伴回复了你|||#000000,remark:快去看看吧|||#000000,keyword1:暗夜之白雪|||,keyword2:2016-12-06 14&colon;40|||,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制|||";
+        String data = "first:有小伙伴回复了你|||#000000,remark:快去看看吧|||#000000,keyword1:暗夜之白雪|||,keyword2:2016-12-06 14&colon;40|||,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制|||";
       //  String data = "first:,remark:快去看看吧|||#000000,keyword1:暗夜之白雪|||,keyword2:2016-12-06 14&colon;40|||,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制|||";
-        String data = "first:,remark:快去看看吧|||#000000,keyword1:暗夜之白雪,keyword2:2016-12-06 14&colon;40,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制";
+       // String data = "first:,remark:快去看看吧|||#000000,keyword1:暗夜之白雪,keyword2:2016-12-06 14&colon;40,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制";
 /*       System.out.println(StringUtils.isNotBlank(data) && StringUtils.split(StringUtils.split(data, ",")[1], ":").length ==2);
        System.out.println(StringUtils.isNotBlank(data) && StringUtils.split(StringUtils.split(data, ",")[0], ":").length ==2);*/
         System.out.println(validate(data));
@@ -436,7 +435,8 @@ public class TestJson {
             }
              elems.add(sb.toString());
         });
-        
+        JSONObject jo = JSONObject.parseObject("{" + StringUtils.join(elems, ",") + "}");
+        System.out.println(jo);
         System.out.println("{"+ StringUtils.join(elems, ",") + "}");
     }
     
@@ -525,6 +525,21 @@ public class TestJson {
         }
         
     }
+    
+    public class Employee {
+        private String name;
+        private int age;
+        public Employee(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+        
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+        }
+        
+    } 
     
     
 
