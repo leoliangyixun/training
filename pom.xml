@@ -540,5 +540,6 @@
     <module>spring-boot-mvc</module>
     <module>yk-concurrent</module>
     <module>file-upload</module>
+    <module>yk-code</module>
   </modules>
 </project>

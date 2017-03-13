@@ -1,5 +1,7 @@
 package test;
 
+import java.util.Objects;
+
 import org.junit.Test;
 
 public class Main {
@@ -52,6 +54,14 @@ public class Main {
 		Long a = null;
 		System.out.println(a == 0l);
 		System.out.println(a == 0);
+	}
+	
+	@Test
+	public void test2() {
+		User user = new User("yk", 20);
+		System.out.println(Objects.equals(user.getAge(), 20));//true
+		System.out.println(user.getAge() == 20);//true
+		System.out.println(user.getAge() == new Integer(20));//false
 	}
 
 }

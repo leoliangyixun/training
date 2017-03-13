@@ -5,13 +5,14 @@ package com.hujiang.fileupload.config;
 
 import javax.servlet.MultipartConfigElement;
 
-import com.hujiang.basic.framework.plugin.dfs.service.TakaClient;
-import com.hujiang.basic.framework.plugin.dfs.service.TakaFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
+import com.hujiang.basic.framework.plugin.dfs.service.TakaFactory;
+import com.hujiang.basic.framework.plugin.dfs.service.TakaService;
 
 /**
  * @author yangkai
@@ -30,8 +31,8 @@ public class DemoConfig {
     String intranetUploadSite;
 
     @Bean
-    public TakaClient takaClient() {
-        return TakaFactory.getQiniuClient(accessKey, secretKey, intranetUploadSite);
+    public TakaService takaService() {
+        return TakaFactory.getQiniuProxy(accessKey, secretKey, intranetUploadSite);
     }
 
     //@Bean

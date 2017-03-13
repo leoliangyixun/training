@@ -3,6 +3,9 @@ package test;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
+
 public class StringTest {
 
     public StringTest() {
@@ -34,6 +37,11 @@ public class StringTest {
         x = y;
         System.out.println(x);
         
+    }
+    
+    @Test
+    public void test() {
+    	System.out.println(StringUtils.split("1", ","));
     }
 
 }
