@@ -3,7 +3,12 @@
  */
 package test;
 
+import java.io.IOException;
+
 import org.junit.Test;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @description:
@@ -97,7 +102,108 @@ public class TestException {
     		System.out.println(i);
     	}
     }
+
+    @Test
+    public void test2() {
+        UserService userService = new  UserService();
+        try {
+            userService.exec();
+            System.out.println("1");
+            System.out.println("2");
+        } catch (Exception e) {
+            System.out.println("error");
+        }
+
+    }
+
+    @Test
+    public void test3() {
+        UserService userService = new  UserService();
+        try {
+            for (int i = 0; i<10; i++) {
+                userService.exec(i);
+            }
+        } catch (Exception e) {
+            System.out.println("error");
+        }
+    }
+
+    @Test
+    public void test4() {
+        UserService userService = new  UserService();
+
+            for (int i = 0; i<10; i++) {
+                try {
+                    userService.exec(i);
+                } catch (Exception e) {
+                    System.out.println("error");
+                }
+            }
+
+    }
+
+    public class UserService {
+        public boolean exec() {
+            return true;
+            //throw new RuntimeException("system error");
+        }
+
+        public void exec(int i) {
+            if (i == 5) {
+                throw new RuntimeException("system error");
+            }
+            System.out.println(i);
+        }
+    }
     
+    @Data
+    @EqualsAndHashCode(callSuper=true)
+    public static class SysException extends RuntimeException {
+
+        private static final long serialVersionUID = -6817534485465703972L;
+        private int errorCode;
+        private String errorMsg;
+        
+        public SysException(int errorCode, String errorMsg) {
+            this.errorCode = errorCode;
+            this.errorMsg = errorMsg;
+        }
+    }
     
+    @Data
+    @EqualsAndHashCode(callSuper=true)
+    public static class AppException extends RuntimeException {
+
+        private static final long serialVersionUID = -6817534485465703972L;
+        private int errorCode;
+        private String errorMsg;
+        
+        public AppException(int errorCode, String errorMsg) {
+            this.errorCode = errorCode;
+            this.errorMsg = errorMsg;
+        }
+    }
+    
+    public static class Runner {
+        public String run(int i) {
+            try {
+                if (i == 0) {
+                    return "ok";
+                }
+                throw new SysException(0, "error");
+            } catch (AppException e) {
+               System.out.println(e.getErrorMsg());
+               return "exception";
+            }
+        }
+    }
+    
+    @Test
+    public void testTryCatch() {
+        Runner runner = new Runner();
+        String result = runner.run(400);
+        System.out.println(result);
+
+    }
 
 }

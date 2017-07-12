@@ -8,6 +8,16 @@
   <name>Maven</name>
   <url>http://maven.apache.org/</url>
   <inceptionYear>2001</inceptionYear>
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<url>http://nexus.yeshj.com/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>http://nexus.yeshj.com/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
       <properties>
     	<compiler.source>1.8</compiler.source>
 		<compiler.target>1.8</compiler.target>
@@ -17,7 +27,6 @@
 		<maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
 		<maven-resources-plugin.version>2.5</maven-resources-plugin.version>
         <maven.test.skip>false</maven.test.skip>
-
         <log4j.version>1.2.16</log4j.version>
         <hibernate.version>5.1.0.Final<!-- 4.2.15.Final --></hibernate.version>
         <persistence-api.version>1.0</persistence-api.version>
@@ -27,7 +36,7 @@
 		<guava.version>18.0</guava.version>
 		<commons-httpclient.version>3.1</commons-httpclient.version>
 		<commons.lang.version>2.6</commons.lang.version>
-		<commons-lang3.version>3.3.1</commons-lang3.version>
+		<commons-lang3.version>3.4</commons-lang3.version>
 		<commons-codec.version>1.8</commons-codec.version>
 		<slf4j.version>1.6.1</slf4j.version>
 		<slf4j-logfj12.version>1.7.12</slf4j-logfj12.version>
@@ -57,7 +66,7 @@
     </properties>
     
 	<repositories>
-	<repository>
+		<repository>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
@@ -114,13 +123,6 @@
 			<url>http://repo1.maven.org/maven2/</url>
 		</pluginRepository>
 	</pluginRepositories>
-	
-  <distributionManagement>
-    <site>
-      <id>website</id>
-      <url>scp://webhost.company.com/www/website</url>
-    </site>
-  </distributionManagement>
   
     <dependencyManagement>
         <dependencies>
@@ -520,7 +522,6 @@
     <module>dubbo</module>
     <module>collection</module>
     <module>pajk-mybatis-generator</module>
-    <module>yk-service</module>
     <module>yk-model</module>
     <module>spring-boot</module>
     <module>annotation</module>
@@ -541,5 +542,6 @@
     <module>yk-concurrent</module>
     <module>file-upload</module>
     <module>yk-code</module>
+    <module>hujiang-framework-1.0</module>
   </modules>
 </project>

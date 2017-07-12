@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import javax.xml.soap.Text;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jglue.fluentjson.JsonBuilderFactory;
@@ -23,8 +22,6 @@ import org.junit.Test;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
-import com.b5m.training.concurrent.TestCollection;
-import com.fasterxml.jackson.core.io.JsonStringEncoder;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
@@ -584,6 +581,102 @@ public class TestJson {
         System.out.println(jo2);
         System.out.println(jo.get("first"));
     }
+    
+    
+    @Test
+    public void test9() {
+        Service service = new Service();
+        String data = "";
+        System.out.println(service.dataFormat(data));
+
+        data = "first";
+        System.out.println(service.dataFormat(data));
+
+        data = "first:";
+        System.out.println(service.dataFormat(data));
+        data = ":hello";
+        System.out.println(service.dataFormat(data));
+
+        data = "first:你预约的课已开播";
+        System.out.println(service.dataFormat(data));
+
+        data = "first:你预约的课已开播|||#000000,remark:快去参加吧！点击进入|||#000000,keyword1:测试|||#000000,keyword2:2017年05月27日 11&colon;50 AM-12&colon;50 PM|||#000000,keyword3: |||,keyword4: |||";
+        System.out.println(service.dataFormat(data));
+
+        data = "first:你预约的课已开播|||#000000,remark:快去参加吧！点击进入|||#000000,keyword1:测试|||#000000,keyword2:2017年05月27日 11&colon;50 AM-12&colon;50 PM|||#000000,keyword3:||| ,keyword4:||| ";
+        System.out.println(service.dataFormat(data));
+
+        data ="first:你预约的课已开播|||#000000,remark:快去参加吧！点击进入|||#000000,keyword1:测试|||#000000,keyword2:2017年05月27日 11&colon;50 AM-12&colon;50 PM|||#000000,keyword3:|||,keyword4:|||";
+        System.out.println(service.dataFormat(data));
+
+        data ="first:你预约的课已开播|||#000000,remark:快去参加吧！点击进入|||#000000,keyword1:测试|||#000000,keyword2:2017年05月27日 11&colon;50 AM-12&colon;50 PM|||#000000,keyword3:|||,keyword4:shit";
+        System.out.println(service.dataFormat(data));
+
+        data ="first:你预约的课已开播|||#000000,remark:快去参加吧！点击进入|||#000000,keyword1:测试|||#000000,keyword2:2017年05月27日 11&colon;50 AM-12&colon;50 PM|||#000000,keyword3:|||,keyword4:shit";
+        System.out.println(service.dataFormat(data));
+
+        data ="first:你预约的课已开播|||#000000,remark:快去参加吧！点击进入|||#000000,keyword1:测试|||#000000,keyword2:2017年05月27日 11&colon;50 AM-12&colon;50 PM|||#000000,keyword3:|||#ffffff,keyword4:shit";
+        System.out.println(service.dataFormat(data));
+
+    }
+
+    public static class Service {
+        public String dataFormat(String data) {
+            if (StringUtils.isNotBlank(data)) {
+                List<String> elems = new ArrayList<>();
+                Arrays.asList(StringUtils.split(data, ",")).stream().forEach(content -> {
+                    StringBuilder sb = new StringBuilder();
+                    //like this --> first:有小伙伴回复了你|||#000000
+                    String[] text = StringUtils.split(content, ":");
+                    if (text.length == 0) {
+                        text = new String[]{"", ""};
+                    } else if (text.length == 1) {
+                        text = new String[] {text[0], ""};
+                    }
+
+                    sb.append("\"").append(text[0]).append("\"").append(":");
+                    //like this --> 有小伙伴回复了你|||#000000
+                    if (text[1].contains("|||")) {
+                        //1.有小伙伴回复了你|||#000000
+                        //2.|||
+                        //3. |||
+                        //4.有小伙伴回复了你|||
+                        //5.|||#000000
+                        String[] pairs = StringUtils.split(text[1], "|||");
+                        //兼容逻辑，防止出现异常（如："keyword3:|||,keyword4:|||" 会出现异常）
+                        if (pairs.length == 0) {
+                            pairs = new String[]{"", ""};
+                        } else if (pairs.length == 1) {
+                            if (pairs[0].contains("#")) {
+                                pairs = new String[]{"", pairs[0]};
+                            } else {
+                                pairs = new String[]{pairs[0], ""};
+                            }
+                        }
+
+                        sb.append("{");
+                        sb.append("\"value\"").append(":").append("\"").append(pairs[0].replaceAll("&colon;", ":").replaceAll("&comma;", ",")).append("\"").append(",");
+                        sb.append("\"color\"").append(":").append("\"").append(pairs[1]).append("\"");
+                        sb.append("}");
+                    } else {
+                        sb.append("{");
+                        sb.append("\"value\"").append(":").append("\"").append(text[1]).append("\"").append(",");
+                        sb.append("\"color\"").append(":").append("\"\"");
+                        sb.append("}");
+                    }
+
+                    elems.add(sb.toString());
+                });
+
+                return StringUtils.join(elems, ",");
+            }
+
+            return null;
+        }
+    }
+    
+    
+    
     
     
     

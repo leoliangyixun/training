@@ -8,11 +8,41 @@
   <artifactId>test</artifactId>
   <name>test</name>
   <description>test</description>
-  <properties>	
 
-  </properties>
-  <dependencies>
-    <dependency>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<hujiang-framework.version>2.0.3-RELEASE</hujiang-framework.version>
+	</properties>
+    <dependencies>
+  			<dependency>
+				<groupId>com.hujiang.basic.framework</groupId>
+				<artifactId>hujiang-framework-rest</artifactId>
+				<version>${hujiang-framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.hujiang.basic.framework</groupId>
+				<artifactId>hujiang-framework-model</artifactId>
+				<version>${hujiang-framework.version}</version>
+			</dependency>
+			<dependency>
+			<groupId>com.hujiang.basic.framework</groupId>
+				<artifactId>hujiang-framework-core</artifactId>
+				<version>${hujiang-framework.version}</version>
+			</dependency>
+			<dependency>
+			<groupId>com.hujiang.basic.framework</groupId>
+				<artifactId>hujiang-framework-common</artifactId>
+				<version>${hujiang-framework.version}</version>
+			</dependency>
+
+		  <dependency>
+			  <groupId>org.springframework</groupId>
+			  <artifactId>spring-test</artifactId>
+			  <version>4.3.8.RELEASE</version>
+		  </dependency>
+
+
+	  <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
@@ -53,6 +83,7 @@
     <dependency>
 	    <groupId>org.apache.commons</groupId>
 	  	<artifactId>commons-lang3</artifactId>
+	  	<version>3.4</version>
   	</dependency>
   	<dependency>
 		<groupId>org.apache.commons</groupId>
@@ -63,39 +94,53 @@
 		<groupId>commons-collections</groupId>
 		<artifactId>commons-collections</artifactId>
     </dependency>
-
-	  <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 	  <dependency>
 		  <groupId>com.fasterxml.jackson.core</groupId>
 		  <artifactId>jackson-core</artifactId>
-		 
 	  </dependency>
-	  <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 	  <dependency>
 		  <groupId>com.fasterxml.jackson.core</groupId>
 		  <artifactId>jackson-databind</artifactId>
-		 
 	  </dependency>
-	  <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
 	  <dependency>
 		  <groupId>com.fasterxml.jackson.core</groupId>
 		  <artifactId>jackson-annotations</artifactId>
 	  </dependency>
-
    	<dependency>
 	    <groupId>org.jglue.fluent-json</groupId>
 	    <artifactId>fluent-json</artifactId>
 	    <version>2.0.0</version>
 	</dependency>
-	  <dependency>
-	    <groupId>com.alibaba</groupId>
-	    <artifactId>fastjson</artifactId>
-    </dependency>
- 	  <dependency>
-		<groupId>org.projectlombok</groupId>
-		<artifactId>lombok</artifactId>
-		<version>1.16.10</version>
-		<scope>provided</scope>
-	 </dependency>
+
+	<dependency>
+	    <groupId>org.projectlombok</groupId>
+	    <artifactId>lombok</artifactId>
+	    <version>1.16.10</version>
+	</dependency>
+ 	<dependency>
+	    <groupId>com.google.guava</groupId>
+	    <artifactId>guava</artifactId>
+	    <version>21.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.jooq</groupId>
+	    <artifactId>jooq</artifactId>
+	    <version>3.9.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.jooq</groupId>
+	    <artifactId>jool</artifactId>
+	    <version>0.9.12</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.jooq</groupId>
+	    <artifactId>jooq-codegen-maven-example</artifactId>
+	    <version>2.0.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.jooq</groupId>
+	    <artifactId>jooq-codegen</artifactId>
+	    <version>3.9.0</version>
+	</dependency>
   </dependencies>
 </project>

@@ -3,10 +3,7 @@
  */
 package com.yk.spring.boot.demo.component;
 
-import com.hujiang.notifycenter.tencent.service.WXApiService;
-import com.hujiang.notifycenter.tencent.service.sys.PublicAccountInfoService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ExecutorService;

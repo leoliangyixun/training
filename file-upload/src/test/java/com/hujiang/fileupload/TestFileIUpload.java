@@ -22,6 +22,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
 
 import com.google.common.annotations.VisibleForTesting;
 
@@ -57,6 +58,12 @@ public class TestFileIUpload {
 		HttpResponse  httpResponse = httpClient.execute(httpPost);
 		HttpEntity httpEntity =  httpResponse.getEntity();
 		String content = EntityUtils.toString(httpEntity);
+	}
+	
+	@Test
+	public void test2() {
+		ClassPathResource resource =  new ClassPathResource("tupu_pkcs8_private_key.pem");
+		System.out.println(resource.getPath());
 	}
 
 }

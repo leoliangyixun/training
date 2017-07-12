@@ -1,5 +1,5 @@
 ///**
-// * 
+// *
 // */
 //package com.hujiang.fileupload.controller;
 //
@@ -39,19 +39,19 @@
 //
 //	@RequestMapping(value = "/", method = RequestMethod.GET)
 //	public DataResult<Object> ok() {
-//		
+//
 //		return DataResult.ok();
 //	}
-//	
+//
 //	@RequestMapping(value = "/upload/all", method = RequestMethod.POST)
 //	public DataResult<Object> uploadAll(@RequestParam("files") MultipartFile[] files) {
 //		System.out.println(files);
 //		return DataResult.ok();
 //	}
-//	
+//
 //	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 //	public DataResult<Object> upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-//		
+//
 //		try {
 //
 //			//生成signature
@@ -62,7 +62,7 @@
 //
 //
 //			HttpPost httpPost = new HttpPost(intranetUploadSite + "/v2/file");
-//			
+//
 //			HttpClient httpClient = HttpClientBuilder.create().build();
 //
 ////			String filePath = request.getSession().getServletContext().getRealPath("/") + "/upload/"
@@ -77,23 +77,23 @@
 //					.addTextBody("bucket", "app")
 //					.addBinaryBody("file", file.getInputStream(), ContentType.MULTIPART_FORM_DATA, file.getOriginalFilename())
 //					.build();
-//			
+//
 //			httpPost.setEntity(mutiEntity);
-//			
+//
 //			HttpResponse  httpResponse = httpClient.execute(httpPost);
 //			HttpEntity httpEntity =  httpResponse.getEntity();
 //			String content = EntityUtils.toString(httpEntity);
 //			System.out.println(content);
 //			//byte[] bits = StreamUtils.copyToByteArray(file.getInputStream());
-//			
+//
 //		} catch (IOException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-//		
+//
 //		return DataResult.ok();
 //	}
-//	
+//
 //	public String generateSignature() {
 ////         Long timestamp = new Date().getTime();
 ////
