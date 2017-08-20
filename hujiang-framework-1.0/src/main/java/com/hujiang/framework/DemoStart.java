@@ -7,5 +7,4 @@ import com.hujiang.basic.framework.plugin.cache.ops.CachePlugin;
  */
 public class DemoStart {
 
-    CachePlugin<K, V>
 }

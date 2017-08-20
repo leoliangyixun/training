@@ -7,6 +7,41 @@
   </parent>
   <artifactId>yk-code</artifactId>
   <dependencies>
+        <dependency>
+            <groupId>com.hujiang.basic.framework</groupId>
+            <artifactId>hujiang-framework-model</artifactId>
+            <version>2.0.4-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hujiang.basic.framework</groupId>
+            <artifactId>hujiang-framework-common</artifactId>
+            <version>2.0.4-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hujiang.basic.framework</groupId>
+            <artifactId>hujiang-framework-dao</artifactId>
+            <version>2.0.4-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hujiang.basic.framework</groupId>
+            <artifactId>hujiang-framework-core</artifactId>
+            <version>2.0.4-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hujiang.basic.framework</groupId>
+            <artifactId>hujiang-framework-rest</artifactId>
+            <version>2.0.4-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hujiang.basic.framework</groupId>
+            <artifactId>hujiang-framework-plugin-cache</artifactId>
+            <version>2.0.4-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hujiang.basic.framework</groupId>
+            <artifactId>hujiang-framework-plugin-mq</artifactId>
+            <version>2.0.4-RELEASE</version>
+        </dependency>
 	<dependency>
 	    <groupId>org.projectlombok</groupId>
 	    <artifactId>lombok</artifactId>

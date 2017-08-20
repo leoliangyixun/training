@@ -412,12 +412,13 @@ public class TestString {
 
     @Test
     public void test18() {
-       // String a = "\"yangkai\"";
+        //String a = "yangkai";
+        String a = "\"yangkai\"";
         // String a = "\"yangkai";
         // String a = "\"\"";
-        String a = "\"";
+        //String a = "\"";
         System.out.println("原始值: " + a);
-        System.out.println("杨开的方法: " + removeFirstAndLastQuote(a));
+        //System.out.println("杨开的方法: " + removeFirstAndLastQuote(a));
         System.out.println("余老师的方法: " + removeFirstAndLastQuote2(a));
 
 
@@ -453,12 +454,6 @@ public class TestString {
             } // 去掉第一个"
 
             return str.substring(startOffset, endOffset);
-
-			/*
-			 * if (str.lastIndexOf("\"") == (str.length() - 1)) {
-			 * str = str.substring(0, str.length() - 1);
-			 * } //去掉最后一个"
-			 */
         }
 
         return str;
@@ -487,6 +482,130 @@ public class TestString {
         String[] as = a.split("^-^");
 
         System.out.println();
+    }
+
+
+    @Test
+    public void test21() {
+        String s = "\"";
+        System.out.println(s.substring(1, s.length()).equals(""));
+    }
+
+    public static String removeFirstAndLastQuote3(String str) {
+        if (StringUtils.isNotBlank(str)) {
+            //str = str.trim();
+            int start = 0;
+            int length = str.length();
+            int end = length;
+            if (str.charAt(start) == QUOTE_CHAR) {
+                start++;
+            }
+
+            if (str.charAt(end - 1) == QUOTE_CHAR) {
+                end--;
+            }
+
+            str = end >= start ? str.substring(start, end) :str.substring(start, length);
+
+        }
+        return str;
+    }
+
+    @Test
+    public void test22() {
+        String a = "yangkai";
+        String b = "\"yangkai\"";
+        String c = "\"yangkai";
+        String d = "yangkai\"";
+        String e = "\"\"";
+        String f = "\"";
+        String g = "\" ";
+        String h = " \"";
+        String i = " \"yangkai \" ";
+        String j = "yangkai \" ";
+        String k = " \"yangkai";
+        String l = " \"yangkai ";
+        String m = " \"   \"";
+        String n = " \"'yangkai '";
+        String o = "\"y\"";
+        String p = "\"y";
+        String q = "y\"";
+        String r = "";
+        System.out.println("a --> length:" + a.length() + " origin:" + "{" + a + "}" + " {" + removeFirstAndLastQuote3(a) + "}");
+        System.out.println("b --> length:" + b.length() + " origin:" + "{" + b + "}" + " {" + removeFirstAndLastQuote3(b) + "}");
+        System.out.println("c --> length:" + c.length() + " origin:" + "{" + c + "}" + " {" + removeFirstAndLastQuote3(c) + "}");
+        System.out.println("d --> length:" + d.length() + " origin:" + "{" + d + "}" + " {" + removeFirstAndLastQuote3(d) + "}");
+        System.out.println("e --> length:" + e.length() + " origin:" + "{" + e + "}" + " {" + removeFirstAndLastQuote3(e) + "}");
+        System.out.println("f --> length:" + f.length() + " origin:" + "{" + f + "}" + " {" + removeFirstAndLastQuote3(f) + "}");
+        System.out.println("g --> length:" + g.length() + " origin:" + "{" + g + "}" + " {" + removeFirstAndLastQuote3(g) + "}");
+        System.out.println("h --> length:" + h.length() + " origin:" + "{" + h + "}" + " {" + removeFirstAndLastQuote3(h) + "}");
+        System.out.println("i --> length:" + i.length() + " origin:" + "{" + i + "}" + " {" + removeFirstAndLastQuote3(i) + "}");
+        System.out.println("j --> length:" + j.length() + " origin:" + "{" + j + "}" + " {" + removeFirstAndLastQuote3(j) + "}");
+        System.out.println("k --> length:" + k.length() + " origin:" + "{" + k + "}" + " {" + removeFirstAndLastQuote3(k) + "}");
+        System.out.println("l --> length:" + l.length() + " origin:" + "{" + l + "}" + " {" + removeFirstAndLastQuote3(l) + "}");
+        System.out.println("m --> length:" + m.length() + " origin:" + "{" + m + "}" + " {" + removeFirstAndLastQuote3(m) + "}");
+        System.out.println("n --> length:" + n.length() + " origin:" + "{" + n + "}" + " {" + removeFirstAndLastQuote3(n) + "}");
+        System.out.println("o --> length:" + o.length() + " origin:" + "{" + o + "}" + " {" + removeFirstAndLastQuote3(o) + "}");
+        System.out.println("p --> length:" + p.length() + " origin:" + "{" + p + "}" + " {" + removeFirstAndLastQuote3(p) + "}");
+        System.out.println("q --> length:" + q.length() + " origin:" + "{" + q + "}" + " {" + removeFirstAndLastQuote3(q) + "}");
+        System.out.println("r --> length:" + r.length() + " origin:" + "{" + r + "}" + " {" + removeFirstAndLastQuote3(r) + "}");
+    }
+
+    @Test
+    public void test23() {
+        String a  = "abcd";
+        System.out.println(a.substring(0, 0).equals(""));
+        System.out.println(a.substring(0, 100));
+    }
+
+    @Test
+    public void testArrayContain() {
+        String[] a  = {"a", "b", "c"};
+        String x = null;
+        System.out.println(ArrayUtils.contains(a, x));
+
+    }
+
+    @Test
+    public void testArrayContain2() {
+        SendType[] types  = SendType.values();
+        String type = null;
+        System.out.println(ArrayUtils.contains(types, SendType.convert(type)));
+        type = "mass";
+        System.out.println(ArrayUtils.contains(types, SendType.convert(type)));
+
+    }
+
+    public enum SendType {
+        applet, tmpl, mass;
+
+        public static SendType convert(String value) {
+            return Arrays.stream(values()).filter(e -> e.name().equals(value)).findFirst().orElse(null);
+        }
+    }
+
+
+    @Test
+    public void test24() {
+        String a  = "abcd";
+        System.out.println(a.substring(0, 100));// error
+        System.out.println(StringUtils.substring(a, 0, 100));
+    }
+
+    @Test
+    public void test25() {
+        String a  = "123456_abcd.png";
+        String[] ss = StringUtils.split(a, ".");
+        System.out.println(ss);
+    }
+
+
+    @Test
+    public void test26() {
+        String a  = "";
+        String b  = null;
+      //  System.out.println(Integer.valueOf(a));
+        System.out.println(Integer.valueOf(b));
     }
 
 

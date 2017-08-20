@@ -1,12 +1,13 @@
 package test;
 
 import com.hujiang.basic.framework.core.util.DateUtil;
-import org.joda.time.DateTime;
-import org.joda.time.Days;
+import org.joda.time.*;
+import org.joda.time.Duration;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.junit.Test;
 
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Locale;
 
@@ -61,6 +62,32 @@ public class TestJoda {
         String s = new DateTime(d).toString("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
         System.out.println(s);
     }
+
+    @Test
+    public void testJoda7() throws Exception {
+        Date start = new Date();
+        Thread.sleep(200);
+        Date end = new Date();
+        int seconds = Seconds.secondsBetween(new LocalDateTime(start), new LocalDateTime(end)).getSeconds();
+
+        System.out.println(seconds);
+    }
+
+
+    @Test
+    public void testJoda8() throws Exception {
+        Date start = new Date();
+       Thread.sleep(200);
+        Date end = new Date();
+      //  Date end = Date.from(java.time.LocalDateTime.of(2017, 7, 23, 21, 40, 0).atZone(ZoneId.systemDefault()).toInstant());
+        //Date end = DateUtil.toDateTime("2017-07-23T21:00:00"); //不能识别
+       // Date end = DateUtil.toDateTime("2017-07-23 21:00:00");
+        int minutes = Minutes.minutesBetween(new LocalDateTime(start), new LocalDateTime(end)).getMinutes();
+
+        System.out.println(minutes);
+    }
+
+
 
 
 }

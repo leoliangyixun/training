@@ -1,0 +1,74 @@
+package com.yangkai.myblog.service;
+import java.util.List;
+import java.util.Map;
+import com.yangkai.myblog.domain.Album;
+import com.yangkai.myblog.domain.Blog;
+import com.yangkai.myblog.domain.BlogComment;
+import com.yangkai.myblog.domain.BlogCommentReply;
+import com.yangkai.myblog.domain.Message;
+import com.yangkai.myblog.domain.MessageReply;
+import com.yangkai.myblog.domain.Mood;
+import com.yangkai.myblog.domain.MoodComment;
+import com.yangkai.myblog.domain.Photo;
+import com.yangkai.myblog.domain.User;
+public interface MyBlogService 
+{
+	public List<String> getAlbumMapKey(Map<String,List<Photo>> album_map);//业务逻辑独有的方法。 
+	public List<String> getFriendsAlbumMapKey();//业务逻辑独有的方法。 
+	public int alterBlogNum(String username,int blog_num_mark);//业务逻辑独有的方法。
+	public String loginCheck(String username,String password);
+	public List<Blog> getBlog(String username);
+	public List<Blog> getAllBlog(String username);
+	public List<Blog> getDraftBlog(String username);
+	public List<Blog> getPrivateBlog(String username);
+	public List<Message> getMessage(String username);
+	public List<Message> getMyLeaveMessage(String guest); 
+	public List<MessageReply> getMyMessageReply(String guest);
+	public List<MessageReply> getAllMessageReply(String username);
+	public List<Mood> getMood(String username);	
+	public User getUser(String username);
+	public User getBloger(String username);
+	public List<String> getFriends(String username);
+	public Map<String,User> getFriendsInfo(String username);
+	public List<Blog> getFriendsBlog(String username);
+	public List<Blog> getLatestBlog();
+	public List<BlogCommentReply> getBlogCommentReply(int blog_comment_id);
+	public List<MessageReply> getMessageReply(String username);
+	public int getAlbumId(String username, String album_name);
+	public List<String> getBlogClass(String username);
+	public List<BlogComment> getBlogComment(int blog_id);
+	public Map<String,List<Photo>> getAlbumMap(String username);
+	public List<Photo> getAlbumPhoto(int album_id);
+	public List<Album> getAlbum(String username);
+	public Map<String,Map<String,List<Photo>>> getFriendsAlbumMap(List<String> friends);
+	public Map<String,List<Album>> getFriendsAlbum(List<String> friends);
+	public int regist(User user);
+	public int addUser(User user);
+	public int alterUserInfo(User user);
+	public int addBlogClass(String username,String blog_class);
+	public int addBlog(Blog blog);
+	public int addBlogComment(BlogComment blogcomment);
+	public int addBlogCommentReply(BlogCommentReply blogcommentreply);
+	public int addMessage(Message msg);
+	public int addMessageReply(MessageReply messagereply);
+	public int addMood(Mood mood);
+	public int addMoodComment(MoodComment moodcomment);
+	public int addMoodCommentReply(BlogCommentReply blogcommentreply);
+	public int deleteBlog(int blog_id);
+	public int deleteBlogComment(int blog_comment_id);
+	public int deleteBlogCommentReply(int blog_comment_reply_id);
+	public int deleteMood(Mood mood);
+	public int deleteMoodComment(int mood_comment_id);
+	public int deleteMoodCommentReply(int mood_comment_reply_id);
+	public int deleteMessage(int message_id);
+	public int deleteMessageReply(int message_reply_id);
+	public int updateBlogContent(Blog blog);
+	public int uploadPhoto(List<Photo> photos);
+	public boolean checkAlbumName(String username, String album_name);
+	public boolean checkUsername(String username);
+	public boolean checkBlogClass(String username, String blog_class);
+	public int cutBlogNumber(String username);
+	public int createAlbum(Album album);
+	public int alterBlogState(int blog_state,int blog_id);
+	public int saveBlog(Blog blog);
+}

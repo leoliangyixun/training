@@ -76,7 +76,7 @@ public class FileUploadController {
 			simpleFile.setRawFilename(file.getOriginalFilename());
 			simpleFile.setContent(file.getBytes());
 			simpleFile.setCustomKey(customKey);
-			simpleFile.setCustomPath(customPath);
+			simpleFile.setCustomPath(customPath );
 			simpleFiles.add(simpleFile);
 		}
 

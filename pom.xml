@@ -5,9 +5,6 @@
   <artifactId>training</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Maven</name>
-  <url>http://maven.apache.org/</url>
-  <inceptionYear>2001</inceptionYear>
 	<distributionManagement>
 		<repository>
 			<id>releases</id>
@@ -74,28 +71,6 @@
 			<name>Public Repositories</name>
 			<url>http://nexus.yeshj.com/nexus/content/groups/public/</url>
 		</repository>
-
-		<repository>
-			<id>oschina Releases</id>
-			<name>oschina Releases</name>
-			<url>http://maven.oschina.net/content/groups/public</url>
-		</repository>
-		<repository>
-			<id>springsource-repo</id>
-			<name>SpringSource Repository</name>
-			<url>http://repo.spring.io/release/</url>
-		</repository>
-		<repository>
-			<id>springsource-repo-snapshot</id>
-			<name>SpringSource Repository</name>
-			<url>http://repo.spring.io/snapshot/</url>
-		</repository>
-		<repository>
-			<id>central</id>
-			<name>Maven Repository Switchboard</name>
-			<layout>default</layout>
-			<url>http://repo.maven.apache.org/maven2</url>
-		</repository>
 	</repositories>
 	
 	<pluginRepositories>
@@ -109,18 +84,6 @@
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-		</pluginRepository>
-		
-		<pluginRepository>
-			<id>oschina Releases</id>
-			<name>oschina Releases</name>
-			<url>http://maven.oschina.net/content/groups/public</url>
-		</pluginRepository>
-			
-		<pluginRepository>
-			<id>maven2-repo</id>
-			<name>maven2 Repository</name>
-			<url>http://repo1.maven.org/maven2/</url>
 		</pluginRepository>
 	</pluginRepositories>
   
@@ -543,5 +506,8 @@
     <module>file-upload</module>
     <module>yk-code</module>
     <module>hujiang-framework-1.0</module>
+    <module>rxjava</module>
+    <module>metrics</module>
+    <module>myblog</module>
   </modules>
 </project>

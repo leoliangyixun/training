@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>send.html</title>	
+    <meta http-equiv="content-type" content="text/html; charset=gb2312">
+<script type="text/javascript">
+<!--
+var xmlhttp=null;
+ function createXMLHttpRequest()
+    {
+    	var objxmlhttp=null;
+    	var xmlhttpTypes=["Microsoft.XMLHTTP","Msxml2.XMLHTTP.3.0","Msxml2.XMLHTTP.4.0","Msxml2.XMLHTTP.5.0","Msxml2.XMLHTTP.6.0"];
+    	if(window.ActiveXObject)
+    		{
+    		for(var i=0;i<xmlhttpTypes.length;i++)
+    		{
+    			try{
+    					objxmlhttp=new ActiveXObject(xmlhttpTypes[i]);
+    					break;
+    			   }catch(e){continue;}
+    		}
+    	}
+    	else if(window.XMLHttpRequest)
+    	{
+    		objxmlhttp=new XMLHttpRequest();
+    	}
+    	return objxmlhttp;
+    }	
+     function get(){
+   
+      xmlHttp=createXMLHttpRequest();
+      xmlHttp.open("get","book.xml",true);
+      xmlHttp.onreadystatechange=callback;
+      xmlHttp.send(null);
+    }
+    function callback(){
+      if(xmlHttp.readyState==4){
+      show();
+      }
+    }
+    function show(){
+      var xmlDoc = xmlHttp.responseXML;
+      var display = xmlDoc.getElementsByTagName("display");//获取xml文档中所有的program节点
+       
+       var rowSize=display.length;//取得节点的个数
+       var tab=document.createElement('table');//创建表格结点
+       tab.setAttribute("width", "60%");//设置表格的宽度属性
+       tab.setAttribute("border", "1");//设置表格的线条粗细度
+       tab.setAttribute("height", "23%");//设置表格的高度
+       tab.setAttribute("align","center");//设置表格居中显示
+	     tab.setAttribute("bgColor","#FFFFCC");
+	     var xmldisplay = document.getElementById("xmldisplay");
+	     xmldisplay.innerHTML="";
+         for(var i=0;i <rowSize;i++){     //根据朋友节点的个数为表格添加行
+              var row=tab.insertRow(i); //添加第i行
+              
+              row.setAttribute("width","31%");
+              row.setAttribute("height", "20%");
+              
+              for(var   n=0;n <display[i].childNodes.length;n++){     //为添加的行添加单元格
+                   var data=display[i].childNodes[n].firstChild.data;//取得数据
+                   var cell=tab.rows[i].insertCell(n); //为行加入第n个单元格
+                   tab.rows[i].cells[n].innerHTML=data;//为第n个单元格加入数据
+
+                }
+             }   
+      xmldisplay.appendChild(tab);
+    }
+    function changtabborderstyle()
+    {
+    	 var tab=document.getElementById("tab");
+    	 tab.style.borderCollapse="collapse";
+    }
+-->
+
+</script>
+  </head>
+  
+  <body>
+  <div align="center">
+   <input type="button" value="请求数据" onclick="get()">
+   <div id="xmldisplay"></div>
+   </div>
+  </body>
+</html>
+
+

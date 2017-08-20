@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="bak"
+  id="myeclipse.1359742376499"
+  context-root="/bak"
+  j2ee-spec="6.0"
+  archive="bak.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

@@ -234,5 +234,24 @@ public class TestDate {
 
     }
 
+    @Test
+    public void testJdk8Date4() throws Exception{
+
+        LocalDateTime from = LocalDateTime.now();
+        Thread.sleep(100);
+       // LocalDateTime to = LocalDateTime.of(from.getYear(), from.getMonth(), from.getDayOfMonth(), 23, 59, 59);
+        LocalDateTime to = LocalDateTime.now();
+        long seconds = Duration.between(from, to).getSeconds();
+        long milliseconds = Duration.between(from, to).toMillis();
+        System.out.println(seconds);
+        System.out.println(milliseconds);
+    }
+    
+    @Test
+    public void format() {
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sss").format(new Date()));
+
+    }
+
 
 }

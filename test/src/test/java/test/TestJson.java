@@ -15,6 +15,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import com.hujiang.basic.framework.core.exception.AppException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jglue.fluentjson.JsonBuilderFactory;
 import org.junit.Test;
@@ -33,6 +35,7 @@ import lombok.NoArgsConstructor;
  * @author yangkai
  *
  */
+@Slf4j
 public class TestJson {
     
     String key = null;
@@ -585,43 +588,47 @@ public class TestJson {
     
     @Test
     public void test9() {
-        Service service = new Service();
+
         String data = "";
-        System.out.println(service.dataFormat(data));
+        System.out.println(Utils.wxData2JSON(data));
 
         data = "first";
-        System.out.println(service.dataFormat(data));
+        System.out.println(Utils.wxData2JSON(data));
 
         data = "first:";
-        System.out.println(service.dataFormat(data));
+        System.out.println(Utils.wxData2JSON(data));
+
         data = ":hello";
-        System.out.println(service.dataFormat(data));
+        System.out.println(Utils.wxData2JSON(data));
+
+        data = "first:|||";
+        System.out.println(Utils.wxData2JSON(data));
 
         data = "first:你预约的课已开播";
-        System.out.println(service.dataFormat(data));
+        System.out.println(Utils.wxData2JSON(data));
 
         data = "first:你预约的课已开播|||#000000,remark:快去参加吧！点击进入|||#000000,keyword1:测试|||#000000,keyword2:2017年05月27日 11&colon;50 AM-12&colon;50 PM|||#000000,keyword3: |||,keyword4: |||";
-        System.out.println(service.dataFormat(data));
+        System.out.println(Utils.wxData2JSON(data));
 
         data = "first:你预约的课已开播|||#000000,remark:快去参加吧！点击进入|||#000000,keyword1:测试|||#000000,keyword2:2017年05月27日 11&colon;50 AM-12&colon;50 PM|||#000000,keyword3:||| ,keyword4:||| ";
-        System.out.println(service.dataFormat(data));
+        System.out.println(Utils.wxData2JSON(data));
 
         data ="first:你预约的课已开播|||#000000,remark:快去参加吧！点击进入|||#000000,keyword1:测试|||#000000,keyword2:2017年05月27日 11&colon;50 AM-12&colon;50 PM|||#000000,keyword3:|||,keyword4:|||";
-        System.out.println(service.dataFormat(data));
+        System.out.println(Utils.wxData2JSON(data));
 
         data ="first:你预约的课已开播|||#000000,remark:快去参加吧！点击进入|||#000000,keyword1:测试|||#000000,keyword2:2017年05月27日 11&colon;50 AM-12&colon;50 PM|||#000000,keyword3:|||,keyword4:shit";
-        System.out.println(service.dataFormat(data));
+        System.out.println(Utils.wxData2JSON(data));
 
         data ="first:你预约的课已开播|||#000000,remark:快去参加吧！点击进入|||#000000,keyword1:测试|||#000000,keyword2:2017年05月27日 11&colon;50 AM-12&colon;50 PM|||#000000,keyword3:|||,keyword4:shit";
-        System.out.println(service.dataFormat(data));
+        System.out.println(Utils.wxData2JSON(data));
 
         data ="first:你预约的课已开播|||#000000,remark:快去参加吧！点击进入|||#000000,keyword1:测试|||#000000,keyword2:2017年05月27日 11&colon;50 AM-12&colon;50 PM|||#000000,keyword3:|||#ffffff,keyword4:shit";
-        System.out.println(service.dataFormat(data));
+        System.out.println(Utils.wxData2JSON(data));
 
     }
 
-    public static class Service {
-        public String dataFormat(String data) {
+    public static class Utils {
+        public static String wxData2JSON(String data) {
             if (StringUtils.isNotBlank(data)) {
                 List<String> elems = new ArrayList<>();
                 Arrays.asList(StringUtils.split(data, ",")).stream().forEach(content -> {
@@ -673,12 +680,324 @@ public class TestJson {
 
             return null;
         }
+
+
+        public static String wxData2JSON_V2(String data) {
+            try {
+                if (StringUtils.isNotBlank(data)) {
+                    List<String> elems = new ArrayList<>();
+                    Arrays.asList(StringUtils.split(data, ",")).stream().forEach(content -> {
+                        StringBuilder sb = new StringBuilder();
+                        //like this --> first:有小伙伴回复了你|||#000000
+                        String[] text = StringUtils.split(content, ":");
+                        if (text.length == 0) {
+                            text = new String[]{"", ""};
+                        } else if (text.length == 1) {
+                            text = new String[]{text[0], ""};
+                        }
+
+                        sb.append("\"").append(text[0].trim()).append("\"").append(":");
+                        //like this --> 有小伙伴回复了你|||#000000
+                        if (text[1].contains("|||")) {
+                            //1.有小伙伴回复了你|||#000000
+                            //2.|||
+                            //3. |||
+                            //4.有小伙伴回复了你|||
+                            //5.|||#000000
+                            String[] pairs = StringUtils.split(text[1], "|||");
+                            //兼容逻辑，防止出现异常（如："keyword3:|||,keyword4:|||" 会出现异常）
+                            if (pairs.length == 0) {
+                                pairs = new String[]{"", ""};
+                            } else if (pairs.length == 1) {
+                                if (pairs[0].contains("#")) {
+                                    pairs = new String[]{"", pairs[0]};
+                                } else {
+                                    pairs = new String[]{pairs[0], ""};
+                                }
+                            }
+
+                            if (StringUtils.isNotBlank(pairs[1])) {
+                                pairs[1] = pairs[1].trim();
+                                if (!pairs[1].startsWith("#")) {
+                                    pairs[1] = "#" + pairs[1];
+                                }
+                            }
+
+                            sb.append("{");
+                            sb.append("\"value\"").append(":").append("\"").append(pairs[0].trim().replaceAll("&colon;", ":").replaceAll("&comma;", ",")).append("\"").append(",");
+                            sb.append("\"color\"").append(":").append("\"").append(pairs[1]).append("\"");
+                            sb.append("}");
+                        } else {
+                            sb.append("{");
+                            sb.append("\"value\"").append(":").append("\"").append(text[1]).append("\"").append(",");
+                            sb.append("\"color\"").append(":").append("\"\"");
+                            sb.append("}");
+                        }
+
+                        elems.add(sb.toString());
+                    });
+
+                    return StringUtils.join(elems, ",");
+                }
+            } catch (Exception e) {
+                log.error(String.format("invalid template data: %s, error stack: ", data), e);
+            }
+
+            return null;
+        }
+
+        public static String wxData2JSON_V3(String data) {
+            try {
+                if (StringUtils.isNotBlank(data)) {
+                    List<String> elems = new ArrayList<>();
+                    //like this --> first:xxx|||#020202,remark:xxx|||,keyword1:xxx|||#020202,keyword2:xxx|||#020202,keyword3:xxx|||#020202
+                    Arrays.asList(StringUtils.split(data, ",")).stream().forEach(content -> {
+                        if (StringUtils.isNotBlank(content)) {
+                            StringBuilder sb = new StringBuilder();
+                            //like this --> first:有小伙伴回复了你|||#000000
+                            String[] text = StringUtils.split(content, ":");
+                            if (text.length == 0) {
+                                text = new String[]{"", ""};
+                            } else if (text.length == 1) {
+                                text = new String[]{text[0], ""};
+                            }
+
+                            sb.append("\"").append(text[0].trim()).append("\"").append(":");
+                            //like this --> 有小伙伴回复了你|||#000000
+                            //1.有小伙伴回复了你|||#000000
+                            //2.|||
+                            //3. |||
+                            //4.有小伙伴回复了你|||
+                            //5.|||#000000
+                            String[] pairs = StringUtils.split(text[1], "|||");
+                            //兼容逻辑，防止出现异常（如："keyword3:|||,keyword4:|||" 会出现异常）
+                            if (pairs.length == 0) {
+                                pairs = new String[]{"", ""};
+                            } else if (pairs.length == 1) {
+                                if (pairs[0].contains("#")) {
+                                    pairs = new String[]{"", pairs[0]};
+                                } else {
+                                    pairs = new String[]{pairs[0], ""};
+                                }
+                            }
+
+                            if (StringUtils.isNotBlank(pairs[1])) {
+                                pairs[1] = pairs[1].trim();
+                                if (!pairs[1].startsWith("#")) {
+                                    pairs[1] = "#" + pairs[1];
+                                }
+                            }
+
+                            sb.append("{");
+                            sb.append("\"value\"").append(":").append("\"").append(pairs[0].trim().replaceAll("&colon;", ":").replaceAll("&comma;", ",")).append("\"").append(",");
+                            sb.append("\"color\"").append(":").append("\"").append(pairs[1]).append("\"");
+                            sb.append("}");
+
+                            elems.add(sb.toString());
+                        }
+                    });
+
+                    return StringUtils.join(elems, ",");
+                }
+            } catch (Exception e) {
+                log.error(String.format("invalid template data: %s, error stack: ", data), e);
+                //throw new AppException(ErrorCode.invalid_args.errorCode(), ErrorCode.invalid_args.errorMsg());
+            }
+
+            return null;
+        }
     }
-    
-    
-    
-    
-    
+
+    @Test
+    public void test10() {
+        String data = "first:  anneyuholi|||020202 ,remark:||| ,keyword1:中级日语会话【外教随到随学班】 |||020202 ,keyword2:欢迎同学加入中级日语会话【外教随到随学班】 。班级将于2017-07-14开班，2017-09-12关班。同学可以在讨论区查看班级使用指南，做好开课准备哦！|||020202 ,keyword3:2017-07-14|||020202 ";
+        System.out.println("{" + Utils.wxData2JSON_V2(data) + "}");
+    }
+
+    @Test
+    public void test11() {
+
+        String data = "";
+        System.out.println("1--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("1--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = "first";
+        System.out.println("2--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("2--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = "first:";
+        System.out.println("3--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("3--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = ":你预约的课已开播";
+        System.out.println("4--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("4--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = ":";
+        System.out.println("5--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("5--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = ": ";
+        System.out.println("6--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("6--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = " :";
+        System.out.println("7--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("7--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = " : ";
+        System.out.println("8--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("8--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = "first:|||";
+        System.out.println("9--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("9--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = "first:你预约的课已开播";
+        System.out.println("10--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("10--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = "first:你预约的课已开播|||";
+        System.out.println("11--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("11--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = "first:你预约的课已开播|||#ffffff";
+        System.out.println("12--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("12--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = "first:|||#ffffff";
+        System.out.println("13--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("13--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = " :你预约的课已开播";
+        System.out.println("14--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("14--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = ":|||";
+        System.out.println("15--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("15--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = " :|||";
+        System.out.println("16--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("16--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = ": |||";
+        System.out.println("17--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("17--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = " : |||";
+        System.out.println("18--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("18--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = " : ||| ";
+        System.out.println("19--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("19--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = ":|||000000";
+        System.out.println("20--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("20--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = ":你预约的课已开播|||";
+        System.out.println("21--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("21--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = ":你预约的课已开播|||000000";
+        System.out.println("22--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("22--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = ":你预约的课已开播||| 000000 ";
+        System.out.println("23--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("23--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = "first:你预约的课已开播||| #ffffff ";
+        System.out.println("24--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("24--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = "first:你预约的课已开播||| ffffff ";
+        System.out.println("25--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("25--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = "first:你预约的课已开播|||ffffff ";
+        System.out.println("26--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("26--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = " first : 你预约的课已开播 ||| #ffffff ";
+        System.out.println("27--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("27--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = " first : 你预约的课已开播 ";
+        System.out.println("28--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("28--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = "first:||| #ffffff ";
+        System.out.println("29--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("29--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = "first:||| ffffff ";
+        System.out.println("30--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("30--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = "你预约的课已开播||| ffffff ";
+        System.out.println("31--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("31--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = "first:你预约的课已开播|||  ffffff ";
+        System.out.println("32--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("32--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        data = null;
+        System.out.println("33--> {" + Utils.wxData2JSON_V2(data) + "}");
+        System.out.println("33--> {" + Utils.wxData2JSON_V3(data) + "}");
+        System.out.println("-----------------------------------------------------------------------------------------");
+    }
+
+    @Test
+    public void test12() {
+        String data = ":|||000000";
+        String[] ss = StringUtils.split(data, ":");
+        System.out.println(ss);
+
+        String s2 = "";
+        s2 = s2.trim();
+        System.out.println(s2);
+
+        String s3 = "  ";
+        s3 = s3.trim();
+        System.out.println(s3);
+    }
+
     
 
 }

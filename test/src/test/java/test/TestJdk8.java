@@ -3,11 +3,13 @@
  */
 package test;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.hujiang.basic.framework.core.util.DateUtil;
+import javafx.beans.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -325,6 +327,98 @@ public class TestJdk8 {
 		System.out.println(users);
 	}
 
+	@Test
+	public void limit() {
+		List<Integer> ids = null;
+		ids = Lists.newArrayList(1,2,3,4,5,6,7,8,9).stream().limit(2).collect(Collectors.toList());
+		System.out.println(ids);
+		ids = Lists.newArrayList(1,2,3,4,5,6,7,8,9).stream().skip(2).limit(2).collect(Collectors.toList());
+		System.out.println(ids);
+	}
 
+	@Test
+	public void limit2() {
+		int offset = 10;
+		Set<Integer> id = Sets.newHashSet(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20);
+		Set<Integer> id1 = id.stream().limit(offset).collect(Collectors.toSet());
+		Set<Integer> id2 = id.stream().skip(offset).limit(id.size() - offset).collect(Collectors.toSet());
+		System.out.println(id);
+		System.out.println(id1);
+		System.out.println(id2);
+        System.out.println("------------------------------------------------------------------------------------------");
+		List<Integer> age = Lists.newArrayList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20);
+		Set<Integer> age1 = age.stream().limit(offset).collect(Collectors.toSet());
+		Set<Integer> age2 = age.stream().skip(offset).limit(age.size() - offset).collect(Collectors.toSet());
+		System.out.println(age);
+		System.out.println(age1);
+		System.out.println(age2);
+        System.out.println("------------------------------------------------------------------------------------------");
+        List<Integer> hourse = Lists.newArrayList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20);
+        List<Integer> hourse1 = hourse.stream().limit(offset).collect(Collectors.toList());
+        List<Integer> hourse2 = hourse.stream().skip(offset).limit(hourse.size() - offset).collect(Collectors.toList());
+        System.out.println(hourse);
+        System.out.println(hourse1);
+        System.out.println(hourse2);
+        System.out.println("------------------------------------------------------------------------------------------");
+	}
+
+    @Test
+    public void optional() {
+	    //User user = null;
+        User user = new User(1,"yk", 20);
+        Optional.ofNullable(user).ifPresent(c -> {
+            System.out.println(c.getName());
+            System.out.println(c.getAge());
+        });
+    }
+
+    @Test
+	public void optional2() {
+		//List<User> users = null;
+		//List<User> users = Lists.newArrayList(new User(1, "yk", 28), new User(2, "gwj", 27));
+		//System.out.println(Optional.ofNullable(users).isPresent());
+		//Optional.ofNullable(users).ifPresent(e -> e.forEach(x -> System.out.println(x.getName())));
+		//Optional<List<User>> opt = Optional.ofNullable(users);
+		//opt.isPresent()
+		//Optional.ofNullable(users).filter(e -> e.size() > 0);
+	}
+
+	@Test
+	public void optional3() {
+		List<User> users = Lists.newArrayList(null, new User(2, "gwj", 27));
+		Optional.ofNullable(users).ifPresent(e -> e.forEach(x -> System.out.println(x.getName())));
+		//exception
+
+	}
+
+	@Test
+	public void optional4() {
+		List<User> users = Lists.newArrayList();
+		Optional.ofNullable(users).ifPresent(e -> e.forEach(x -> System.out.println(x.getName())));
+		//right
+	}
+
+	@Test
+	public void foreach() {
+		String ids = "123456,456789,   345678    ,456789    ,   123890,";
+		System.out.println(ids);
+		Set<String> userIds = Arrays.stream(StringUtils.split(ids, ",")).map(e -> StringUtils.trim(e)).collect(Collectors.toSet());
+		System.out.println(userIds);
+		userIds.forEach(e -> System.out.println(e));
+		System.out.println(StringUtils.join(userIds, ","));
+
+	}
+
+	@Test
+	public void foreach2() {
+		String ids = "63648834， 68481812";
+		System.out.println(ids);
+		Set<String> userIds = Arrays.stream(StringUtils.split(ids, ",")).map(e -> StringUtils.trim(e)).collect(Collectors.toSet());
+		System.out.println(userIds);
+		userIds.forEach(e -> System.out.println(e));
+		System.out.println(StringUtils.join(userIds, ","));
+
+
+	}
 
 }
