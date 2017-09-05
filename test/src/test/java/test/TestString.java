@@ -3,7 +3,11 @@
  */
 package test;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.*;
@@ -18,12 +22,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.StreamUtils;
+import sun.nio.ch.IOUtil;
 
 /**
  * @author yangkai
@@ -608,5 +617,31 @@ public class TestString {
         System.out.println(Integer.valueOf(b));
     }
 
+    @Test
+    public void testGenUUID() throws Exception {
+        //String str = StreamUtils.copyToString(new ClassPathResource("uuid.txt").getInputStream(), StandardCharsets.UTF_8);
 
+        File file = new File("uuid.txt");
+        OutputStream output = new FileOutputStream(file, true);
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 10000; i++) {
+            builder.append("\"").append(UUID.randomUUID().toString()).append("\",").append("\n");
+        }
+
+        IOUtils.write(builder.toString(), output, StandardCharsets.UTF_8);
+    }
+
+
+    @Test
+    public void test27() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i< 300; i++) {
+
+            for (int j = 0; j< 8; j ++) {
+                sb.append(new Random().nextInt(9));
+            }
+            sb.append(",");
+        }
+        System.out.println(sb.toString());
+    }
 }

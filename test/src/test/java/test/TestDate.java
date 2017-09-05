@@ -249,8 +249,9 @@ public class TestDate {
     
     @Test
     public void format() {
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sss").format(new Date()));
-
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.ssssss").format(new Date()));
+        System.out.println(new SimpleDateFormat("yyyyMM").format(new Date()));
+        System.out.println(new SimpleDateFormat("yyyy-MM").format(new Date()));
     }
 
 

@@ -14,15 +14,20 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.jooq.util.maven.example.postgres.Public;
 import org.junit.Test;
+import org.springframework.context.support.StaticApplicationContext;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.val;
 
 /**
  * @author yangkai
@@ -406,7 +411,6 @@ public class TestJdk8 {
 		System.out.println(userIds);
 		userIds.forEach(e -> System.out.println(e));
 		System.out.println(StringUtils.join(userIds, ","));
-
 	}
 
 	@Test
@@ -417,8 +421,38 @@ public class TestJdk8 {
 		System.out.println(userIds);
 		userIds.forEach(e -> System.out.println(e));
 		System.out.println(StringUtils.join(userIds, ","));
-
-
 	}
 
+	@Test
+	public void testMap() {
+		String s = "a,b  , ,,,,,,, c,d,  e  ,f,  g";
+		System.out.println(StringUtils.split(s, ","));
+		Set<String> ss = Arrays.stream(StringUtils.split(s, ",")).map(e -> e.trim()).collect(Collectors.toSet());
+		System.out.println(ss.size() + ":" + ss);
+		Set<String> ss2 = Arrays.stream(StringUtils.split(s, ",")).collect(Collectors.toSet());
+		System.out.println(ss2.size() + ":" + ss2);
+	}
+
+	@Test
+	public void testMap2() {
+		String s = "a,b  , ,,,,,,, c,d,  e  ,f,  g";
+		Set<String> ss = Arrays.stream(	StringUtils.stripAll(StringUtils.split(s, ","))).collect(Collectors.toSet());
+		System.out.println(ss.size() + ":" + ss);
+		Set<String> ss2 = Arrays.stream(StringUtils.split(s, ",")).collect(Collectors.toSet());
+		System.out.println(ss2.size() + ":" + ss2);
+	}
+
+	@Test
+	public void testMap3() {
+		String s = "a,b  , ,,,,,,, c,d,  e  ,f,  g";
+		Set<String> ss = Arrays.stream(	StringUtils.stripAll(StringUtils.split(s, ","))).collect(Collectors.toSet());
+		System.out.println(ss.size() + ":" + ss);
+		Set<String> ss1 = Arrays.stream(StringUtils.split(s, ",")).map(String::trim).collect(Collectors.toSet());
+		System.out.println(ss1.size() + ":" + ss1);
+		Set<String> ss2 = Arrays.stream(StringUtils.split(s, ",")).collect(Collectors.toSet());
+		System.out.println(ss2.size() + ":" + ss2);
+	}
+
+
+	   
 }

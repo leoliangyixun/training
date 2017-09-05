@@ -1,3 +1,0 @@
-constant:pagesize;pagestep;
-in:curr_page;curr_step;photos.size();album.size();
-out:currpage;currstep;countpage;countstep;
