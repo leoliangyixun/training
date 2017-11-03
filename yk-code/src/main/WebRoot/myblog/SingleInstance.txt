@@ -1,0 +1,33 @@
+package com.yangkai.myblog.factory;
+
+import com.yangkai.myblog.dao.MyBlogDAO;
+import com.yangkai.myblog.dao.MyBlogDAO;
+
+public class SingleInstanceFactory 
+{
+	public static MyBlogDAO dao=new MyBlogDAO();
+	//public static ListDAO dao=null;
+	public static SingleInstanceFactory fac=new SingleInstanceFactory();
+	private SingleInstanceFactory() 
+	{
+		//dao=new ListDAO();
+	}
+	public static SingleInstanceFactory getInstance()
+	{
+		return fac;
+	}
+	public  static MyBlogDAO getListDAO()
+	{
+		return dao;
+	}
+	@SuppressWarnings("static-access")
+	public static void main(String[] args)
+	{
+		MyBlogDAO dao1=SingleInstanceFactory.getInstance().getListDAO();
+		System.out.println(dao1);
+		MyBlogDAO dao2=SingleInstanceFactory.getInstance().getListDAO();
+		System.out.println(dao2);
+		MyBlogDAO dao3=SingleInstanceFactory.getInstance().getListDAO();
+		System.out.println(dao3);
+	}
+}
