@@ -3,6 +3,7 @@
  */
 package test;
 
+import com.hujiang.basic.framework.rest.validation.annotation.In;
 import org.junit.Test;
 
 import java.util.Objects;
@@ -55,4 +56,21 @@ public class TestInteger {
 
     }
 
+    @Test
+    public void test5() {
+        long a = 123455 % 64;
+        System.out.println(new Long(a).intValue());
+    }
+
+    @Test
+    public void test6() {
+        Integer a = 9999;
+        Integer b = new Integer(9999);
+        Integer c = new Integer(9999);
+        int d = 9999;
+        System.out.println(a == 9999);
+        System.out.println(b == c);
+        System.out.println(c == d);
+        System.out.println(c == a);
+    }
 }

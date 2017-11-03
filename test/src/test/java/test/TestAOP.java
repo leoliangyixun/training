@@ -26,7 +26,7 @@ public class TestAOP {
 
     @Test
     public void testAOP() {
-        Main.Employee e = new Main.Employee("yk", 20, "yangkai@hujang.com", "shanghai");
+        Facade.Employee e = new Facade.Employee("yk", 20, "yangkai@hujang.com", "shanghai");
 
         service.exec(e);
     }

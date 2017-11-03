@@ -3,21 +3,20 @@
  */
 package test;
 
+import com.hujiang.basic.framework.core.util.DateUtil;
+import org.junit.Test;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
-
-import com.hujiang.basic.framework.core.util.DateUtil;
-import org.joda.time.*;
-import org.junit.Test;
 
 /**
  * @description: TODO
@@ -253,6 +252,104 @@ public class TestDate {
         System.out.println(new SimpleDateFormat("yyyyMM").format(new Date()));
         System.out.println(new SimpleDateFormat("yyyy-MM").format(new Date()));
     }
+
+    @Test
+    public void testEpoch() {
+       long seconds =  Instant.now().getEpochSecond();
+        System.out.println(seconds);
+        Date date = new Date(seconds * 1000L);
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+    }
+
+    @Test
+    public void test4() {
+        long seconds =  Instant.now().getEpochSecond();
+        Date date1 = new Date(seconds * 1000L);
+        System.out.println(date1);
+        Date date2 = Calendar.getInstance().getTime();
+        System.out.println(date1.getTime());
+        System.out.println(date2.getTime());
+
+    }
+
+
+    @Test
+    public void test5() {
+        Date expire = DateUtil.toDateTime("2017-10-21 08:30:30");
+        Date now = DateUtil.toDateTime("2017-10-21 08:30:31");
+        System.out.println(expire);
+        System.out.println(new Date());
+
+        System.out.println(expire.compareTo(now));
+    }
+
+    @Test
+    public void test6() {
+        Date date = Date.from(LocalDateTime.of(1900, 1, 1, 0, 0, 59)
+                .atZone(ZoneId.systemDefault()).toInstant());
+        System.out.println(date);
+    }
+
+    @Test
+    public void test7() {
+        Date d = new Date();
+        Date d2 = Date.from(LocalDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault()).plusDays(1).atZone(ZoneId.systemDefault()).toInstant());
+        System.out.println(d2);
+        Date d3 = Date.from(LocalDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault()).plusDays(30).atZone(ZoneId.systemDefault()).toInstant());
+        System.out.println(d3);
+    }
+
+    @Test
+    public void test8() {
+        Date date1 = DateUtil.toDateTime("2017-10-22 16:30:30");
+        Date date2 = new Date();
+        Date date3 = DateUtil.toDateTime("2017-10-22 16:30:30");
+        System.out.println(date1.getTime());
+        System.out.println(date2.getTime());
+        System.out.println(date3.getTime());
+        System.out.println(date1.compareTo(date3));
+        Date d = Calendar.getInstance().getTime();
+        System.out.println(d.getTime());
+    }
+
+    @Test
+    public void test9() {
+        Date d = new Date();
+        Date d1 = Calendar.getInstance().getTime();
+        Date d2 =  DateUtil.toDateTime(DateUtil.toDateString(d1, DateUtil.DEFAULT_DATETIME_PATTERN));
+        System.out.println(d1.getTime());
+        System.out.println(d2.getTime());
+        System.out.println(d1.compareTo(d2));
+    }
+
+    @Test
+    public void testLocalDateTime2Seconds() {
+        long seconds = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        System.out.println(seconds);
+        seconds = Instant.now().toEpochMilli();
+        System.out.println(seconds);
+
+
+
+    }
+
+    @Test
+    public void testDate2Seconds() {
+        //Instant.now().toEpochMilli();
+        Date date = new Date();
+        long milli = date.toInstant().toEpochMilli();
+        System.out.println(milli);
+        long seconds = date.toInstant().getEpochSecond();
+        System.out.println(seconds);
+        System.out.println(date.getTime());//  seconds != date.getTime()
+
+    }
+
+    @Test
+    public void testDate2LocalDateTime() {
+        Date date = new Date();
+    }
+
 
 
 }

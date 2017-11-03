@@ -154,7 +154,70 @@ public class TestJson {
             "        }\n" +
             "    ]\n" +
             "}";
-    
+
+
+    /**
+     * 将data装换成json格式
+     * @return
+     */
+    public static String wxData2Json(String data) {
+        try {
+            if (StringUtils.isNotBlank(data)) {
+                List<String> elems = new ArrayList<>();
+                Arrays.asList(StringUtils.split(data, ",")).stream().forEach(content -> {
+                    StringBuilder sb = new StringBuilder();
+                    //like this --> first:有小伙伴回复了你|||#000000
+                    String[] text = StringUtils.split(content, ":");
+                    if (text.length == 0) {
+                        text = new String[]{"", ""};
+                    } else if (text.length == 1) {
+                        text = new String[]{text[0], ""};
+                    }
+
+                    sb.append("\"").append(text[0]).append("\"").append(":");
+                    //like this --> 有小伙伴回复了你|||#000000
+                    if (text[1].contains("|||")) {
+                        //1.有小伙伴回复了你|||#000000
+                        //2.|||
+                        //3. |||
+                        //4.有小伙伴回复了你|||
+                        //5.|||#000000
+                        String[] pairs = StringUtils.split(text[1], "|||");
+                        //兼容逻辑，防止出现异常（如："keyword3:|||,keyword4:|||" 会出现异常）
+                        if (pairs.length == 0) {
+                            pairs = new String[]{"", ""};
+                        } else if (pairs.length == 1) {
+                            if (pairs[0].contains("#")) {
+                                pairs = new String[]{"", pairs[0]};
+                            } else {
+                                pairs = new String[]{pairs[0], ""};
+                            }
+                        }
+
+                        sb.append("{");
+                        sb.append("\"value\"").append(":").append("\"").append(pairs[0].replaceAll("&colon;", ":").replaceAll("&comma;", ",")).append("\"").append(",");
+                        sb.append("\"color\"").append(":").append("\"").append(pairs[1]).append("\"");
+                        sb.append("}");
+                    } else {
+                        sb.append("{");
+                        sb.append("\"value\"").append(":").append("\"").append(text[1]).append("\"").append(",");
+                        sb.append("\"color\"").append(":").append("\"\"");
+                        sb.append("}");
+                    }
+
+                    elems.add(sb.toString());
+                });
+
+                return StringUtils.join(elems, ",");
+            }
+        } catch (Exception e) {
+            log.error(String.format("invalid template data: %s, error stack: ", data), e);
+        }
+
+        return null;
+    }
+
+
     @Test
     public void test() {
        String s ="{\"study_tool\":{  \n" +
@@ -406,8 +469,8 @@ public class TestJson {
         String data = "first:有小伙伴回复了你|||#000000,remark:快去看看吧|||#000000,keyword1:暗夜之白雪|||,keyword2:2016-12-06 14&colon;40|||,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制|||";
       //  String data = "first:,remark:快去看看吧|||#000000,keyword1:暗夜之白雪|||,keyword2:2016-12-06 14&colon;40|||,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制|||";
        // String data = "first:,remark:快去看看吧|||#000000,keyword1:暗夜之白雪,keyword2:2016-12-06 14&colon;40,keyword3:哦，好吧，因为我想申请一个东西，怕赶不上时间限制";
-/*       System.out.println(StringUtils.isNotBlank(data) && StringUtils.split(StringUtils.split(data, ",")[1], ":").length ==2);
-       System.out.println(StringUtils.isNotBlank(data) && StringUtils.split(StringUtils.split(data, ",")[0], ":").length ==2);*/
+/*       System.out.println(Utils.isNotBlank(data) && Utils.split(Utils.split(data, ",")[1], ":").length ==2);
+       System.out.println(Utils.isNotBlank(data) && Utils.split(Utils.split(data, ",")[0], ":").length ==2);*/
         System.out.println(validate(data));
         String[] ss1 = StringUtils.split(data, ",");
         String[] ss2 = StringUtils.split(ss1[0], ":");
@@ -457,7 +520,7 @@ public class TestJson {
         System.out.println(ss[1]);*/
         
         String str = "有小伙伴回复了你|||#000000";
-       // String[] ss =StringUtils.splitByWholeSeparator(str, "|||");
+       // String[] ss =Utils.splitByWholeSeparator(str, "|||");
         String[] ss =StringUtils.split(str, "|||");
         //String[] ss = str.split("|||");
         System.out.println(ss);

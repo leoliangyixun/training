@@ -100,7 +100,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <warSourceDirectory>src/main/webapp</warSourceDirectory>
+                    <warSourceDirectory>src/facade/webapp</warSourceDirectory>
                     <warName>springmvc</warName>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>

@@ -121,7 +121,7 @@ Java Threads: ( => current thread )
   0x00007fa75d801800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=18435, stack(0x0000700007f3a000,0x000070000803a000)]
   0x00007fa75b80b800 JavaThread "Finalizer" daemon [_thread_blocked, id=14595, stack(0x0000700007e37000,0x0000700007f37000)]
   0x00007fa75b80a800 JavaThread "Reference Handler" daemon [_thread_blocked, id=14083, stack(0x0000700007d34000,0x0000700007e34000)]
-  0x00007fa75d802800 JavaThread "main" [_thread_blocked, id=7171, stack(0x0000700007316000,0x0000700007416000)]
+  0x00007fa75d802800 JavaThread "facade" [_thread_blocked, id=7171, stack(0x0000700007316000,0x0000700007416000)]
 
 Other Threads:
   0x00007fa75c808800 VMThread [stack: 0x0000700007c31000,0x0000700007d31000] [id=13571]

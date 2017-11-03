@@ -22,7 +22,7 @@
 		</snapshotRepository>
 	</distributionManagement>
       <properties>
-    	<compiler.source>1.8</compiler.source>
+    		<compiler.source>1.8</compiler.source>
 		<compiler.target>1.8</compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven-source-plugin.version>2.2.1</maven-source-plugin.version>
@@ -515,5 +515,7 @@
     <module>rxjava</module>
     <module>metrics</module>
     <module>myblog</module>
+    <module>oauth2.0</module>
+    <module>spring-security-oauth2</module>
   </modules>
 </project>

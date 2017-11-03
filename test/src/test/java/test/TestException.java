@@ -4,7 +4,9 @@
 package test;
 
 import java.io.IOException;
+import java.util.Set;
 
+import com.google.common.collect.Sets;
 import org.junit.Test;
 
 import lombok.Data;
@@ -204,6 +206,17 @@ public class TestException {
         String result = runner.run(400);
         System.out.println(result);
 
+    }
+
+    @Test
+    public void testForEachReturn() {
+        Set<Integer> ids = Sets.newHashSet(1,2,3,4,5,6,7,8,9);
+        ids.forEach(e -> {
+            if (e ==2){
+                return;
+            }
+            System.out.println(e);
+        });
     }
 
 }

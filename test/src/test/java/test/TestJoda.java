@@ -87,7 +87,21 @@ public class TestJoda {
         System.out.println(minutes);
     }
 
+    @Test
+    public void testJoda9() throws Exception {
+        Date d = new Date();
+        Date d1 = new LocalDateTime(d).toDate();
+        Date d2 = new LocalDateTime(d).plusDays(1).toDate();
+        Date d3 = new LocalDateTime(d).plusSeconds(1).toDate();
+        System.out.println(d1 );
+        System.out.println(d2);
+        System.out.println(d3);
 
-
+    }
+    @Test
+    public void testJoda10() throws Exception {
+        System.out.println(new Date().getTime());
+        System.out.println(Instant.now().getMillis());
+    }
 
 }

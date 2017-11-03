@@ -3,31 +3,22 @@
  */
 package test;
 
-import java.io.Serializable;
-import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
-import com.hujiang.basic.framework.core.util.DateUtil;
-import javafx.beans.*;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.CompareToBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.jooq.util.maven.example.postgres.Public;
-import org.junit.Test;
-import org.springframework.context.support.StaticApplicationContext;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-
+import com.hujiang.basic.framework.core.util.DateUtil;
+import com.hujiang.basic.framework.core.util.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.val;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.junit.Test;
+import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
+import org.springframework.test.context.TestPropertySource;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author yangkai
@@ -453,6 +444,91 @@ public class TestJdk8 {
 		System.out.println(ss2.size() + ":" + ss2);
 	}
 
+	@Test
+	public void testForEach_continue() {
+		List<Integer> list = Lists.newArrayList(1,2,3,4,5,6,7,8,9);
+		list.forEach(e -> {
+			if (e == 2) {
+				// 只是终止当前迭代，不会终止本次迭代 相当于continue,如果要break 则throw exception
+				return;
+			}
 
-	   
+			System.out.println(e);
+		});
+	}
+
+	@Test
+	public void testSort1 () {
+		List<Kid> kids = Lists.newArrayList(new Kid(1),new Kid(3),new Kid(5),new Kid(2));
+		//kids.sort(Comparator.comparing());
+	}
+
+	@Test
+	public void testSort2 () {
+		List<Kid> kids = Lists.newArrayList(new Kid(1),new Kid(3),new Kid(5),new Kid(2));
+		System.out.println("before sort: " + kids);
+		kids.sort((o1, o2) ->
+				Integer.compare(o1.getAge(), o2.getAge())
+				//-Integer.compare(o1.getAge(), o2.getAge())
+		);
+		System.out.println("after sort: " + kids);
+	}
+
+	@Test
+	public void testSort3 () {
+		List<Kid> kids = Lists.newArrayList(new Kid(1),new Kid(3),new Kid(5),new Kid(2));
+		System.out.println("before sort: " + kids);
+		kids.sort(Comparator.comparingInt(Kid::getAge));
+		System.out.println("after sort: " + kids);
+		kids.sort(Comparator.comparingInt(Kid::getAge).reversed());
+		System.out.println("after sort: " + kids);
+	}
+
+	@Test
+	public void testSort4 () {
+		List<Kid> kids = Lists.newArrayList(
+				new Kid(DateUtil.toDateTime("2010-10-01 20:30:30")),
+				new Kid(DateUtil.toDateTime("2009-10-01 20:30:00")),
+				new Kid(DateUtil.toDateTime("2012-10-01 20:30:30")),
+				new Kid(DateUtil.toDateTime("2009-10-01 20:29:59"))
+		);
+		System.out.println("before sort: " + kids);
+		kids.sort(Comparator.comparing(Kid::getBirthday, (o1, o2) -> o1.compareTo(o2)));
+
+		System.out.println("after sort: " + kids);
+	}
+
+
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class Kid {
+		private int age;
+		private Date birthday;
+
+		public Kid(int age) {
+			this.age = age;
+		}
+
+		public Kid(Date birthday) {
+			this.birthday = birthday;
+		}
+
+		@Override
+		public String toString() {
+			return JsonUtil.object2JSON(this);
+		}
+	}
+
+	@Test
+	public void testOptional() {
+		Kid kid = new Kid(20, new Date());
+
+	}
+
+
+	public static class Service {
+
+	}
 }

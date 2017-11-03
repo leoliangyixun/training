@@ -100,7 +100,7 @@
 	<build>
 		<resources>
 			<resource>
-				<directory>src/main/resources</directory>
+				<directory>src/facade/resources</directory>
 				<filtering>true</filtering>
 			</resource>
 		</resources>

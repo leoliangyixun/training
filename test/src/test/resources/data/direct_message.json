@@ -1,0 +1,38 @@
+{
+    "Initiator": "SysTest",
+    "InitiatorID": 999,
+    "Token": "A435FBA5-0AC3-45AC-AA40-611B750B4BFA",
+    "Url": "http://m.hujiang.com/wechat/rewards/210339/38caad4c60cdac1f49e74bff1a72a7aa/",
+    "OpenID": "o_QKgwEhRP4HqpDoGycv8bfdaf4I",
+    "TemplateID": "-931XStnWqXiJo3ZLWn2GOu6D9e-53HGsTPpvbOmxIM",
+    "WechatAppID": "wxa5775d7088f462ca",
+    "Template": {
+      "First": {
+        "Value": "杨开",
+        "Color": "#ccc"
+      },
+      "Keyword1": {
+        "Value": "100分\n"
+      },
+      "Keyword2": {
+        "Value": "嘀~收到好友【助攻】*1，目前好友总数：2\n",
+        "color":"#000"
+      },
+      "Keyword3": {
+        "Value": "angela\r\n",
+        "color":"#000"
+      },
+      "Keyword4": {
+        "Value": "2016-05-04 12:55:20\r\n",
+        "color":"#000"
+      },
+      "Keyword5": {
+        "Value": "沪江网\r\n",
+        "color":"#000"
+      },
+      "Remark": {
+        "Value": "恭喜您已免费进入《英语口语加油站》英语学习营！请点“详情”领取奖励，并安装CCtalk即可听课，祝你学习愉快！\r\n",
+        "color":"#000"
+      }
+    }
+}

@@ -7,10 +7,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.alibaba.fastjson.JSONObject;
 import com.b5m.test.enumeration.SourceType;
@@ -130,7 +134,7 @@ public class TestString {
         ids.add("d");
         ids.add("e");
 
-        String str = StringUtils.join(ids, ',');
+        String str = Utils.join(ids, ',');
         System.out.println(str);*/
 
 /*        List<User> users =  new ArrayList<User>();
@@ -147,7 +151,7 @@ public class TestString {
             users.add(u2);
             users.add(u3);
 
-            String str2 = StringUtils.join(users, ',');
+            String str2 = Utils.join(users, ',');
 
             System.out.println(str2);*/
 
@@ -618,7 +622,7 @@ public class TestString {
     }
 
     @Test
-    public void testGenUUID() throws Exception {
+    public void testGenUUID2File() throws Exception {
         //String str = StreamUtils.copyToString(new ClassPathResource("uuid.txt").getInputStream(), StandardCharsets.UTF_8);
 
         File file = new File("uuid.txt");
@@ -644,4 +648,121 @@ public class TestString {
         }
         System.out.println(sb.toString());
     }
+
+    @Test
+    public void testGenUUID() throws Exception {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            builder.append("\"").append(UUID.randomUUID().toString()).append("\",").append("\n");
+        }
+        System.out.println(builder.toString());
+    }
+
+
+    @Test
+    public void test2() {
+        String str = null;
+        System.out.println(String.format("token:%s", str));
+    }
+
+    @Test
+    public void testStrip() {
+        String source = "www.hujiang.com/login";
+        String target ="http://www.hujiang.com/login?source=app&appid=20091024538";
+
+        if (StringUtils.startsWithIgnoreCase(source, "http://")) {
+            source = StringUtils.stripStart(source, "http://");
+        } else if (StringUtils.startsWithIgnoreCase(source, "https://")) {
+            source = StringUtils.stripStart(source, "https://");
+        }
+        System.out.println(source);
+
+        if (StringUtils.startsWithIgnoreCase(target, "http://")) {
+            target = StringUtils.stripStart(target, "http://");
+        } else if (StringUtils.startsWithIgnoreCase(target, "https://")) {
+            target = StringUtils.stripStart(target, "https://");
+        }
+
+        target = StringUtils.split(target, "?")[0];
+
+        System.out.println(target);
+
+        System.out.println(StringUtils.contains(target, source));
+        System.out.println(Objects.equals(source, target));
+
+
+    }
+
+    @Test
+    public void testURLEncode() throws Exception{
+        String mobile = "13166016298";
+        String email = "leoliangyixun@163.com";
+        System.out.println(URLEncoder.encode(mobile, StandardCharsets.UTF_8.name()));
+        System.out.println(URLEncoder.encode(email, StandardCharsets.UTF_8.name()));
+    }
+
+    @Test
+    public void testStirng() {
+        String a = "{\"name\": \"yangkai\"}";
+        String json = JsonUtil.json2Object(a, String.class);
+        System.out.println(json);
+    }
+
+    @Test
+    public void testSplit6() {
+        String s = "123 , 456, 789  ,  345  , 675,  245";
+        Set<String> ids;
+        ids = Arrays.stream(StringUtils.split(s, ","))
+                .map(StringUtils::trim).collect(Collectors.toSet());
+        System.out.println(ids);
+
+        ids = Arrays.stream(StringUtils.split(s, ","))
+                .map(String::trim).collect(Collectors.toSet());
+        System.out.println(ids);
+
+        ids = Arrays.stream(StringUtils.split(s, ",")).collect(Collectors.toSet());
+        System.out.println(ids);
+
+
+    }
+
+    @Test
+    public void testSplit7() {
+        Set<String> ids = Arrays.stream(StringUtils.split("", ","))
+                .map(StringUtils::trim).collect(Collectors.toSet());
+        System.out.println(ids);
+        System.out.println(ids.isEmpty());
+        System.out.println(ids.size());
+    }
+
+    @Test
+    public void testSplit8() {
+        Set<String> ids = Sets.newHashSet();
+        String touser = StringUtils.join(ids, ",");
+        System.out.println(StringUtils.isBlank(touser));
+        System.out.println(StringUtils.isEmpty(touser));
+        System.out.println(touser == null);
+    }
+
+
+    @Test
+    public void testUrl() throws Exception {
+        String s = "https://pass.hujang.com/v1/qc/?source=xxx&name=yk";
+        URL url = new URL(s);
+        System.out.println(url.getHost());
+        System.out.println(url.getQuery());
+    }
+
+    @Test
+    public void testUrl2() throws Exception {
+        String s = "http%3A%2F%2Fqapass.cctalk.com%2Fqc%3Fsource%3dHUJIANG%26callbacktype%3d0%26protocol%3dhttps%3A%26domain%3dhujiang.com%26bind_mobile%3d%26callbackUrl%3dhttp%3A%2F%2Fqapass.cctalk.com%2Fqc%26returnurl%3dhttp%253A%252F%252Fdevpass.hujiang.com%252Faccount%252F%26inputsource%3d%26version%3dv2";
+        s =  URLDecoder.decode(s, "utf-8");
+        URL url = new URL(s);
+        System.out.println(url.getHost());
+        System.out.println(url.getQuery());
+    }
+
+
+
+
 }
