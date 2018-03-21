@@ -1,4 +1,4 @@
-package com.yangkai.fileupload.serevlet;
+package com.hujiang.fileupload.servlet;
 
 import java.io.File;
 import java.io.IOException;

@@ -31,7 +31,7 @@
 		<maven-resources-plugin.version>2.5</maven-resources-plugin.version>
         <maven.test.skip>false</maven.test.skip>
         <log4j.version>1.2.16</log4j.version>
-        <hibernate.version>5.1.0.Final<!-- 4.2.15.Final --></hibernate.version>
+        <hibernate.version>5.1.0.Final</hibernate.version>
         <persistence-api.version>1.0</persistence-api.version>
         <hibernate-jpa-api.version>1.0.0.Final</hibernate-jpa-api.version>
         <metaq-client.version>1.4.6.2</metaq-client.version>
@@ -95,11 +95,6 @@
   
     <dependencyManagement>
         <dependencies>
-<!-- 			<dependency>
-		    	<groupId>com.kerwinyang.training</groupId>
-				<artifactId>yk-model</artifactId>
-				<version>1.0</version>
-			</dependency> -->
 			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
@@ -517,5 +512,10 @@
     <module>myblog</module>
     <module>oauth2.0</module>
     <module>spring-security-oauth2</module>
+    <module>spring5</module>
+    <module>spring-boot2.0</module>
+    <module>apns</module>
+    <module>netty</module>
+    <module>kafka</module>
   </modules>
 </project>

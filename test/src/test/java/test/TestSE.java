@@ -1,9 +1,10 @@
 package test;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.google.common.collect.Lists;
 import com.hujiang.basic.framework.core.util.JsonUtil;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -13,21 +14,12 @@ import org.junit.Test;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by yangkai on 2017/6/9.
  */
 public class TestSE {
-
-    @Test
-    public void test() {
-        Main.Employee e = new Main.Employee(200, "ok", "{yk}");
-        e.setName("xx");
-        //System.out.println(e.toString());
-        System.out.println(e.clearSensitive());
-    }
 
     @Data
     @NoArgsConstructor
@@ -410,10 +402,136 @@ public class TestSE {
 
     }
 
-
     @Test
     public void testStudent() throws Exception {
         Student s = new Student(20);
         System.out.println(s);
+    }
+
+    @Test
+    public void testURL() throws Exception {
+        String url = "http://localhost:8080/qc?source=xx";
+        System.out.println(new URL(url).getHost());
+
+    }
+
+    @Test
+    public void testNull() throws Exception {
+        System.out.println(Objects.equals(null, null));
+    }
+
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class People {
+        private Integer userId;
+        private String name;
+        private People teacher;
+        private People leader;
+        private List<People> students;
+
+        public People(Integer userId, String name) {
+            this.userId = userId;
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return JsonUtil.object2JSON(this);
+        }
+    }
+
+    @Test
+    public void testJsonCascade() {
+        People p1 = new People(1, "xx");
+        People p2 = new People(2, "yy");
+        People p3 = new People(3, "xx");
+        People p4 = new People(4, "mm");
+        People p5 = new People(5, "nn");
+        p1.setTeacher(p2);
+        p1.setStudents(Lists.newArrayList(p4, p5));
+
+        People[] peoples = new People[]{p1/*, p2, p3,p4, p5*/};
+        //List<People> ss = Lists.newArrayList(p1, p2, p3);
+
+        System.out.println(JsonUtil.object2JSON(peoples, SerializerFeature.WriteDateUseDateFormat, SerializerFeature.WriteMapNullValue, SerializerFeature.DisableCircularReferenceDetect));
+        //System.out.println(JsonUtil.object2JSON(ss));
+    }
+
+    public interface Teachable {
+        public void work();
+    }
+
+    public interface Programmable {
+        public void program();
+    }
+
+    public class Programmer {
+        public void work() {
+            System.out.println("I am programming");
+        }
+    }
+
+    public class TeachableProgrammer extends Programmer implements Teachable {
+
+        @Override
+        public void work() {
+            super.work();
+            System.out.println("I am teaching");
+        }
+    }
+
+    @Test
+    public void testWork() {
+        TeachableProgrammer tp = new TeachableProgrammer();
+        tp.work();
+    }
+    
+    
+    @Data 
+    public static class Student2 {
+        private String name;
+
+        @Override
+        public boolean equals(Object obj) {
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((name == null) ? 0 : name.hashCode());
+            return result;
+        }
+
+        public Student2(String name) {
+            this.name = name;
+        } 
+    }
+    
+    @Test
+    public void testHashCodeAndEqual() {
+        
+        Student2 s1 = new Student2("yk");
+        Student2 s2 = new Student2("yk");
+        System.out.println(s1.hashCode());
+        System.out.println(s2.hashCode());
+
+        System.out.println(s1 == s2);
+
+        System.out.println( s1.equals(s2));
+
+        Map<Student2, String> map = new HashMap<>();
+        map.put(s1, "yk");
+        map.put(s2, "yk2");
+        System.out.println(map);
+
+        Set<Student2> set = new HashSet<>();
+        set.add(s1);
+        set.add(s2);
+        System.out.println(set);
+
     }
 }

@@ -1,6 +1,7 @@
 package test;
 
 import com.hujiang.basic.framework.core.util.DateUtil;
+import com.training.Utils;
 import org.joda.time.*;
 import org.joda.time.Duration;
 import org.joda.time.LocalDateTime;
@@ -102,6 +103,14 @@ public class TestJoda {
     public void testJoda10() throws Exception {
         System.out.println(new Date().getTime());
         System.out.println(Instant.now().getMillis());
+    }
+
+    @Test
+    public void testPlus() {
+        Date now = new Date();
+        System.out.println(now);
+        Date date = new LocalDateTime(now).plusDays(30).toDate();
+        System.out.println(date);
     }
 
 }

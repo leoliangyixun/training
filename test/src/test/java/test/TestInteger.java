@@ -73,4 +73,27 @@ public class TestInteger {
         System.out.println(c == d);
         System.out.println(c == a);
     }
+
+    @Test
+    public void test7() {
+
+        System.out.println(Integer.MAX_VALUE);
+    }
+
+    @Test
+    public void test8() {
+        int a = 33462689;
+        Long b = 33462689L;
+        System.out.println(Objects.equals((long)a, b));
+    }
+
+    @Test
+    public void test9() {
+        Integer a = new Integer(9999);
+        int b = 9999;
+        Integer c = 9999;
+        System.out.println(a == b);
+        System.out.println(b == c);
+        System.out.println(a == c);
+    }
 }

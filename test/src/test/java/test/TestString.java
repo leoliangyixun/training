@@ -21,7 +21,6 @@ import com.b5m.test.enumeration.SourceType;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.hujiang.basic.framework.core.util.JsonUtil;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -621,20 +620,6 @@ public class TestString {
         System.out.println(Integer.valueOf(b));
     }
 
-    @Test
-    public void testGenUUID2File() throws Exception {
-        //String str = StreamUtils.copyToString(new ClassPathResource("uuid.txt").getInputStream(), StandardCharsets.UTF_8);
-
-        File file = new File("uuid.txt");
-        OutputStream output = new FileOutputStream(file, true);
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < 10000; i++) {
-            builder.append("\"").append(UUID.randomUUID().toString()).append("\",").append("\n");
-        }
-
-        IOUtils.write(builder.toString(), output, StandardCharsets.UTF_8);
-    }
-
 
     @Test
     public void test27() {
@@ -654,6 +639,15 @@ public class TestString {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < 10; i++) {
             builder.append("\"").append(UUID.randomUUID().toString()).append("\",").append("\n");
+        }
+        System.out.println(builder.toString());
+    }
+
+    @Test
+    public void testGenUUIDUpcase() throws Exception {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            builder.append("\"").append(UUID.randomUUID().toString().toUpperCase()).append("\",").append("\n");
         }
         System.out.println(builder.toString());
     }
@@ -762,6 +756,85 @@ public class TestString {
         System.out.println(url.getQuery());
     }
 
+    @Test
+    public void testStringTrip() {
+        String str = "(x(x)x)";
+        str = StringUtils.strip(str, "(");
+        System.out.println(str);
+    }
+
+    @Test
+    public void testStringTrip2() {
+        String str = "http://pass.hujiang.com";
+        System.out.println(str);
+        str = StringUtils.stripStart(str, "http://");
+        str = StringUtils.stripStart(str, "https://");
+        System.out.println(str);
+    }
+
+    @Test
+    public void testRemove() {
+        String str = "https://pass.hujiang.com";
+        System.out.println(str);
+        str = StringUtils.removeStart(str, "http://");
+        str = StringUtils.removeStart(str, "https://");
+        System.out.println(str);
+    }
+
+    @Test
+    public void testRemove2() {
+        String str = "https://pass.hujiang.com";
+        System.out.println(str);
+        str = StringUtils.remove(str, "http://");
+        str = StringUtils.remove(str, "https://");
+        System.out.println(str);
+    }
+
+    @Test
+    public void testStringLegnth() {
+        String str = "[{\n" +
+                "    \"item\": {\n" +
+                "        \"id\": 10,\n" +
+                "        \"key\": \"study_tool_h\",\n" +
+                "        \"name\": \"学习工具配置\",\n" +
+                "        \"value\": \"{\\n      \\\"items\\\": [\\n        {\\n          \\\"id\\\": \\\"com.hujiang.hjclass\\\",\\n          \\\"name\\\": \\\"沪江网校\\\",\\n          \\\"icon\\\": \\\"http://www.qiniu.com/a.png\\\",\\n          \\\"scheme\\\": \\\"hujiangclass3://hjclass.hujiang.com/\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiang-wang-xiao-wai-yu/id738227542?l=zh&ls=1&mt=8\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"com.hujiang.cctalk\\\",\\n          \\\"name\\\": \\\"沪江CCTalk\\\",\\n          \\\"icon\\\": \\\"\\\",\\n          \\\"scheme\\\": \\\"hujiangcctalk://\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiangcctalk-hu-dong-zhi/id843666882?l=zh&ls=1&mt=8\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"com.hujiang.dict\\\",\\n          \\\"name\\\": \\\"小D词典4G\\\",\\n          \\\"icon\\\": \\\"\\\",\\n          \\\"scheme\\\": \\\"hjdict://\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiang-xiaod-ci-dian-ying/id481584414?l=zh&ls=1&mt=8\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"com.hjwordgames\\\",\\n          \\\"name\\\": \\\"开心词场4G\\\",\\n          \\\"icon\\\": \\\"\\\",\\n          \\\"scheme\\\": \\\"cichang://\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiang-kai-xin-ci-chang/id635206028?l=zh&ls=1&mt=8\\\"\\n        }\\n      ],\\n      \\\"display\\\": true\\n    }\"\n" +
+                "    },\n" +
+                "    \"id\": 10\n" +
+                "},{\n" +
+                "    \"item\": {\n" +
+                "        \"id\": 10,\n" +
+                "        \"key\": \"study_tool_h\",\n" +
+                "        \"name\": \"学习工具配置\",\n" +
+                "        \"value\": \"{\\n      \\\"items\\\": [\\n        {\\n          \\\"id\\\": \\\"com.hujiang.hjclass\\\",\\n          \\\"name\\\": \\\"沪江网校\\\",\\n          \\\"icon\\\": \\\"http://www.qiniu.com/a.png\\\",\\n          \\\"scheme\\\": \\\"hujiangclass3://hjclass.hujiang.com/\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiang-wang-xiao-wai-yu/id738227542?l=zh&ls=1&mt=8\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"com.hujiang.cctalk\\\",\\n          \\\"name\\\": \\\"沪江CCTalk\\\",\\n          \\\"icon\\\": \\\"\\\",\\n          \\\"scheme\\\": \\\"hujiangcctalk://\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiangcctalk-hu-dong-zhi/id843666882?l=zh&ls=1&mt=8\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"com.hujiang.dict\\\",\\n          \\\"name\\\": \\\"小D词典4G\\\",\\n          \\\"icon\\\": \\\"\\\",\\n          \\\"scheme\\\": \\\"hjdict://\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiang-xiaod-ci-dian-ying/id481584414?l=zh&ls=1&mt=8\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"com.hjwordgames\\\",\\n          \\\"name\\\": \\\"开心词场4G\\\",\\n          \\\"icon\\\": \\\"\\\",\\n          \\\"scheme\\\": \\\"cichang://\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiang-kai-xin-ci-chang/id635206028?l=zh&ls=1&mt=8\\\"\\n        }\\n      ],\\n      \\\"display\\\": true\\n    }\"\n" +
+                "    },\n" +
+                "    \"id\": 10\n" +
+                "},{\n" +
+                "    \"item\": {\n" +
+                "        \"id\": 10,\n" +
+                "        \"key\": \"study_tool_h\",\n" +
+                "        \"name\": \"学习工具配置\",\n" +
+                "        \"value\": \"{\\n      \\\"items\\\": [\\n        {\\n          \\\"id\\\": \\\"com.hujiang.hjclass\\\",\\n          \\\"name\\\": \\\"沪江网校\\\",\\n          \\\"icon\\\": \\\"http://www.qiniu.com/a.png\\\",\\n          \\\"scheme\\\": \\\"hujiangclass3://hjclass.hujiang.com/\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiang-wang-xiao-wai-yu/id738227542?l=zh&ls=1&mt=8\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"com.hujiang.cctalk\\\",\\n          \\\"name\\\": \\\"沪江CCTalk\\\",\\n          \\\"icon\\\": \\\"\\\",\\n          \\\"scheme\\\": \\\"hujiangcctalk://\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiangcctalk-hu-dong-zhi/id843666882?l=zh&ls=1&mt=8\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"com.hujiang.dict\\\",\\n          \\\"name\\\": \\\"小D词典4G\\\",\\n          \\\"icon\\\": \\\"\\\",\\n          \\\"scheme\\\": \\\"hjdict://\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiang-xiaod-ci-dian-ying/id481584414?l=zh&ls=1&mt=8\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"com.hjwordgames\\\",\\n          \\\"name\\\": \\\"开心词场4G\\\",\\n          \\\"icon\\\": \\\"\\\",\\n          \\\"scheme\\\": \\\"cichang://\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiang-kai-xin-ci-chang/id635206028?l=zh&ls=1&mt=8\\\"\\n        }\\n      ],\\n      \\\"display\\\": true\\n    }\"\n" +
+                "    },\n" +
+                "    \"id\": 10\n" +
+                "},{\n" +
+                "    \"item\": {\n" +
+                "        \"id\": 10,\n" +
+                "        \"key\": \"study_tool_h\",\n" +
+                "        \"name\": \"学习工具配置\",\n" +
+                "        \"value\": \"{\\n      \\\"items\\\": [\\n        {\\n          \\\"id\\\": \\\"com.hujiang.hjclass\\\",\\n          \\\"name\\\": \\\"沪江网校\\\",\\n          \\\"icon\\\": \\\"http://www.qiniu.com/a.png\\\",\\n          \\\"scheme\\\": \\\"hujiangclass3://hjclass.hujiang.com/\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiang-wang-xiao-wai-yu/id738227542?l=zh&ls=1&mt=8\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"com.hujiang.cctalk\\\",\\n          \\\"name\\\": \\\"沪江CCTalk\\\",\\n          \\\"icon\\\": \\\"\\\",\\n          \\\"scheme\\\": \\\"hujiangcctalk://\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiangcctalk-hu-dong-zhi/id843666882?l=zh&ls=1&mt=8\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"com.hujiang.dict\\\",\\n          \\\"name\\\": \\\"小D词典4G\\\",\\n          \\\"icon\\\": \\\"\\\",\\n          \\\"scheme\\\": \\\"hjdict://\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiang-xiaod-ci-dian-ying/id481584414?l=zh&ls=1&mt=8\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"com.hjwordgames\\\",\\n          \\\"name\\\": \\\"开心词场4G\\\",\\n          \\\"icon\\\": \\\"\\\",\\n          \\\"scheme\\\": \\\"cichang://\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiang-kai-xin-ci-chang/id635206028?l=zh&ls=1&mt=8\\\"\\n        }\\n      ],\\n      \\\"display\\\": true\\n    }\"\n" +
+                "    },\n" +
+                "    \"id\": 10\n" +
+                "},{\n" +
+                "    \"item\": {\n" +
+                "        \"id\": 10,\n" +
+                "        \"key\": \"study_tool_h\",\n" +
+                "        \"name\": \"学习工具配置\",\n" +
+                "        \"value\": \"{\\n      \\\"items\\\": [\\n        {\\n          \\\"id\\\": \\\"com.hujiang.hjclass\\\",\\n          \\\"name\\\": \\\"沪江网校\\\",\\n          \\\"icon\\\": \\\"http://www.qiniu.com/a.png\\\",\\n          \\\"scheme\\\": \\\"hujiangclass3://hjclass.hujiang.com/\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiang-wang-xiao-wai-yu/id738227542?l=zh&ls=1&mt=8\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"com.hujiang.cctalk\\\",\\n          \\\"name\\\": \\\"沪江CCTalk\\\",\\n          \\\"icon\\\": \\\"\\\",\\n          \\\"scheme\\\": \\\"hujiangcctalk://\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiangcctalk-hu-dong-zhi/id843666882?l=zh&ls=1&mt=8\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"com.hujiang.dict\\\",\\n          \\\"name\\\": \\\"小D词典4G\\\",\\n          \\\"icon\\\": \\\"\\\",\\n          \\\"scheme\\\": \\\"hjdict://\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiang-xiaod-ci-dian-ying/id481584414?l=zh&ls=1&mt=8\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"com.hjwordgames\\\",\\n          \\\"name\\\": \\\"开心词场4G\\\",\\n          \\\"icon\\\": \\\"\\\",\\n          \\\"scheme\\\": \\\"cichang://\\\",\\n          \\\"url\\\": \\\"https://itunes.apple.com/cn/app/hu-jiang-kai-xin-ci-chang/id635206028?l=zh&ls=1&mt=8\\\"\\n        }\\n      ],\\n      \\\"display\\\": true\\n    }\"\n" +
+                "    },\n" +
+                "    \"id\": 10\n" +
+                "}]";
+        System.out.println(str.length());
+    }
 
 
 

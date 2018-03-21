@@ -16,11 +16,12 @@ import org.junit.Test;
  *
  */
 public class TestThreadPool {
-    
+    private ExecutorService service = Executors.newFixedThreadPool(100);
+    private CompletionService<String> completionService = new ExecutorCompletionService<String>(service);
+
     @Test
     public void test () {
-        ExecutorService service = Executors.newFixedThreadPool(100);
-        CompletionService<String> completionService = new ExecutorCompletionService<String>(service);
+
         
         completionService.submit(new Callable<String>() {
             @Override

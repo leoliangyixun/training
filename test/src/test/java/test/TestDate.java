@@ -350,6 +350,21 @@ public class TestDate {
         Date date = new Date();
     }
 
+    @Test
+    public void testDateCompare() {
+        Date date1 = DateUtil.toDateTime("2017-10-21 08:30:30");
+        Date date2 = DateUtil.toDateTime("2017-10-21 08:30:30");
+        System.out.println(date1.before(date2));
+        System.out.println(date1.compareTo(date2));
+        Date now = new Date();
+        System.out.println(DateUtil.toDateString(now, DateUtil.DEFAULT_DATETIME_PATTERN));
+        System.out.println(DateUtil.toDateString(now, DateUtil.DEFAULT_DATEDETAIL_PATTERN));
+    }
 
+    @Test
+    public void testTimestamp2Date_1() {
+        Date d = new Date(1L);
+        System.out.println(d);
 
+    }
 }

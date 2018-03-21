@@ -14,11 +14,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
-import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
-import org.springframework.test.context.TestPropertySource;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author yangkai
@@ -515,6 +514,10 @@ public class TestJdk8 {
 			this.birthday = birthday;
 		}
 
+		public static Kid getKid(int age) {
+			return  age < 18 ? new Kid(age, DateUtil.toDateTime("2000-10-15 21:00:00")) : null;
+		}
+
 		@Override
 		public String toString() {
 			return JsonUtil.object2JSON(this);
@@ -527,8 +530,436 @@ public class TestJdk8 {
 
 	}
 
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class AccessToken {
+		private Date expireAt;
 
-	public static class Service {
+		public boolean hasExpired() {
+			return expireAt.before(new Date());
+		}
+
+		public static AccessToken getAccessToken(String date, boolean create) {
+			return create ? new AccessToken(DateUtil.toDateTime(date)) : null;
+		}
+
+		@Override
+		public String toString() {
+			return JsonUtil.object2JSON(this);
+		}
+	}
+	@Test
+	public void testOpt5() {
+		AccessToken access = AccessToken.getAccessToken("2017-10-15 21:00:00", true);
+		//AccessToken access = AccessToken.getAccessToken("2017-11-11 21:00:00", true);
+		//AccessToken access = AccessToken.getAccessToken("2000-10-15 21:00:00", false);
+		System.out.println(access);
+		Optional.ofNullable(access).map(e -> {
+			if (e.hasExpired()) {
+				e = new AccessToken(new Date());
+			}
+			return e;
+		}).ifPresent(e -> e.setExpireAt(DateUtil.toDateTime("2015-10-15 21:00:00")));
+
+		System.out.println(access);
+	}
+
+
+	@Test
+	public void testOpt4() {
+		AccessToken access = AccessToken.getAccessToken("2000-10-15 21:00:00", true);
+		//AccessToken access = AccessToken.getAccessToken("2017-11-11 21:00:00", true);
+		//AccessToken access = AccessToken.getAccessToken("2000-10-15 21:00:00", false);
+		System.out.println("-----------行不通----------");
+		access = Optional.ofNullable(access).map(t -> {
+			System.out.println("not expire");
+			System.out.println(t);
+			return t;
+		}).map(t -> {
+			System.out.println("expired, delete");
+			AccessToken e = new AccessToken(new Date());
+			System.out.println(e);
+			return e;
+		}).orElseGet(() -> {
+			System.out.println("null");
+			AccessToken t = new AccessToken(new Date());
+			System.out.println(t);
+			return t;
+		});
+
+		System.out.println(access);
+	}
+
+	@Test
+	public void testOpt2() {
+		Kid kid = Optional.ofNullable(Kid.getKid(20)).filter(e -> e.getAge() < 18).map(e -> {
+			System.out.println(e.getAge());
+			System.out.println(e.getBirthday());
+			return e;
+		}).orElseGet(() -> {
+			Kid e = new Kid(18, new Date());
+			return e;
+		});
+
+		System.out.println(kid);
 
 	}
+
+	@Test
+	public void testOpt3() {
+		Kid kid = Optional.ofNullable(Kid.getKid(10)).filter(e -> e.getAge() > 18).map(e -> {
+			System.out.println(e.getAge());
+			System.out.println(e.getBirthday());
+			return e;
+		}).orElseGet(() -> {
+			Kid e = new Kid(18, new Date());
+			return e;
+		});
+
+		System.out.println(kid);
+
+	}
+
+	@Test
+	public void testStream2() {
+		Set<Kid> kids = Sets.newHashSet();
+		kids.stream().filter(kid -> kid.getBirthday().after(new Date()));
+	}
+
+	@Test
+	public void testJoin() {
+		Set<String> names = Sets.newHashSet("aa ", "bb", "  cc ", "   dd");
+		String str = names.stream().map(StringUtils::trim).collect(Collectors.joining(","));
+		System.out.println(str);
+
+		str = names.stream().map(StringUtils::trim).collect(Collectors.joining(",", "start", "end"));
+		System.out.println(str);
+	}
+
+	@Test
+	public void testOptional2() {
+		Kid kid = Kid.getKid(20);
+		Kid kid2 = Optional.<Kid>empty().get();
+		System.out.println(kid2);
+	}
+
+	@Test
+	public void testOptional3() {
+		List<Kid> kids = Lists.newArrayList(new Kid(10), new Kid(16), new Kid(18));
+		Kid kid = kids.stream().filter(k -> k.getAge() > 20).findAny().map(k -> {
+			System.out.println("find");
+			return k;
+		}).orElseGet(() -> {
+			System.out.println("not find");
+			return null;
+		});
+
+		System.out.println(kid == null);
+
+		kid = kids.stream().filter(k -> k.getAge() > 20).findAny().map(k -> {
+			System.out.println("find");
+			return k;
+		}).get();
+
+		System.out.println(kid == null);
+	}
+
+	@Test
+	public void testifelseif() {
+		Kid kid1 = Kid.getKid(8);
+		Kid kid2 = Kid.getKid(9);
+
+		if (kid1 == null && kid2 == null) {
+			System.out.println("kid1 null, kid2 null");
+		} else if (kid1 != null && kid2 == null) {
+			System.out.println("kid1 not null, kid2 null");
+		} else if (kid1 == null && kid2 != null) {
+			System.out.println("kid1 null, kid2 not null");
+		} else {
+			System.out.println("kid1 not null, kid2 not null");
+		}
+	}
+
+	@Test
+	public void testPeek() {
+		List<String> list = Stream.of("one", "two", "three", "four")
+				.filter(e -> e.length() >= 3)
+				.peek(e -> System.out.println("Filtered value: " + e))
+				.map(String::toUpperCase)
+				.peek(e -> System.out.println("Mapped value: " + e))
+				.collect(Collectors.toList());
+
+		System.out.println(list);
+	}
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class UserInfo {
+		Long userId;
+		String userDomain;
+	}
+
+	@Test
+	public void testList() {
+		//List<UserInfo> list = new ArrayList();
+		List<UserInfo> list = Lists.newArrayList(new UserInfo(1L, "cc"), new UserInfo(2L, "hj"));
+		Long userId = list.stream().findAny().map(UserInfo::getUserId).orElse(100L);
+		System.out.println(userId);
+
+	}
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class Employee {
+		private Long id;
+		private String name;
+		private String city;
+		private Integer sales;
+
+		@Override
+		public String toString() {
+			return JsonUtil.object2JSON(this);
+		}
+	}
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class Person {
+		private Long id;
+		private String name;
+		private String city;
+
+		@Override
+		public String toString() {
+			return JsonUtil.object2JSON(this);
+		}
+	}
+
+	public static String get(String str) {
+		return str;
+	}
+
+	@Test
+	public void testOptional10() {
+		String a = get("a");
+		System.out.println(Optional.ofNullable(a).orElse("x"));
+
+		String b =get(null);
+		System.out.println(Optional.ofNullable(b).orElse("y"));
+	}
+
+	@Test
+	public void testList2Map() {
+		List<Employee> list = Lists.newArrayList(
+				new Employee(1L, "aa", "sh", 100),
+				new Employee(1L, "bb", "sh", 200),
+				new Employee(1L, "cc", "bj", 300),
+				new Employee(1L, "dd", "hz", 400)
+		);
+
+		Map<String, Employee> map = list.stream().collect(Collectors.toMap(Employee::getName, v -> v));
+		System.out.println(map);
+	}
+
+	@Test
+	public void testOptional11() {
+		Employee e1 = null;
+		System.out.println(Optional.ofNullable(e1).map(e -> new Person(e.getId(), e.getName(), e.getCity())).orElse(null));
+
+		Employee e2 = new Employee(1000L, "yk", "sh", 100);
+		System.out.println(Optional.ofNullable(e2).map(e -> new Person(e.getId(), e.getName(), e.getCity())).orElse(null));
+	}
+
+	@Test
+	public void testGroupingBy() {
+		List<Employee> employees = Lists.newArrayList(
+				new Employee(1L, "aa", "sh", 100),
+				new Employee(1L, "bb", "sh", 200),
+				new Employee(2L, "cc", "bj", 300),
+				new Employee(2L, "dd", "hz", 400),
+				new Employee(3L, "ee", "sh", 100),
+				new Employee(3L, "ff", "sh", 200),
+				new Employee(3L, "gg", "bj", 300),
+				new Employee(4L, "hh", "hz", 400),
+				new Employee(5L, "ii", "sh", 100),
+				new Employee(5L, "jj", "sh", 200),
+				new Employee(6L, "kk", "bj", 300),
+				new Employee(6L, "ll", "hz", 400),
+				new Employee(6L, "mm", "sh", 100),
+				new Employee(6L, "nn", "sh", 200)
+		);
+
+		Map<Long, List<Employee>> map1 = employees.stream().collect(Collectors.groupingBy(Employee::getId));
+		Map<Long, Set<Employee>> map2 =employees.stream().collect(Collectors.groupingBy(Employee::getId, Collectors.toSet()));
+		System.out.println(map1);
+		System.out.println(map2);
+	}
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class Student {
+		private String name;
+
+		@Override
+		public String toString() {
+			return JsonUtil.object2JSON(this);
+		}
+	}
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class Teacher {
+		private String name;
+		private List<Student> students;
+
+		@Override
+		public String toString() {
+			return JsonUtil.object2JSON(this);
+		}
+	}
+
+	@Test
+	public void test11() {
+		Teacher teacher = new Teacher("xx", Lists.newArrayList(new Student("xx1"), new Student("xx2")));
+		List<Student> students = Optional.ofNullable(teacher).map(Teacher::getStudents).orElse(null);
+		System.out.println(students);
+
+		teacher = null;
+		students = Optional.ofNullable(teacher).map(Teacher::getStudents).orElse(null);
+		System.out.println(students);
+
+		teacher = new Teacher("xx",null);
+		students = Optional.ofNullable(teacher).map(Teacher::getStudents).orElse(null);
+		System.out.println(students);
+	}
+
+	public static class Context {
+		public static void set(String name, String value) {
+			System.out.println("name: " + name + ", value: " + value);
+		}
+	}
+
+	@Test
+	public void test12() {
+		//Student obj = new Student("yk");
+		//Student obj = null;
+		Student obj = new Student("");
+		Optional.ofNullable(obj).ifPresent(o -> Optional.ofNullable(o.getName()).filter(StringUtils::isNotBlank).ifPresent(e -> Context.set("name", e)));
+	}
+
+
+    @Test
+    public void testStream3() {
+        List<Integer> ids = Lists.newArrayList();
+        for (int i = 0; i < 10000000; i++) {
+            ids.add(i);
+        }
+        long start = System.currentTimeMillis();
+        Map<Integer, String> dic = ids.stream().collect(Collectors.toMap(k -> k, v -> v.toString() + "^-^"));
+        ids = ids.stream().filter(e -> e % 2 == 0).collect(Collectors.toList());
+
+        List<String> names = ids.stream().map(dic::get).collect(Collectors.toList());
+        long end = System.currentTimeMillis();
+        System.out.println("costs: " + (end - start) + "ms");
+    }
+
+    @Test
+    public void testStream4() {
+        List<Integer> ids = Lists.newArrayList();
+        for (int i = 0; i < 10000000; i++) {
+            ids.add(i);
+        }
+        long start = System.currentTimeMillis();
+        Map<Integer, String> dic = ids.parallelStream().collect(Collectors.toMap(k -> k, v -> v.toString() + "^-^"));
+        ids = ids.stream().filter(e -> e % 2 == 0).collect(Collectors.toList());
+
+        List<String> names = ids.parallelStream().map(dic::get).collect(Collectors.toList());
+        long end = System.currentTimeMillis();
+        System.out.println("costs: " + (end - start) + "ms");
+
+    }
+
+    @Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+    public static class UnionUser {
+		private Long userId;
+		private String userDomain;
+
+		@Override
+		public String toString() {
+			return JsonUtil.object2JSON(this);
+		}
+	}
+
+	@Test
+	public void testFlatMap1() {
+		Set<Long> ids = Sets.newHashSet(123456L, 234567L, 345678L);
+		List<UnionUser> users = Stream.of(ids)
+				.flatMap(e -> e.stream()).map(e -> new UnionUser(e, "hj"))
+				.collect(Collectors.toList());
+
+		System.out.println(users);
+	}
+
+
+	public static String B() {
+		System.out.println("B()...");
+		return "B";
+	}
+
+	@Test
+	public  void testOrElseAndOrElseGet1() {
+		System.out.println(Optional.of("A").orElse(B()));
+	}
+
+	/**
+	 * If opt doesn't contain a value, the two are indeed equivalent. But if opt does contain a value, how many Foo objects will be created?
+
+	 P.s.: of course in this example the difference probably wouldn't be measurable, but if you have to obtain your default value from a remote web service for example, or from a database, it suddenly becomes very important.
+	 */
+	@Test
+	public  void testOrElseAndOrElseGet2() {
+		System.out.println(Optional.of("A").orElseGet(() -> B()));
+	}
+
+	@Test
+	public void testList_RemoveIf() {
+		List<Long> all = Lists.newArrayList(1L,2L,3L,4L,5L,6L,7L,8L);
+		//List<Long> ids1 = Lists.newArrayList(1L,2L,6L,7L,8L);
+		List<Long> ids1 = Lists.newArrayList(1L,2L,3L,4L,5L,6L,7L,8L);
+		List<Long> ids2 = Lists.newArrayList(all);
+		//List<Long> ids2 = Lists.newArrayList();
+		System.out.println(ids2);
+		ids1.forEach(e-> ids2.removeIf(v -> Objects.equals(v, e)));
+		System.out.println(ids2);
+	}
+
+	@Test
+	public void testOptional_orElseThrow_1() {
+		//boolean isBind = true;
+		boolean isBind = false;
+		String value = Optional.of(isBind).filter(e -> e).map(e -> "need bind").orElseThrow(NullPointerException::new);
+		System.out.println(value);
+	}
+
+	@Test
+	public void testOptional_empty() {
+
+	}
+
+
+	@Test
+	public void testForEach() {
+		List<Long> users = Lists.newArrayList();
+		users.forEach(System.out::println);
+
+	}
+
 }

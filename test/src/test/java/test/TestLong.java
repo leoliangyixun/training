@@ -25,7 +25,8 @@ public class TestLong {
 
     @Test
     public void test2() {
-        Long a = 63L;
+        Long a = 64L;
         System.out.println(a % 64);
+        System.out.println(a % 64L);
     }
 }
