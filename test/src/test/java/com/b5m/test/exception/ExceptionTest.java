@@ -3,6 +3,10 @@
  */
 package com.b5m.test.exception;
 
+import java.util.concurrent.ExecutorCompletionService;
+
+import org.junit.Test;
+
 /**
  * @description:
  * Copyright 2011-2015 B5M.COM. All rights reserved
@@ -43,6 +47,51 @@ public class ExceptionTest {
 			System.out.println("j=" + j);
 		}
 	}
+	
+    @Test
+    public void test_() {
+        User user = new User();
+        
+        String s = user.action();
+        System.out.println( s == null);
+    }
+    
+
+    
+    
+    public static class User {
+        
+        public String action() {
+            try {
+                eat();
+
+            } catch (Exception e) {
+               System.out.println(e);
+              // return " catch exception";
+               throw new RuntimeException("catch exception");
+            } finally {
+                System.out.println("finally");
+            }
+            return "aaa";
+           // sleep();
+           // paly(); 
+        }
+        
+        private void eat(){
+            System.out.println("eatting");
+            throw new RuntimeException();
+            
+        }
+        
+        private void sleep(){
+            System.out.println("sleeping");
+            
+        }
+        
+        private void paly(){
+            System.out.println("playing");
+        }
+    }
 
 	/**
 	 * @param args
@@ -55,6 +104,34 @@ public class ExceptionTest {
 		} catch (Exception e) {
 			
 		}
+	}
+	
+	@Test
+	public void testComplexException() {
+	    Customer customer = new Customer();
+	    String s = customer.consume();
+	    System.out.println(s);
+	}
+	
+	public static class Customer {
+	    public String consume() {
+	        
+	        try {
+	            execute();
+	            return "success";
+	        } catch (Exception e) {
+	            System.out.println("exception");
+	        } finally {
+	            System.out.println("finally");
+	            // can't throw exception in finally block
+	            //throw new RuntimeException("finally  error");
+	        }
+	        return null;
+	    }
+	    
+	    public void execute() {
+	        throw new RuntimeException("execute error");
+	    }
 	}
 
 }

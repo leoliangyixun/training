@@ -2,77 +2,75 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.kerwinyang.training</groupId>
-    <artifactId>kerwin-training</artifactId>
+    <artifactId>training</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>test</artifactId>
   <name>test</name>
   <description>test</description>
-  <properties>	
-		<spring.version>4.1.6.RELEASE</spring.version>
-		<aspectj.version>1.7.4</aspectj.version>
-		<jstl.version>1.2</jstl.version>
-		<jsp.version>2.2.1-b03</jsp.version>
-		<servlet.version>2.5</servlet.version>
-		<jackson.version>1.9.13</jackson.version>
-		<fastjson.version>1.1.39</fastjson.version>
-		<log4j.version>1.2.17</log4j.version>
-		<slf4j.version>1.7.5</slf4j.version>
-		<lang.version>2.4</lang.version>
-		<junit.version>4.10</junit.version>
-  </properties>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<hujiang-framework.version>2.0.7-RELEASE</hujiang-framework.version>
+	</properties>
+    <dependencies>
+  			<dependency>
+				<groupId>com.hujiang.basic.framework</groupId>
+				<artifactId>hujiang-framework-rest</artifactId>
+				<version>${hujiang-framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.hujiang.basic.framework</groupId>
+				<artifactId>hujiang-framework-model</artifactId>
+				<version>${hujiang-framework.version}</version>
+			</dependency>
+			<dependency>
+			<groupId>com.hujiang.basic.framework</groupId>
+				<artifactId>hujiang-framework-core</artifactId>
+				<version>${hujiang-framework.version}</version>
+			</dependency>
+			<dependency>
+			<groupId>com.hujiang.basic.framework</groupId>
+				<artifactId>hujiang-framework-common</artifactId>
+				<version>${hujiang-framework.version}</version>
+			</dependency>
+
     <dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-orm</artifactId>
-		<version>${spring.version}</version>
 	</dependency>
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-context-support</artifactId>
-		<version>${spring.version}</version>
 	</dependency>
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-context</artifactId>
-		<version>4.1.6.RELEASE</version>
 	</dependency>
 	
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-core</artifactId>
-		<version>${spring.version}</version>
 	</dependency>
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-beans</artifactId>
-		<version>${spring.version}</version>
 	</dependency>
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-web</artifactId>
-		<version>${spring.version}</version>
 	</dependency>
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-webmvc</artifactId>
-		<version>${spring.version}</version>
 	</dependency>
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-aop</artifactId>
-		<version>${spring.version}</version>
     </dependency>
     <dependency>
-	     <groupId>org.apache.commons</groupId>
-	  	 <artifactId>commons-lang3</artifactId>
-	 	 <version>3.4</version>
+	    <groupId>org.apache.commons</groupId>
+	  	<artifactId>commons-lang3</artifactId>
   	</dependency>
   	<dependency>
 		<groupId>org.apache.commons</groupId>
@@ -82,7 +80,84 @@
   	<dependency>
 		<groupId>commons-collections</groupId>
 		<artifactId>commons-collections</artifactId>
-		<version>3.2.1</version>
     </dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+	  <dependency>
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-core</artifactId>
+	  </dependency>
+	  <dependency>
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-databind</artifactId>
+	  </dependency>
+	  <dependency>
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-annotations</artifactId>
+	  </dependency>
+   	<dependency>
+	    <groupId>org.jglue.fluent-json</groupId>
+	    <artifactId>fluent-json</artifactId>
+	    <version>2.0.0</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>org.projectlombok</groupId>
+	    <artifactId>lombok</artifactId>
+	    <version>1.16.10</version>
+	</dependency>
+ 	<dependency>
+	    <groupId>com.google.guava</groupId>
+	    <artifactId>guava</artifactId>
+	    <version>21.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.jooq</groupId>
+	    <artifactId>jooq</artifactId>
+	    <version>3.9.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.jooq</groupId>
+	    <artifactId>jool</artifactId>
+	    <version>0.9.12</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.jooq</groupId>
+	    <artifactId>jooq-codegen-maven-example</artifactId>
+	    <version>2.0.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.jooq</groupId>
+	    <artifactId>jooq-codegen</artifactId>
+	    <version>3.9.0</version>
+	</dependency>
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+    </dependency>
+     <dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-test</artifactId>
+		  <exclusions>
+			  <exclusion>
+				  <groupId>org.springframework.boot</groupId>
+				  <artifactId>spring-boot-starter-logging</artifactId>
+			  </exclusion>
+		  </exclusions>
+		  <scope>test</scope>
+	  </dependency>
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>servlet-api</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		    <version>1.10</version>
+		</dependency>
+	  
   </dependencies>
 </project>

@@ -1,0 +1,132 @@
+/****************************************************************************************************************/
+private static MyBlogDao dao;
+public static List<Blog> getFriendsBlog(MyBlogDao dao,String loginuser)
+{
+	return dao.getFriendsBlog(loginuser);	
+}
+public static List<Blog> getBlog(MyBlogDao dao,String loginuser)
+{
+	return dao.getBlog(loginuser);
+}
+public static Map<String,List<Photo>> getAlbumMapping(MyBlogDao dao,String loginuser)
+{
+	return dao.getAlbumMapping(loginuser);
+}
+public static List<Album> getAlbum(MyBlogDao dao,String loginuser)
+{
+	return dao.getAlbum(loginuser);
+}
+public static List<String> getAlbumMapKey(Map<String,List<Photo>> album_map)
+{
+	List<String> album_map_key=null;
+	if(album_map!=null)
+	{
+		album_map_key=new ArrayList<String>();
+		for(String key:album_map.keySet())
+		{
+			album_map_key.add(key);
+		}
+	}
+	return album_map_key;
+}
+	
+public static MyBlogDao getMyBlogDao(HttpServletRequest request)
+{
+	HttpSession session=request.getSession();
+	MyBlogDao dao=(MyBlogDao)session.getAttribute("dao");
+	if(dao==null)
+	{
+		dao=InstanceFactory.getMyBlogDao();
+	}
+	return dao;
+}
+	
+public static List<String> getBlogClass(MyBlogDao dao,String username)
+{
+	return dao.getBlogClass(username);
+}
+
+	public static User getUser()
+	{
+		return new User();
+	}
+	public static Blog getBlog()
+	{
+		return new Blog();
+	}
+	public static BlogComment getBlogComment()
+	{
+		return new BlogComment();
+	}
+	public static BlogCommentReply getBlogCommentReply()
+	{
+		return new BlogCommentReply();
+	}
+	public static Album getAlbum()
+	{
+		return new Album();
+	}
+	public static Photo getPhoto()
+	{
+		return new Photo();
+	}
+	public static Mood getMood()
+	{
+		return new Mood();
+	}
+	public static MoodComment getMoodComment()
+	{
+		return new MoodComment();
+	}
+	public static MoodCommentReply getMessageCommentReply()
+	{
+		return new MoodCommentReply();
+	}
+	public static Message getMessage()
+	{
+		return new Message();
+	}
+	public static MessageReply getMessageReply()
+	{
+		return new MessageReply();
+	}
+/****************************************************************************************************************/
+				<%--
+			out.println("<div id='single_list'>");
+			out.println("<div class='blog_style'>");
+			out.println("<form action='AddBlog' method='get'>");
+			out.println("<div><a>文章标题：</a><input type='text' name='blog_subject' size='40' class='content'/></div>");
+			
+			out.println("<div><a><textarea class='content' cols='60' rows='20'></textarea></a></div>");
+			
+			out.println("<div><a>文章类型： </a><a><select name='blog_class' id='blog_class'> <option value='default'>==请选择文章类型==</option>");
+			for(int i=0;i<10;i++)
+			{
+				out.println("<option value="+i+">"+i+"</option>");
+			}
+			out.println("</select></a><a href='javascript:showText()'>新建分类</a><a id='create_class'></a></div>");  
+			out.println("<div><input type='submit' value='发表' class='button_style'/></div>");
+			out.println("</form>");
+			out.println("</div>");//end of blog_style
+			out.println("</div>");//end of single_list
+			--%>
+/****************************************************************************************************************/		
+		 <!--div style="margin-left:10px;margin-top: 10px;font-size: 14px;">
+	 	<table border="1" width="270"  bordercolor="#000000" style="border-collapse: collapse">
+		  <tr>
+		    <td width="80">相册名：</td>
+		   
+		  </tr>
+		  <tr>
+		    <td>照片数：</td>
+		  </tr>
+		  <tr>
+		    <td>相册描述：</td>
+		
+		  </tr>
+		  <tr>
+		    <td>创建时间：</td>
+		  </tr>
+		</table>
+	 </div-->
+/****************************************************************************************************************/	 		

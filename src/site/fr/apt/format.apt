@@ -37,7 +37,7 @@ Le format APT
   Line 2 of paragraph 2.
 +------------------------------------------------------------------------+
 
-  The indentation of the first line of a paragraph is the main method used by
+  The indentation of the first line of a paragraph is the facade method used by
   an APT processor to recognize the type of the paragraph. For example, a
   section title must not be indented at all.
 

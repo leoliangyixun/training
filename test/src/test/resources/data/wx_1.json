@@ -1,0 +1,24 @@
+{
+  "appId": "200441030",
+  "batchId": "BI-DOP-WECHAT-182-1-1509322415",
+  "body": {
+    "appId": "200441030",
+    "batchId": "BI-DOP-WECHAT-182-1-1509322415",
+    "data": "first:四六级倒计时备考正式开始！|||#000000,remark:戳我去参加直播>>|||#000000,keyword1:Uni班班|||#000000,keyword2:我们准备了好多备考实用套路、前人经验，还有名师阿笠博士和直播的大批奖励，现在来正好！|||#000000",
+    "isOpenId": false,
+    "templateType": 1,
+    "template_id": "zlEYXTXqrMAzetmCgsfk4PxnaHNh7avAGM7orLyDX7k",
+    "topcolor": "#FFFFFF",
+    "touser": "83329495",
+    "url": "https&colon;//mc.hujiang.com/live/class_live.aspx?videoId=15088174081856&ch_campaign=cls15609&ch_source=iwx_hj_3_mbxx",
+    "wechatAppID": "wx99bcf174724d0ae0"
+  },
+  "initiator": "MC",
+  "initiatorID": 888,
+  "receiverIDs": null,
+  "receivers": null,
+  "sendType": "tmpl",
+  "token": "4C0FD89F-C037-4B3A-B69B-75F0601465E8",
+  "topic": null,
+  "wechatAppID": ""
+}

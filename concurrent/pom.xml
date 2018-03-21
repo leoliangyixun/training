@@ -1,0 +1,69 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.kerwinyang.training</groupId>
+    <artifactId>training</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>concurrent</artifactId>
+  <name>concurrent</name>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+	     <groupId>org.apache.commons</groupId>
+	  	 <artifactId>commons-lang3</artifactId>
+  	</dependency>
+  	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-collections4</artifactId>
+		<version>4.0</version>
+	</dependency>
+  	<dependency>
+		<groupId>commons-collections</groupId>
+		<artifactId>commons-collections</artifactId>
+    </dependency>
+	<dependency>
+		<groupId>com.google.guava</groupId>
+		<artifactId>guava</artifactId>		
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/io.atlassian.util.concurrent/atlassian-util-concurrent -->
+	<dependency>
+	    <groupId>io.atlassian.util.concurrent</groupId>
+	    <artifactId>atlassian-util-concurrent</artifactId>
+	    <version>4.0.0</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/concurrent/concurrent -->
+	<dependency>
+	    <groupId>concurrent</groupId>
+	    <artifactId>concurrent</artifactId>
+	    <version>1.3.4</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/com.google.collections/google-collections -->
+	<dependency>
+	    <groupId>com.google.collections</groupId>
+	    <artifactId>google-collections</artifactId>
+	    <version>1.0</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/br.com.objectos/collections -->
+	<dependency>
+	    <groupId>br.com.objectos</groupId>
+	    <artifactId>collections</artifactId>
+	    <version>0.2.1</version>
+	</dependency>
+	  <dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-test</artifactId>
+		  <exclusions>
+			  <exclusion>
+				  <groupId>org.springframework.boot</groupId>
+				  <artifactId>spring-boot-starter-logging</artifactId>
+			  </exclusion>
+		  </exclusions>
+		  <scope>test</scope>
+	  </dependency>
+  </dependencies>
+</project>

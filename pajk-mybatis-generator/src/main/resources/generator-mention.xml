@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<classPathEntry location="C:\Users\lscm\.m2\repository\mysql\mysql-connector-java\5.1.35\mysql-connector-java-5.1.35.jar" />
+
+	<context id="Mysql" targetRuntime="MyBatis3">
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="com.pajk.frame.mybatis.plugin.CommonPlugin" />
+		<plugin type="com.pajk.frame.mybatis.plugin.CreateTimePlugin" />
+		<plugin type="com.pajk.frame.mybatis.plugin.UpdateTimePlugin" />
+		<plugin type="com.pajk.frame.mybatis.plugin.PaginationPlugin">
+			<property name="pagination" value="com.b5m.mention.model.Pagination"/>
+		</plugin>
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/mention" userId="root"
+			password="root">
+		</jdbcConnection>
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		<javaModelGenerator targetPackage="com.b5m.mention.entity" targetProject="${targetProject}" />
+		<sqlMapGenerator targetPackage="com.b5m.mention.mapper" targetProject="${targetProject}" />
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.b5m.mention.mapper" targetProject="${targetProject}" />
+		
+		<table schema="mention" tableName="mention_account" domainObjectName="Account" />
+		<table schema="mention" tableName="mention_rules" domainObjectName="Rules">
+			<generatedKey column="id" sqlStatement="JDBC"/>
+		</table>
+	</context>
+</generatorConfiguration>
