@@ -1,4 +1,0 @@
-public static<T> List<T> getFriendsBlog(Class<T> clazz)
-{
-	return new ArrayList<T>();
-}

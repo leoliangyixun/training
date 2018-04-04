@@ -1,12 +1,15 @@
 package test;
 
-import com.google.common.collect.Sets;
 import com.hujiang.basic.framework.core.util.JsonUtil;
 import com.hujiang.passport.SecurityHelper;
+
+import com.google.common.collect.Sets;
 import com.training.Utils;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
@@ -19,7 +22,12 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 
 public class TestUtils {
 
@@ -232,7 +240,7 @@ public class TestUtils {
     }
 
 
-    public static void testGenerateFixexStr(String[] args) {
+    public static void testGenFixexStr(String[] args) {
         String str = Utils.generateFixedStr(64);
         System.out.println(str.toUpperCase());
 
@@ -244,7 +252,7 @@ public class TestUtils {
     }
 
     @Test
-    public void testGenerateNotifyWechat_Schema() {
+    public void testGenWechat_Schema() {
         String year = "2018";
         for (int i = 1; i <= 12; i++) {
             String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
@@ -360,7 +368,7 @@ public class TestUtils {
     }
 
     @Test
-    public void testGenerateAppKeyAndAppSecret() {
+    public void testGenAppKeyAndAppSecret() {
         System.out.println("测试环境");
         System.out.println("appkey: " + Utils.generateFixedStr(32));
         System.out.println("appsecret: " + Utils.generateFixedStr(32));
@@ -453,5 +461,58 @@ public class TestUtils {
     @Test
     public void testGenWXAppSecret()  throws Exception {
         System.out.println(UUID.randomUUID().toString().toUpperCase());
+    }
+
+    @Test
+    public void testGenPush_Schema() {
+        String[] apps = new String[]{"cctalk", "class"};
+        String year = "2018";
+        for (String app : apps) {
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "DROP TABLE IF EXISTS `push_task_" + app + "_" + year + month + "`;\n"
+                    + "CREATE TABLE `push_task_" + app + "_" + year + month + "` (\n"
+                    + "  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n"
+                    + "  `batch_id` varchar(128) NOT NULL COMMENT '批次号',\n"
+                    + "  `payload` json NOT NULL COMMENT '请求体',\n"
+                    + "  `audience` json NOT NULL COMMENT '接收者',\n"
+                    + "  `notification` json NOT NULL COMMENT '通知体',\n"
+                    + "  `platform` varchar(200) NOT NULL COMMENT '平台',\n"
+                    + "  `status` int NOT NULL COMMENT '消息状态(1创建，2处理中，3失败，4结束且部分成功，5成功)',\n"
+                    + "  `status_detail` varchar(20) NOT NULL COMMENT '消息状态详情',\n"
+                    + "  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间，字段变化时自动更新时间',\n"
+                    + "  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间，记录插入时自动插入时间',\n"
+                    + "  PRIMARY KEY (`id`),\n"
+                    + "  KEY `idx_batch_id` (`batch_id`) USING BTREE\n"
+                    + ") ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;";
+                System.out.println(sql);
+                System.out.println();
+            }
+        }
+    }
+
+    @Test
+    public void testGenPushAnalysis_Schema() {
+        String[] apps = new String[]{"cctalk", "class"};
+        String year = "2018";
+        for (String app : apps) {
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "DROP TABLE IF EXISTS `push_task_analysis_" + app + "_" + (year + month) + "`;\n"
+                    + "CREATE TABLE `push_task_analysis_" + app + "_" + (year + month) + "` (\n"
+                    + "  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n"
+                    + "  `batch_id` varchar(128) NOT NULL COMMENT '批次号',\n"
+                    + "  `app_name` varchar(64) NOT NULL COMMENT '应用名称',\n"
+                    + "  `status` int NOT NULL COMMENT '消息状态(1创建，2处理中，3失败，4结束且部分成功，5成功)',\n"
+                    + "  `analysis_status` varchar(20) NOT NULL COMMENT '消息状态详情',\n"
+                    + "  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间，字段变化时自动更新时间',\n"
+                    + "  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间，记录插入时自动插入时间',\n"
+                    + "  PRIMARY KEY (`id`),\n"
+                    + "  KEY `idx_batch_id` (`batch_id`) USING BTREE\n"
+                    + ") ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;";
+                System.out.println(sql);
+                System.out.println();
+            }
+        }
     }
 }

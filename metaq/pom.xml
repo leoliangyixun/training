@@ -1,46 +1,3 @@
-<<<<<<< HEAD
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	  <modelVersion>4.0.0</modelVersion>
-	  <parent>
-	    <groupId>com.kerwinyang.training</groupId>
-	    <artifactId>kerwin-training</artifactId>
-	    <version>0.0.1-SNAPSHOT</version>
-	  </parent>
-	  <artifactId>metaq</artifactId>
-	  <name>metaq</name>
-	   <properties>
-	      <maven.test.skip>false</maven.test.skip>
-	      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	      <version.c3p0>0.9.1.2</version.c3p0>
-	      <metaq-client.version>1.4.6.2</metaq-client.version>
-	      <fastjson.version>1.1.29</fastjson.version>
-	  </properties>
-
-    <dependencies>
-    <!-- fastjson -->
-    	 <dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>fastjson</artifactId>
-				<version>${fastjson.version}</version>
-		</dependency>
-        <!-- METAQ Client -->
-        <dependency>
-            <groupId>com.taobao.metamorphosis</groupId>
-            <artifactId>metamorphosis-client</artifactId>
-            <version>${metaq-client.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.taobao.metamorphosis</groupId>
-            <artifactId>metamorphosis-client-extension</artifactId>
-            <version>${metaq-client.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.taobao.metamorphosis</groupId>
-            <artifactId>metamorphosis-commons</artifactId>
-            <version>${metaq-client.version}</version>
-        </dependency>
-     </dependencies>
-=======
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	  <modelVersion>4.0.0</modelVersion>
 	  <parent>
@@ -82,5 +39,4 @@
             <version>${metaq-client.version}</version>
         </dependency>
      </dependencies>
->>>>>>> develop
 </project>

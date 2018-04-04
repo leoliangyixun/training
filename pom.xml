@@ -470,8 +470,6 @@
     <module>curator</module>
     <module>jdbc</module>
     <module>retrofit</module>
-<<<<<<< HEAD
-=======
     <module>validator</module>
     <module>mybatis</module>
     <module>webapp</module>
@@ -495,16 +493,11 @@
     <module>dao</module>
     <module>hibernate-jpa</module>
     <module>logging</module>
-    <module>spring-boot-activiti</module>
-    <module>yk-spring-boot</module>
-    <module>spring-boot-rabbitmq</module>
     <module>rabbitmq</module>
     <module>design-pattern</module>
-    <module>spring-boot-camel</module>
     <module>fluent-json</module>
     <module>yk-jooq</module>
     <module>camel</module>
-    <module>spring-boot-mvc</module>
     <module>yk-concurrent</module>
     <module>file-upload</module>
     <module>yk-code</module>
@@ -519,6 +512,6 @@
     <module>apns</module>
     <module>netty</module>
     <module>kafka</module>
->>>>>>> develop
+    <module>netty5</module>
   </modules>
 </project>
