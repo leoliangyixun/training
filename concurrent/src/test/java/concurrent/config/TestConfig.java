@@ -1,9 +1,7 @@
 /**
  * 
  */
-package com.yk.concurrent.config;
-
-import java.util.concurrent.ExecutorService;
+package concurrent.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
