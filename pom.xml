@@ -501,7 +501,6 @@
     <module>yk-concurrent</module>
     <module>file-upload</module>
     <module>yk-code</module>
-    <module>hujiang-framework-1.0</module>
     <module>rxjava</module>
     <module>metrics</module>
     <module>myblog</module>
