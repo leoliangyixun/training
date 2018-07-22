@@ -1,0 +1,38 @@
+{
+  "templates": [
+    {"fansTemplateId":"52e9d9440d0243c1", "nofansTemplateId":"5302fd819e6643aa", "url":"http://mc.hujiang.com/myclass?hideNav=", "first":"亲爱的同学，你报的班级开课了！", "text":"班级上课提醒"},
+    {"fansTemplateId":"52e17605496373b6", "nofansTemplateId":"5302fe38056e33dd", "url": null, "first":"亲爱的同学，你有班级今天毕业了！", "text":"班级到期通知"},
+    {"fansTemplateId":"52e8cd0f7226d3ae", "nofansTemplateId":"53030510b5579395", "url":"http://mc.hujiang.com/myclass?hideNav:1", "first":"亲爱的同学，你的班级还有7天就毕业了！", "text": "关班前7天通知"},
+    {"fansTemplateId":"52e8cecaae0723cd", "nofansTemplateId":"53030650d0234391", "url":"http://mc.hujiang.com", "first":"亲爱的同学，你有班级进度落后咯！", "text":"班级学习提醒"},
+    {"fansTemplateId":"52e17f11ce90a3a6", "nofansTemplateId":"5302ff2fd8400386", "url":"http://mc.hujiang.com", "first":"亲爱的同学，你提的问题被老师解答了！", "text":"答疑回复通知"},
+    {"fansTemplateId":"52e17c5ddaa9e3fa", "nofansTemplateId":"5303012d092543e7", "url":"http://mc.hujiang.com/myclass?hideNav:1","first":"亲爱的同学，你的作业被老师批改了！", "text": "作业批改通知"},
+    {"fansTemplateId":"52e8d3fd95c543dd", "nofansTemplateId":"530307147cb3439d", "url":"http://mc.hujiang.com", "first":"同学，你所在的班级有新课程发布啦，快去学习吧！", "text":"课件发布通知"},
+    {"fansTemplateId":"52e18029f69a438a", "nofansTemplateId":"530302c8e36b13ea", "url":"http://mc.hujiang.com/order/ClassOrder.aspx?hideNav:1", "first":"亲爱的同学，你的课程已支付成功！", "text":"课程支付成功"},
+    {"fansTemplateId":"52e8d01d0daa13cb", "nofansTemplateId":"5303095e7254b3c5", "url":"http://www.cctalk.com" ,"first":"亲爱的同学，你预约的直播课还有5分钟就要开始啦！", "text":"上课提醒"}
+  ],
+  "templateTypes": [
+    {"isFans":"false", "templateId":"5303095e7254b3c5"},
+    {"isFans":"false", "templateId":"530307147cb3439d"},
+    {"isFans":"false", "templateId":"53030650d0234391"},
+    {"isFans":"false", "templateId":"53030510b5579395"},
+    {"isFans":"false", "templateId":"530302c8e36b13ea"},
+    {"isFans":"false", "templateId":"5303012d092543e7"},
+    {"isFans":"false", "templateId":"5302ff2fd8400386"},
+    {"isFans":"false", "templateId":"5302fe38056e33dd"},
+    {"isFans":"false", "templateId":"5302fe38056e33dd"},
+    {"isFans":"true", "templateId":"52e9d9440d0243c1"},
+    {"isFans":"true", "templateId":"52e8d3fd95c543dd"},
+    {"isFans":"true", "templateId":"52e8d01d0daa13cb"},
+    {"isFans":"true", "templateId":"52e8cecaae0723cd"},
+    {"isFans":"true", "templateId":"52e8cd0f7226d3ae"},
+    {"isFans":"true", "templateId":"52e18029f69a438a"},
+    {"isFans":"true", "templateId":"52e17f11ce90a3a6"},
+    {"isFans":"true", "templateId":"52e17c5ddaa9e3fa"},
+    {"isFans":"true", "templateId":"52e17605496373b6"},
+    {"isFans":"true", "templateId":"52e1754498f053e2"},
+    {"isFans":"false", "templateId":"52c55dd5081c83c7"},
+    {"isFans":"false", "templateId":"5238644c8c0bf3be"},
+    {"isFans":"false", "templateId":"11625464356950507854"},
+    {"isFans":"false", "templateId":"11625464356950507852"}
+  ]
+}

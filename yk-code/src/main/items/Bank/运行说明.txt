@@ -1,0 +1,2 @@
+1.编译Main.java文件（javac Main.java）。
+2.运行Main.java文件（java Main）。

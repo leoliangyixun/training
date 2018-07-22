@@ -19,7 +19,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 public class SyncConfig implements AsyncConfigurer{
 
     @Override
-    @Bean(name="asyncExecutor")
     public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor exec = new ThreadPoolTaskExecutor();
         exec.setMaxPoolSize(Runtime.getRuntime().availableProcessors() * 2);

@@ -8,7 +8,6 @@
   <artifactId>spring-boot-mvc</artifactId>
   <name>spring-boot-mvc</name>
   <properties>
-	<spring-boot.version>1.4.1.RELEASE</spring-boot.version>
   </properties>
   <dependencies>
         <dependency>

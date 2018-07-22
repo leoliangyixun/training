@@ -1,0 +1,163 @@
+package push2.apns.demo3;
+
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.codec.http.DefaultFullHttpRequest;
+import io.netty.handler.codec.http.HttpClientCodec;
+import io.netty.handler.codec.http.HttpClientUpgradeHandler;
+import io.netty.handler.codec.http.HttpMethod;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpRequestEncoder;
+import io.netty.handler.codec.http.HttpResponseDecoder;
+import io.netty.handler.codec.http.HttpVersion;
+import io.netty.handler.codec.http2.DefaultHttp2Connection;
+import io.netty.handler.codec.http2.DelegatingDecompressorFrameListener;
+import io.netty.handler.codec.http2.Http2ClientUpgradeCodec;
+import io.netty.handler.codec.http2.Http2Connection;
+import io.netty.handler.codec.http2.Http2FrameLogger;
+import io.netty.handler.codec.http2.HttpToHttp2ConnectionHandler;
+import io.netty.handler.codec.http2.HttpToHttp2ConnectionHandlerBuilder;
+import io.netty.handler.codec.http2.InboundHttp2ToHttpAdapterBuilder;
+import io.netty.handler.ssl.ApplicationProtocolNegotiationHandler;
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.timeout.IdleState;
+import io.netty.handler.timeout.IdleStateEvent;
+import io.netty.handler.timeout.IdleStateHandler;
+
+/**
+ * Configures the client pipeline to support HTTP/2 frames.
+ */
+class Http2ClientInitializer extends ChannelInitializer<SocketChannel> {
+
+    private static final int IDLE_TIME_SECONDS = 30;
+
+
+    private final SslContext sslCtx;
+
+    private final int maxContentLength;
+
+    private HttpToHttp2ConnectionHandler connectionHandler;
+
+    private HttpResponseHandler responseHandler;
+
+
+
+    private String name;
+
+    Http2ClientInitializer(String name, SslContext sslCtx, int maxContentLength) {
+        this.sslCtx = sslCtx;
+        this.maxContentLength = maxContentLength;
+        this.name = name;
+    }
+
+    @Override
+    public void initChannel(SocketChannel ch) throws Exception {
+        final Http2Connection connection = new DefaultHttp2Connection(false);
+        connectionHandler = new HttpToHttp2ConnectionHandlerBuilder()
+                .frameListener(new DelegatingDecompressorFrameListener(
+                        connection,
+                        new InboundHttp2ToHttpAdapterBuilder(connection)
+                                .maxContentLength(maxContentLength)
+                                .propagateSettings(true)
+                                .build()))
+                .connection(connection)
+                .build();
+        responseHandler = new HttpResponseHandler();
+
+
+            configureSsl(ch);
+
+            configureClearText(ch);
+
+
+        // 客户端接收到的是httpResponse响应，所以要使用HttpResponseDecoder进行解码
+       // ch.pipeline().addLast( new HttpResponseDecoder());
+        // 客户端发送的是httprequest，所以要使用HttpRequestEncoder进行编码
+       // ch.pipeline().addLast(new HttpRequestEncoder());
+      //  ch.pipeline().addLast(new HttpObjectAggregator(512 * 1024));
+    }
+
+
+    private void configureEndOfPipeline(ChannelPipeline pipeline) {
+        pipeline.addLast(/*settingsHandler, */responseHandler/*, pingHandler*/);
+    }
+
+    /**
+     * Configure the pipeline for TLS NPN negotiation to HTTP/2.
+     */
+    private void configureSsl(SocketChannel ch) {
+        ChannelPipeline pipeline = ch.pipeline();
+        pipeline.addLast(sslCtx.newHandler(ch.alloc()));
+        // We must wait for the handshake to finish and the protocol to be negotiated before configuring
+        // the HTTP/2 components of the pipeline.
+        pipeline.addLast(new ApplicationProtocolNegotiationHandler("") {
+            @Override
+            protected void configurePipeline(ChannelHandlerContext ctx, String protocol) {
+                ChannelPipeline p = ctx.pipeline();
+                p.addLast(connectionHandler);
+                configureEndOfPipeline(p);
+            }
+        });
+/*        pipeline.addLast(new IdleStateHandler(Integer.MAX_VALUE, IDLE_TIME_SECONDS, IDLE_TIME_SECONDS))
+                .addLast(new ChannelInboundHandlerAdapter() {
+                    @Override
+                    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+                        super.userEventTriggered(ctx, evt);
+                        if (IdleStateEvent.class.isAssignableFrom(evt.getClass())) {
+                            IdleStateEvent idleStateEvent = (IdleStateEvent) evt;
+                            if (idleStateEvent.state() == IdleState.WRITER_IDLE) {
+                                ctx.channel().write(new Object());
+                            }
+                        }
+                    }
+                });*/
+    }
+
+    /**
+     * Configure the pipeline for a cleartext upgrade from HTTP to HTTP/2.
+     */
+    private void configureClearText(SocketChannel ch) {
+        HttpClientCodec sourceCodec = new HttpClientCodec();
+        Http2ClientUpgradeCodec upgradeCodec = new Http2ClientUpgradeCodec(connectionHandler);
+       HttpClientUpgradeHandler upgradeHandler = new HttpClientUpgradeHandler(sourceCodec, upgradeCodec, 65536);
+
+      // ch.pipeline().addLast(sourceCodec);
+       // ch.pipeline().addLast(upgradeHandler);
+       // ch.pipeline().addLast(new HttpObjectAggregator(1024 * 1024));
+     //   ch.pipeline().addLast(new UserEventLogger());
+    }
+
+    /**
+     * Class that logs any User Events triggered on this channel.
+     */
+    private static class UserEventLogger extends ChannelInboundHandlerAdapter {
+
+        @Override
+        public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+            ctx.fireUserEventTriggered(evt);
+        }
+    }
+
+    /**
+     * A handler that triggers the cleartext upgrade to HTTP/2 by sending an initial HTTP request.
+     */
+    private final class UpgradeRequestHandler extends ChannelInboundHandlerAdapter {
+
+        @Override
+        public void channelActive(ChannelHandlerContext ctx) throws Exception {
+            DefaultFullHttpRequest upgradeRequest =
+                    new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, "/");
+            ctx.writeAndFlush(upgradeRequest);
+
+            ctx.fireChannelActive();
+
+            // Done with this handler, remove it from the pipeline.
+            ctx.pipeline().remove(this);
+
+            configureEndOfPipeline(ctx.pipeline());
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+      "OpenID": "o_QKgwEhRP4HqpDoGycv8bfdaf4I",
+      "UserID": 0,
+      "Type": "text",
+      "BatchID": null,
+      "Media": {
+        "content": "hello, nice to see you."
+      },
+      "WechatAppID": "wxa5775d7088f462ca",
+      "Body": null,
+      "Initiator": "SysTest",
+      "InitiatorID": 999,
+      "ReceiverIDs": null,
+      "Receivers": null,
+      "Token": "A435FBA5-0AC3-45AC-AA40-611B750B4BFA",
+      "Topic": null
+}

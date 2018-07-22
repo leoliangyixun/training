@@ -1,9 +1,4 @@
 package com.training.springboot.test.async.task;
-/**
- * 
- */
-
-
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

@@ -472,7 +472,6 @@
     <module>retrofit</module>
     <module>validator</module>
     <module>mybatis</module>
-    <module>webapp</module>
     <module>springmvc</module>
     <module>spring</module>
     <module>spring-data</module>
@@ -481,36 +480,25 @@
     <module>concurrent</module>
     <module>jdk</module>
     <module>hibernate</module>
-    <module>orm</module>
     <module>zookeeper</module>
     <module>dubbo</module>
     <module>collection</module>
     <module>pajk-mybatis-generator</module>
-    <module>yk-model</module>
     <module>spring-boot</module>
     <module>annotation</module>
     <module>redis</module>
     <module>dao</module>
-    <module>hibernate-jpa</module>
-    <module>logging</module>
     <module>rabbitmq</module>
     <module>design-pattern</module>
-    <module>fluent-json</module>
-    <module>yk-jooq</module>
-    <module>camel</module>
-    <module>yk-concurrent</module>
     <module>file-upload</module>
     <module>yk-code</module>
     <module>rxjava</module>
     <module>metrics</module>
     <module>myblog</module>
-    <module>oauth2.0</module>
-    <module>spring-security-oauth2</module>
     <module>spring5</module>
     <module>spring-boot2.0</module>
-    <module>apns</module>
+    <module>ios-push</module>
     <module>netty</module>
     <module>kafka</module>
-    <module>netty5</module>
   </modules>
 </project>

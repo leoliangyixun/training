@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hujiang.notifycenter.push.dao.PushTaskBiLookupCallbackDao">
+    <resultMap id="pushTaskBiLookupCallbackResultMap" type="com.hujiang.notifycenter.push.model.po.PushTaskPo">
+        <id property="id" column="id" jdbcType="INTEGER" />
+        <result column="bi_task_id" property="biTaskId" jdbcType="INTEGER"/>
+        <result column="msg_ids" property="msgIds" jdbcType="VARCHAR"/>
+        <result column="gmt_update" property="gmtUpdate" jdbcType="TIMESTAMP" />
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="query"
+        resultMap="pushTaskBiLookupCallbackResultMap"
+        parameterType="com.hujiang.notifycenter.push.model.po.PushTaskBiLookupCallbackPo"
+        flushCache="true">
+        SELECT
+            bi_task_id,
+            msg_ids,
+            gmt_update,
+            gmt_update
+        FROM push_task_bi_lookup_callback
+        <where>
+            <if test="batchId != null"> bi_task_id = #{biTaskId}</if>
+        </where>
+    </select>
+
+    <delete id="delete" parameterType="com.hujiang.notifycenter.push.model.po.PushTaskBiLookupCallbackPo">
+        delete from push_task_bi_lookup_callback where id = #{id}
+    </delete>
+</mapper>

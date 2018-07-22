@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hujiang.notifycenter.push.dao.PushTaskAnalysisHistoryDao">
+    <resultMap id="pushTaskAnalysisHistoryResultMap" type="com.hujiang.notifycenter.push.model.po.PushTaskAnalysisHistoryPo">
+        <id property="id" column="id" jdbcType="INTEGER" />
+        <result column="msg_id" property="status" jdbcType="BIGINT"/>
+        <result column="origin_count" property="originCount" jdbcType="INTEGER"/>
+        <result column="send_count" property="sendCount" jdbcType="INTEGER"/>
+        <result column="receive_count" property="receiveCount" jdbcType="INTEGER"/>
+        <result column="open_count" property="openCount" jdbcType="INTEGER"/>
+        <result column="gmt_update" property="gmtUpdate" jdbcType="TIMESTAMP" />
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="query"
+        resultMap="pushTaskAnalysisHistoryResultMap"
+        parameterType="com.hujiang.notifycenter.push.model.po.PushTaskAnalysisHistoryPo"
+        flushCache="true">
+        SELECT
+          msg_id,
+          origin_count,
+          send_count,
+          receive_count,
+          open_count
+        FROM push_task_analysis_history
+        <where>
+            <if test="msgId != null"> msg_id = #{msgId}</if>
+        </where>
+    </select>
+
+    <insert id="insert"
+        keyProperty="id"
+        keyColumn="id"
+        useGeneratedKeys="true"
+        parameterType="com.hujiang.notifycenter.push.model.po.PushTaskAnalysisHistoryPo">
+        insert into push_task_analysis_history (
+          msg_id,
+          origin_count,
+          send_count,
+          receive_count,
+          open_count
+        ) values (
+            #{msgId},
+            #{originCount},
+            #{sendCount},
+            #{receiveCount},
+            #{openCount}
+        )
+    </insert>
+
+    <delete id="deleteByKey" parameterType="com.hujiang.notifycenter.push.model.po.PushTaskAnalysisHistoryPo">
+        delete from push_task_analysis_history where bi_task_id = #{key}
+    </delete>
+
+    <delete id="delete" parameterType="com.hujiang.notifycenter.push.model.po.PushTaskAnalysisHistoryPo">
+        delete from push_task_analysis_history
+        <where>
+            gmt_create <![CDATA[>=]]> #{gmtCreateStart} and gmt_create <![CDATA[<]]> #{gmtCreateEnd}
+        </where>
+    </delete>
+</mapper>
