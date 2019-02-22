@@ -38,4 +38,28 @@ public class TestLong {
         System.out.println(a % b);
         System.out.println((a % b) == 0 ? (a / b) : (a / b) + 1);
     }
+
+    @Test
+    public void test4() {
+        Long a = 1L;
+        Long b = new Long(1L);
+        System.out.println(a == b.longValue());
+    }
+
+    @Test
+    public void test5() {
+        Long a = 1L;
+        Long b = new Long(1L);
+        long c = 0L;
+        Long d = null;
+        System.out.println(Long.compare(a,c));
+        System.out.println(Long.compare(a,b));
+        System.out.println(a > c);
+        System.out.println(d > c);
+    }
+
+    @Test
+    public void test6() {
+        System.out.println(0x7fffffffffffffffL);
+    }
 }

@@ -11,10 +11,13 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Created by yangkai on 2017/8/14.
@@ -239,10 +242,10 @@ public class TestCollection {
         System.out.println("A: " + ArrayUtils.toString(a.toArray()));
         System.out.println("B: " + ArrayUtils.toString(b.toArray()));
         System.out.println("--------------------------------------------");
-        System.out.println("并集                   Union(A, B): " + ArrayUtils.toString(union.toArray()));
-        System.out.println("交集          Intersection(A, B): " + ArrayUtils.toString(intersection.toArray()));
-        System.out.println("交集的补集Disjunction(A, B): " + ArrayUtils.toString(disjunction.toArray()));
-        System.out.println("集合相减        Subtract(A, B): " + ArrayUtils.toString(subtract.toArray()));
+        System.out.println("并集 Union(A, B): " + ArrayUtils.toString(union.toArray()));
+        System.out.println("交集 Intersection(A, B): " + ArrayUtils.toString(intersection.toArray()));
+        System.out.println("交集的补集 Disjunction(A, B): " + ArrayUtils.toString(disjunction.toArray()));
+        System.out.println("集合相减 Subtract(A, B): " + ArrayUtils.toString(subtract.toArray()));
 
     }
 
@@ -275,4 +278,235 @@ public class TestCollection {
         data.putAll(map);
         System.out.println(data);
     }
+
+    @Test
+    public void test_collection_addAll() {
+        Collection<String> col = new HashSet<>();
+        Collection<String> col1 = new HashSet<>();
+        col.addAll(col1);
+        System.out.println(col);
+        //col.addAll(null);
+    }
+
+    @Test
+    public void test_collection_substract() {
+        Set<Long> all = Sets.newHashSet(1L,2L, 3L, 4L, 5L);
+        Set<Long> set1 = Sets.newHashSet(2L, 5L);
+
+        System.out.println(CollectionUtils.subtract(all, set1));
+        Set<Long> set2 = Sets.newHashSet();
+        Set<Long> set = Sets.newHashSet();
+        set.addAll(set2);
+        System.out.println(set);
+        set.addAll(all);
+        System.out.println(set);
+
+        Set<Long> set3 = Sets.newHashSet(6L, 7L);
+        System.out.println(CollectionUtils.subtract(all, set3));
+        Set<Long> set4 = Sets.newHashSet(1L,2L, 3L, 4L, 5L);
+        System.out.println(CollectionUtils.subtract(all, set4));
+        Set<Long> set5 = Sets.newHashSet();
+        set5.addAll(CollectionUtils.subtract(all, set4));
+        System.out.println(set5);
+
+
+    }
+
+    @Test
+    public void test_empty_collection() {
+        Set<Long> nums = Sets.newHashSet();
+        for (Long num : nums) {
+            System.out.println(num);
+        }
+
+        System.out.println(nums.contains(1));
+    }
+
+
+    @Test
+    public void test_collection_generic() {
+        Set<Serializable> set = Sets.newHashSet();
+        set.add(1);
+        set.add(2);
+        set.add(new String("xxx"));
+
+        for (Serializable e : set) {
+            Integer a = (Integer)  e;
+            System.out.println(a);
+        }
+    }
+
+    @Test
+    public void test_collection_sort() {
+/*        List<Integer> list1 = Lists.newArrayList(1,3,5,9,7,5,6,2);
+        System.out.println(list1);
+        List<Integer> list2 = list1.stream().sorted((o1, o2) -> {
+            if (o1 > o2) {
+                return 1;
+            } else if (o1 < o2) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }).collect(Collectors.toList());
+
+        System.out.println(list2);*/
+
+        List<Integer> list = Lists.newArrayList(1,3,5,9,7,5,6,2);
+        System.out.println(list);
+        list = list.stream().sorted((o1, o2) -> {
+            if (o1 > o2) {
+                return 1;
+            } else if (o1 < o2) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }).collect(Collectors.toList());
+
+        System.out.println(list);
+    }
+
+    @Test
+    public void test_add_null_to_collection() {
+        Integer a = 1000;
+        Integer b = null;
+        Integer c = null;
+        Integer d = 2000;
+        Set<Integer> set = Sets.newHashSet();
+        set.add(a);
+        set.add(b);
+        set.add(c);
+        set.add(d);
+        set = set.stream().filter(e -> e!= null).collect(Collectors.toSet());
+        System.out.println(set);
+    }
+
+    @Test
+    public void test_remove() {
+        Set<String> set1 = Sets.newHashSet("abc", "efg", "xxx");
+        Set<String> set2 = Sets.newHashSet(set1);
+        for (String e : set2) {
+            set1.remove(e);
+        }
+        System.out.println(set1);
+        System.out.println(set2);
+    }
+
+    @Data
+    public static class SingleCustomAudienceDto implements Serializable {
+
+        private Long uid;
+        private String phone;
+        private String oid;
+        private String did;
+        private String mail;
+
+        public SingleCustomAudienceDto(Long uid, String did, String mail, String phone, String oid) {
+            this.uid = uid;
+            this.did = did;
+            this.mail = mail;
+            this.phone = phone;
+            this.oid = oid;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            if (!super.equals(o)) {
+                return false;
+            }
+            SingleCustomAudienceDto that = (SingleCustomAudienceDto) o;
+            return Objects.equals(uid, that.uid) &&
+                Objects.equals(did, that.did) &&
+                Objects.equals(mail, that.mail) &&
+                Objects.equals(phone, that.phone) &&
+                Objects.equals(oid, that.oid);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(uid, did, mail, phone, oid);
+        }
+
+        @Override
+        public String toString() {
+            return JsonUtil.object2JSON(this);
+        }
+    }
+
+    @Data
+    public static class CustomAudience {
+        private Set<SingleCustomAudienceDto> audiences;
+
+        public SingleCustomAudienceDto getCustomAudienceByIndex(Serializable index) {
+            return audiences.stream().filter(e ->
+                Objects.equals(e.getUid(), index) ||
+                    Objects.equals(e.getUid(), index) ||
+                    Objects.equals(e.getUid(), index) ||
+                    Objects.equals(e.getUid(), index))
+                .findAny().orElse(null);
+        }
+
+        public Set<Long> getUid() {
+            return audiences.stream().map(e -> e.getUid()).collect(Collectors.toSet());
+        }
+    }
+
+    @Test
+    public void test_remove_object() {
+        SingleCustomAudienceDto audience1 = new SingleCustomAudienceDto(1L, null, null, null, null);
+        SingleCustomAudienceDto audience2 = new SingleCustomAudienceDto(2L, null, null, null, null);
+        SingleCustomAudienceDto audience3 = new SingleCustomAudienceDto(3L, null, null, null, null);
+        Set<SingleCustomAudienceDto> audiences = Sets.newHashSet(audience1 , audience2, audience3);
+        CustomAudience customAudience = new CustomAudience();
+        customAudience.setAudiences(audiences);
+        Set<SingleCustomAudienceDto> set2 = Sets.newHashSet(audiences);
+        System.out.println(audiences);
+/*        for (Long uid : customAudience.getUid()) {
+            SingleCustomAudienceDto audience = customAudience.getCustomAudienceByIndex(uid);
+            //SingleCustomAudienceDto dto = new SingleCustomAudienceDto(audience.getUid(), null, null, null, null);
+
+            //System.out.println(dto.equals(audience));
+            //System.out.println(dto.hashCode() == audience.hashCode());
+            //boolean success = audiences.remove(audience);
+            boolean success = customAudience.getAudiences().remove(audience);
+            System.out.println(success);
+            System.out.println("---------------------------");
+        }*/
+
+        customAudience.getUid().stream().forEach(uid -> {
+            SingleCustomAudienceDto audience = customAudience.getCustomAudienceByIndex(uid);
+            boolean success = customAudience.getAudiences().remove(audience);
+            System.out.println(success);
+            System.out.println("---------------------------");
+        });
+
+        System.out.println(audiences);
+        System.out.println(set2);
+    }
+
+    @Test
+    public void test_remove_object2() {
+        SingleCustomAudienceDto audience1 = new SingleCustomAudienceDto(1L, null, null, null, null);
+        SingleCustomAudienceDto audience2 = new SingleCustomAudienceDto(1L, null, null, null, null);
+        SingleCustomAudienceDto audience3 = new SingleCustomAudienceDto(1L, null, null, null, null);
+        Set<SingleCustomAudienceDto> audiences = Sets.newHashSet(audience1 , audience2, audience3);
+        System.out.println(audiences);
+    }
+
+    @Test
+    public void test_set_null() {
+        Set<User> s = new HashSet<>();
+        s.stream()
+            .filter(e -> StringUtils.isNotEmpty(e.getUserDomain()))
+            .map(e -> e.getUserDomain())
+            .collect(Collectors.toSet());
+    }
+
 }

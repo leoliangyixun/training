@@ -28,9 +28,9 @@ import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 /**
- * Base class for all code generator implementations. This class provides many
- * of the housekeeping methods needed to implement a code generator, with only
- * the actual code generation methods left unimplemented.
+ * Base class for all hujiang generator implementations. This class provides many
+ * of the housekeeping methods needed to implement a hujiang generator, with only
+ * the actual hujiang generation methods left unimplemented.
  *
  * @author Jeff Butler
  *
@@ -99,7 +99,7 @@ public abstract class IntrospectedTable {
     protected Map<String, Object> attributes;
 
     /**
-     * Internal attributes are used to store commonly accessed items by all code
+     * Internal attributes are used to store commonly accessed items by all hujiang
      * generators
      */
     protected Map<IntrospectedTable.InternalAttribute, String> internalAttributes;
@@ -953,10 +953,10 @@ public abstract class IntrospectedTable {
     public abstract List<GeneratedXmlFile> getGeneratedXmlFiles();
 
     /**
-     * Denotes whether generated code is targeted for Java version 5.0 or
+     * Denotes whether generated hujiang is targeted for Java version 5.0 or
      * higher.
      *
-     * @return true if the generated code makes use of Java5 features
+     * @return true if the generated hujiang makes use of Java5 features
      */
     public abstract boolean isJava5Targeted();
 

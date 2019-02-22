@@ -58,6 +58,6 @@ public enum DeliveryPriority {
             }
         }
 
-        throw new IllegalArgumentException(String.format("No delivery priority found with code %d", code));
+        throw new IllegalArgumentException(String.format("No delivery priority found with hujiang %d", code));
     }
 }

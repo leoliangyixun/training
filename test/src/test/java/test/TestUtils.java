@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
@@ -30,6 +31,8 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class TestUtils {
@@ -239,7 +242,7 @@ public class TestUtils {
 
     @Test
     public void testMD5() {
-        System.out.println(Utils.md5("123465@123465"));
+        System.out.println(Utils.md5("hj-app-id=6TA4ErRfqDF578032&hj-random-str=xxx&hj-app-sign=$apr1$SCBk5y$5uwhv.kNQJq.OHsdoJ8mq1"));
     }
 
 
@@ -371,12 +374,16 @@ public class TestUtils {
     }
 
     @Test
-    public void testGenAppKeyAndAppSecret() {
+    public void testGenerateAPNsAppKeyAndAppSecret() {
         System.out.println("测试环境");
         System.out.println("appid: " + Utils.generateFixedStr(32));
         System.out.println("appkey: " + Utils.generateFixedStr(32));
         System.out.println("appsecret: " + Utils.generateFixedStr(32));
-        System.out.println("验证&生产环境");
+/*        System.out.println("验证环境");
+        System.out.println("appid: " + Utils.generateFixedStr(32));
+        System.out.println("appkey: " + Utils.generateFixedStr(32));
+        System.out.println("appsecret: " + Utils.generateFixedStr(32));*/
+        System.out.println("生产环境");
         System.out.println("appid: " + Utils.generateFixedStr(32));
         System.out.println("appkey: " + Utils.generateFixedStr(32));
         System.out.println("appsecret: " + Utils.generateFixedStr(32));
@@ -411,6 +418,19 @@ public class TestUtils {
     }
 
     @Test
+    public void testGenHJAuth() {
+        System.out.println("测试环境");
+        System.out.println("appkey: " + Utils.generateFixedStr(32));
+        System.out.println("appsecret: " + Utils.generateFixedStr(32));
+        System.out.println("验证环境");
+        System.out.println("appkey: " + Utils.generateFixedStr(32));
+        System.out.println("appsecret: " + Utils.generateFixedStr(32));
+        System.out.println("生产环境");
+        System.out.println("appkey: " + Utils.generateFixedStr(32));
+        System.out.println("appsecret: " + Utils.generateFixedStr(32));
+    }
+
+    @Test
     public void testDeviceInfoSign() {
         String appKey = "0978c0545c6d8f6bfccde1b5aa063884";
         String nonce="3724";
@@ -433,7 +453,6 @@ public class TestUtils {
 
         IOUtils.write(builder.toString(), output, StandardCharsets.UTF_8);
     }
-
 
     @Test
     public void testGenOpenId2File() throws Exception {
@@ -470,7 +489,7 @@ public class TestUtils {
 
     @Test
     public void testPasswordDecode() {
-        System.out.println(Utils.passwordDecode("V8SzZve8kt8DN1GCsSvme35G4+tMq65zL8NBkfCs0ZiLOM+lvTNCVpWk2/l82Fp5KqHtQ/yF2QUujWu/HBURKQ=="));
+        System.out.println(Utils.passwordDecode("JpXerYTqhOlmvoB8Y6ShF53QBdwSNLFaFseUewOnDFK9yEX4C7nb9QzQHK9EJvSdLMgZ0gA7Dytcvc9OgUD9Cw=="));
     }
 
     @Test
@@ -570,7 +589,7 @@ public class TestUtils {
     }
 
     @Test
-    public void testIosPushSign() {
+    public void testGenApnsSign() {
        // System.out.println(Utils.md5("0cbf23ace99a4956b6bd5c057fe3ab16" + "&" +1L + "&" + "385280f04c954a8582bd451822b78719"));
        // System.out.println(Utils.md5("cde5ca2b01e44802bcc14071c39c0efe" + "&" +1L + "&" + "dbec5cb6f0ab46d6be4affc30a66a6dc"));
        // System.out.println(Utils.md5("0978c0545c6d8f6bfccde1b5aa063884" + "&" +1L + "&" + "36b1b6c624cb421c87da2dd8b6fe7e34"));
@@ -588,10 +607,15 @@ public class TestUtils {
     }
 
     @Test
-    public void testIosPushSign2() {
-         System.out.println(Utils.md5("0cbf23ace99a4956b6bd5c057fe3ab16" + "&" +1L + "&" + "385280f04c954a8582bd451822b78719"));
-         System.out.println(Utils.md5("cde5ca2b01e44802bcc14071c39c0efe" + "&" +1L + "&" + "dbec5cb6f0ab46d6be4affc30a66a6dc"));
-         System.out.println(Utils.md5("0978c0545c6d8f6bfccde1b5aa063884" + "&" +1L + "&" + "36b1b6c624cb421c87da2dd8b6fe7e34"));
+    public void testGenApnsSign2() {
+         //System.out.println(Utils.md5("0cbf23ace99a4956b6bd5c057fe3ab16" + "&" +1L + "&" + "385280f04c954a8582bd451822b78719"));
+         //System.out.println(Utils.md5("cde5ca2b01e44802bcc14071c39c0efe" + "&" +1L + "&" + "dbec5cb6f0ab46d6be4affc30a66a6dc"));
+         //System.out.println(Utils.md5("0978c0545c6d8f6bfccde1b5aa063884" + "&" +1L + "&" + "36b1b6c624cb421c87da2dd8b6fe7e34"));
+         //System.out.println(Utils.md5("0bc51a63c5084edab9f72eb6d94284e5" + "&" +1L + "&" + "700b600b0a0a43c9ac1095b0354a2cb9"));
+         //System.out.println(Utils.md5("4ef13115e9e244b7ad2631fa6a38712a" + "&" +1L + "&" + "bbd574392def474abc366d6ddc7d84bf"));
+         //System.out.println(Utils.md5("2be85c9c1e614273b617852d94c5dc61" + "&" +1L + "&" + "7e338d98db2e4bb1bde9f8e557cff30f"));
+         //System.out.println(Utils.md5("71c8b4d984e8406387d7dc7adab37384" + "&" +1L + "&" + "8de4277c0d93405aa8b01c3e82036864"));
+         System.out.println(Utils.md5("4ef13115e9e244b7ad2631fa6a38712a" + "&" +1L + "&" + "bbd574392def474abc366d6ddc7d84bf"));
 
     }
 
@@ -613,6 +637,81 @@ public class TestUtils {
         }
 
         System.out.println(sql.toString());
+    }
+
+
+    @Test
+    public void test() throws Exception{
+        //com.hujiang.cctalk
+        byte[] bytes = ("1f840803f4fc7f31d670d05e" + ":" + "c03a28b4f86b564f29c7cb67").getBytes("UTF-8");
+        System.out.println(Base64.encodeBase64String(bytes));
+    }
+
+    @Test
+    public void test2() throws Exception{
+        //com.com.hujiang.hjm.wordplus
+        byte[] bytes = ("808f08d194e98fb2de439a25" + ":" + "8b708a85ad61f25f88f7b398").getBytes("UTF-8");
+        System.out.println(Base64.encodeBase64String(bytes));
+    }
+
+    @Test
+    public void test3() throws Exception{
+        //com.hjclass.hujiangclass
+        byte[] bytes = ("672a073c7ab9e9de75527201" + ":" + "4c42de0dd949aa59002d24a6").getBytes("UTF-8");
+        System.out.println(Base64.encodeBase64String(bytes));
+    }
+
+    @Test
+    public void test4() throws Exception{
+        //com.hujiang.hjm.cctalk
+        byte[] bytes = ("84e031d3bf7523509fdd6dd4" + ":" + "1766bf48183481e82c501ccd").getBytes("UTF-8");
+        System.out.println(Base64.encodeBase64String(bytes));
+    }
+
+    @Test
+    public void testGenBeaconSign() {
+        String s1 = "hj-nc-app-key=3g9AQld3DVg828341&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$zWQi3T$78NOaoHrcsQcjXtZ41Qtj1";
+        String s2 = "hj-nc-app-key=3g9AQld3DVg828341&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$zWQi3T$78NOaoHrcsQcjXtZ41Qtj1";
+
+        System.out.println(Utils.md5(s1));
+        System.out.println(Utils.md5(s2));
+    }
+
+    @Test
+    public void testGenUid() {
+        String prefix = "3346";
+        StringBuilder builder = new StringBuilder();
+        for (int i =1000; i <= 2000 ;i ++) {
+            builder.append(prefix).append(i).append(",");
+        }
+        System.out.println(builder.toString());
+    }
+
+    @Test
+    public void test_wx_ip_whitelist() {
+        //String source = "invalid ip 172.20.10.2, not in whitelist hint: [IlO.Ba07451527]";
+        String source = "xxx56.99.11.88, not in whitelist hint: [IlO.Ba07451527]";
+        //String source = "invalid ip 172.20.10.2, ";
+        //String source = "172.20.10.2";
+        String regEx = "(2(5[0-5]{1}|[0-4]\\d{1})|[0-1]?\\d{1,2})(\\.(2(5[0-5]{1}|[0-4]\\d{1})|[0-1]?\\d{1,2})){3}";
+       // String regEx = "invalid ip ((:?\\d{1,3}\\.){3}\\d{1,3})";
+        //String regEx = "invalid ip ((?:\\d{1,3}\\.){3}\\d{1,3})";
+        // 编译正则表达式
+        Pattern pattern = Pattern.compile(regEx);
+        // 忽略大小写的写法
+        // Pattern pat = Pattern.compile(regEx, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(source);
+        // 字符串是否与正则表达式相匹配
+
+        if(matcher.find()) {
+            System.out.println(matcher.group(0));
+        }
+    }
+
+
+    @Test
+    public void test_JsonUtil() {
+
     }
 
 }

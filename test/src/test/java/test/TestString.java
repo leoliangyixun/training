@@ -9,6 +9,8 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import com.alibaba.fastjson.JSONObject;
@@ -848,5 +850,37 @@ public class TestString {
         System.out.println(str.length());
     }
 
+    @Test
+    public void testExtractIPFromText() {
+        //do not work
+        String[] texts = new String[]{
+            "invalid ip 180.170.210.21, not in whitelist hint: [k0PR40743sha2]",
+            " ip 180.170.210.21, not in whitelist hint: [k0PR40743sha2]",
+            "invalid  180.170.210.21, not in whitelist hint: [k0PR40743sha2]",
+            "hello 127.0.0.1  ",
+            "hello 127.0.0.2  xxx",
+            "  127.0.0.3  ",
+            "127.0.0.4",
+        };
+        String regularExpression = "((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))";
+        List<String> extractList = new ArrayList<>();
+        Pattern pattern = Pattern.compile(regularExpression);
+        for (String text : texts) {
+            Matcher matcher = pattern.matcher(text);
+            if (matcher.matches()) {
+                extractList.add(text);
+            }
+        }
+
+        System.out.println(extractList);
+    }
+
+
+    @Test
+    public void test_substring() {
+        String str = "xxyyxxxx";
+        //System.out.println(str.substring(0, 3000));
+        System.out.println(StringUtils.substring(str, 0, 3));
+    }
 
 }

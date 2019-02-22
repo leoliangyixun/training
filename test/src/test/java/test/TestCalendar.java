@@ -73,4 +73,37 @@ public class TestCalendar {
 		System.out.println(d.getTime());
 	}
 
+	@Test
+	public void test2() throws Exception {
+		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+		Date now = df.parse(df.format(new Date()));
+		Date begin = df.parse("7:00");
+		Date end = df.parse("18:30");
+		System.out.println("now" + now);
+		System.out.println("begin" + begin);
+		System.out.println("end" + end);
+
+
+		Calendar nowTime = Calendar.getInstance();
+		nowTime.setTime(now);
+		Calendar beginTime = Calendar.getInstance();
+		beginTime.setTime(begin);
+		Calendar endTime = Calendar.getInstance();
+		endTime.setTime(end);
+		System.out.println(nowTime.before(endTime) );
+		System.out.println(nowTime.after(beginTime));
+		System.out.println(now.equals(end));
+		System.out.println(now==end);
+	}
+
+	@Test
+	public void test3() {
+		Calendar c = Calendar.getInstance();
+		//c.set(Calendar.YEAR, 2013);
+		//c.set(Calendar.MONTH, 1);
+		System.out.println("------------" + c.get(Calendar.YEAR) + "年" + (c.get(Calendar.MONTH) + 1) +"月" + c.get(Calendar.DAY_OF_MONTH) + "日" + "-------------");
+		System.out.println(c.getActualMaximum(Calendar.DAY_OF_MONTH));
+		System.out.println(c.getActualMaximum(Calendar.DATE));
+	}
+
 }

@@ -6,6 +6,8 @@ import com.hujiang.basic.framework.core.util.JsonUtil;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -611,5 +613,140 @@ public class TestSE {
         System.out.println(all);
     }
 
+    @Test
+    public void testNP() {
+        Integer a = null;
+        System.out.println(1 == a);
+    }
+
+    @Data
+    public static class Person {
+        private Integer age;
+        private String name;
+        private Date birthday;
+    }
+
+    interface Notification {
+        String getPayload();
+        Person getPerson();
+    }
+
+
+    public static class SoaNotification implements Notification {
+        @Setter
+        private String payload;
+        @Setter
+        private Person person;
+
+        @Override
+        public String getPayload() {
+            return null;
+        }
+
+        @Override
+        public Person getPerson() {
+            return null;
+        }
+    }
+
+    @Test
+    public void testJsonUtil4Interface() {
+        Notification notification = new SoaNotification();
+        String data = JsonUtil.object2JSON(notification);
+
+        //Notification copy = JsonUtil.json2Object(data, Notification.class);
+        Notification copy = JsonUtil.json2Object(data, SoaNotification.class);
+        System.out.println(copy);
+
+    }
+
+    @Test
+    public void test11() {
+        int a = 1;
+        int b = 3;
+        //System.out.println(a += b);
+        System.out.println(a = +b);
+
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("key1", "key1");
+        map.put("key2", "key2");
+        map.put("key3", "key3");
+        map.put("key4", map);
+        map.put("key5", map);
+        String json = JsonUtil.object2JSON(map);
+        System.out.println(json);
+        Map dict = JsonUtil.json2Object(json, Map.class);
+        System.out.println(dict);
+    }
+
+    @Test
+    public void test12() {
+        System.out.println(true ^ true^ true^ true);
+        System.out.println(false ^ false^ true^ false);
+    }
+
+    @Data
+    public static class A {
+        private Set<String> names;
+
+        @Override
+        public String toString() {
+            return JsonUtil.object2JSON(this);
+        }
+    }
+
+    @Data
+    public static class B {
+        private Set<String> names;
+
+        @Override
+        public String toString() {
+            return JsonUtil.object2JSON(this);
+        }
+    }
+
+    @Test
+    public void test13() {
+        Set<String> names = Sets.newHashSet("yk", "leo", "lavender");
+        A a = new A();
+        B b = new B();
+        a.setNames(names);
+        b.setNames(names);
+
+        b.getNames().remove("leo");
+        System.out.println(a);
+        System.out.println(b);
+    }
+
+    @Test
+    public void test14() {
+        Serializable a = 10000L;
+        Long b = 10000L;
+        System.out.println(Objects.equals(a, b));
+
+        Serializable c = "yk";
+        String d = "yk";
+        System.out.println(Objects.equals(c, d));
+    }
+
+    @Test
+    public void test15() {
+        String a = "1";
+        String b= "xx";
+        Long c = 2L;
+        Serializable d = 10000L;
+        Long e = (Long) d;
+        System.out.println(e);
+    }
+
+    @Test
+    public void test16() {
+        String a = "1";
+        String b= "xx";
+        Long c = 2L;
+        Serializable d = 10000L;
+        Long e = (Long) d;
+        System.out.println(e);
+    }
 
 }

@@ -3,7 +3,8 @@
  */
 package test;
 
-import java.io.IOException;
+import com.hujiang.basic.framework.core.exception.AppException;
+
 import java.util.Set;
 
 import com.google.common.collect.Sets;
@@ -172,17 +173,14 @@ public class TestException {
         }
     }
     
-    @Data
+
     @EqualsAndHashCode(callSuper=true)
-    public static class AppException extends RuntimeException {
+    public static class BizException extends AppException {
 
         private static final long serialVersionUID = -6817534485465703972L;
-        private int errorCode;
-        private String errorMsg;
-        
-        public AppException(int errorCode, String errorMsg) {
-            this.errorCode = errorCode;
-            this.errorMsg = errorMsg;
+
+        public BizException(int errorCode, String msg) {
+            super(errorCode, msg);
         }
     }
     
@@ -193,10 +191,19 @@ public class TestException {
                     return "ok";
                 }
                 throw new SysException(0, "error");
-            } catch (AppException e) {
-               System.out.println(e.getErrorMsg());
+            } catch (BizException e) {
+               System.out.println(e.getMessage());
                return "exception";
             }
+        }
+
+        public void run2(int i) {
+
+                if (i == 0) {
+                    throw new BizException(0, "error");
+                }
+            System.out.println(i);
+
         }
     }
     
@@ -217,6 +224,22 @@ public class TestException {
             }
             System.out.println(e);
         });
+    }
+
+    @Test
+    public void testChildException() {
+        Runner runner = new Runner();
+        try {
+            runner.run2(0);
+        }/* catch (BizException ex) {
+            System.out.println("BizException");
+        } */catch (AppException ex) {
+            System.out.println("AppException");
+        }catch (Exception ex) {
+            System.out.println("Exception");
+        }
+
+
     }
 
 }

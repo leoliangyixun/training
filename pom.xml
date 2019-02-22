@@ -500,5 +500,7 @@
     <module>ios-push</module>
     <module>netty</module>
     <module>kafka</module>
+      <module>hystrix</module>
+      <module>orika</module>
   </modules>
 </project>

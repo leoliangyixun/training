@@ -1,14 +1,19 @@
 package test;
 
 import com.hujiang.basic.framework.core.util.DateUtil;
-import com.training.Utils;
-import org.joda.time.*;
-import org.joda.time.Duration;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Instant;
+import org.joda.time.Interval;
 import org.joda.time.LocalDateTime;
+import org.joda.time.LocalTime;
+import org.joda.time.Minutes;
+import org.joda.time.Seconds;
 import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.Locale;
 
@@ -111,6 +116,35 @@ public class TestJoda {
         System.out.println(now);
         Date date = new LocalDateTime(now).plusDays(30).toDate();
         System.out.println(date);
+    }
+
+    @Test
+    public void testContain() {
+        DateTime now = DateTime.now();
+        DateTime start = new DateTime(0000, 1, 1, 9, 30);
+        DateTime end = new DateTime(9999, 12, 31, 21, 30);
+        Interval interval = new Interval(start, end);
+        System.out.println(interval.contains(now));
+        System.out.println(start.toDate());
+        System.out.println(end.toDate());
+
+    }
+
+    @Test
+    public void test() {
+        LocalTime now = new LocalTime(new Date());
+        System.out.println(now);
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm");
+        LocalTime lt1 = LocalTime.parse("08:00", formatter);
+        LocalTime lt2 = LocalTime.parse("22:00", formatter);
+        LocalTime lt3 = LocalTime.parse("08:00", formatter);
+        System.out.println(lt1.equals(lt3));
+        System.out.println(lt1.compareTo(lt2));
+        System.out.println(lt1);
+        System.out.println(lt2);
+        System.out.println(now.isAfter(lt1));
+        System.out.println(now.isBefore(lt2));
+
     }
 
 }

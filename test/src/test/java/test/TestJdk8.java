@@ -7,6 +7,7 @@ import com.hujiang.basic.framework.core.util.DateUtil;
 import com.hujiang.basic.framework.core.util.JsonUtil;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.training.Utils;
 
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ForkJoinPool;
@@ -1081,7 +1083,7 @@ public class TestJdk8 {
 	}
 
 	@Test
-	public void testrReduce_asyn() {
+	public void testReduce5() {
 		List<Integer> nums1 = Lists.newArrayList(1, 2, 3, 4, 5);
 		List<Integer> nums2 = Lists.newArrayList(6,7);
 		List<Integer> nums3 = null;
@@ -1100,6 +1102,19 @@ public class TestJdk8 {
 		System.out.println("nums: " + nums);
 
 	}
+
+    @Test
+    public void testReduce6() {
+        List<List<Integer>> list = Lists.newArrayList();
+        List<Integer> nums = list.stream().reduce(Lists.newArrayList(), (x, y) -> {
+            System.out.println("x: " + x);
+            System.out.println("y: " + y);
+            Optional.ofNullable(y).filter(CollectionUtils::isNotEmpty).ifPresent(x::addAll);
+            return x;
+        });
+        System.out.println("nums: " + nums);
+
+    }
 
     public static class MyTask {
         private final int duration;
@@ -1203,14 +1218,14 @@ public class TestJdk8 {
 
 	@Test
 	public void test_stream_max_min() {
-		List<Integer> list = Lists.newArrayList(9,10,11,15,16);
-		Integer min = list.stream().max((o1, o2) -> {
+		List<Integer> list = Lists.newArrayList(9,10,11,8, 15,16);
+		Integer min = list.stream().min((o1, o2) -> {
 			if (o1 > o2) {
-				return -1;
+				return 1;
 			} else if (Objects.equals(o1 , o2)) {
 				return 0;
 			} else {
-				return 1;
+				return -1;
 			}
 		}).orElse(null);
 
@@ -1228,5 +1243,113 @@ public class TestJdk8 {
 		System.out.println(max);
 	}
 
+	@Test
+	public void test_optional() {
+		String s = null;
+		Integer a = Optional.ofNullable(s).map(e -> Integer.valueOf(e)).orElse(-1);
+		System.out.println(a);
+	}
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public class SendCountGroupByStatusDto {
+		private Integer count;
+		private Integer status;
+	}
+
+	@Test
+	public void test_summing() {
+		SendCountGroupByStatusDto dto1 = new SendCountGroupByStatusDto(1, 200);
+		SendCountGroupByStatusDto dto2 = new SendCountGroupByStatusDto(2, 300);
+		SendCountGroupByStatusDto dto3 = new SendCountGroupByStatusDto(1, 300);
+		SendCountGroupByStatusDto dto4 = new SendCountGroupByStatusDto(1, 300);
+		SendCountGroupByStatusDto dto5 = new SendCountGroupByStatusDto(1, 600);
+		SendCountGroupByStatusDto dto6 = new SendCountGroupByStatusDto(2, 600);
+		SendCountGroupByStatusDto dto7 = new SendCountGroupByStatusDto(1, 600);
+		SendCountGroupByStatusDto dto8 = new SendCountGroupByStatusDto(1, 600);
+		List<SendCountGroupByStatusDto> list1 = Lists.newArrayList(dto1);
+		List<SendCountGroupByStatusDto> list2 = Lists.newArrayList(dto2, dto3, dto4);
+		List<SendCountGroupByStatusDto> list3 = Lists.newArrayList(dto5, dto6, dto7, dto8);
+		List<SendCountGroupByStatusDto> list = Lists.newArrayList(dto1, dto2, dto3, dto4, dto5, dto6, dto7, dto8);
+		Map<Integer, List<SendCountGroupByStatusDto>> map = Maps.newHashMap();
+		map.put(200, list1);
+		map.put(300, list2);
+		map.put(600, list3);
+		long start = System.currentTimeMillis();
+		Integer sum1 = list1.stream().collect(Collectors.summingInt((t) -> t.getCount()));
+		Integer sum2 = list2.stream().collect(Collectors.summingInt((t) -> t.getCount()));
+		Integer sum3 = list3.stream().collect(Collectors.summingInt((t) -> t.getCount()));
+		long end = System.currentTimeMillis();
+		System.out.println(sum1);
+		System.out.println(sum2);
+		System.out.println(sum3);
+		System.out.println("cost:" + (end - start) + " ms");
+		start = System.currentTimeMillis();
+		Integer sendingCount = list.stream().filter(e -> Objects.equals(e.getStatus(), 200)).collect(Collectors.summingInt((t) -> t.getCount()));
+		Integer successCount = list.stream().filter(e -> Objects.equals(e.getStatus(), 300)).collect(Collectors.summingInt((t) -> t.getCount()));
+		Integer failCount = list.stream().filter(e -> Objects.equals(e.getStatus(), 600)).collect(Collectors.summingInt((t) -> t.getCount()));
+		Integer failCount2 = list.stream().filter(e -> Objects.equals(e.getStatus(), 500)).collect(Collectors.summingInt((t) -> t.getCount()));
+		end = System.currentTimeMillis();
+		System.out.println(sendingCount);
+		System.out.println(successCount);
+		System.out.println(failCount);
+		System.out.println(failCount2);
+		System.out.println("cost:" + (end - start) + " ms");
+
+	}
+
+	@Test
+	public void test_summing2() {
+		List<SendCountGroupByStatusDto> list = Lists.newArrayList();
+		for (int i = 1; i<= 10000; i++) {
+			list.add(new SendCountGroupByStatusDto(i, 200));
+		}
+
+		for (int i = 1; i<= 10000; i++) {
+			list.add(new SendCountGroupByStatusDto(i, 300));
+		}
+
+		for (int i = 1; i<= 10000; i++) {
+			list.add(new SendCountGroupByStatusDto(i, 600));
+		}
+
+		for (int i = 1; i<= 10000; i++) {
+			list.add(new SendCountGroupByStatusDto(i, 200));
+		}
+
+		for (int i = 1; i<= 10000; i++) {
+			list.add(new SendCountGroupByStatusDto(i, 300));
+		}
+		for (int i = 1; i<= 10000; i++) {
+			list.add(new SendCountGroupByStatusDto(i, 200));
+		}
+
+		for (int i = 1; i<= 10000; i++) {
+			list.add(new SendCountGroupByStatusDto(i, 600));
+		}
+
+		for (int i = 1; i<= 10000; i++) {
+			list.add(new SendCountGroupByStatusDto(i, 200));
+		}
+
+		for (int i = 1; i<= 10000; i++) {
+			list.add(new SendCountGroupByStatusDto(i, 600));
+		}
+
+		for (int i = 1; i<= 10000; i++) {
+			list.add(new SendCountGroupByStatusDto(i, 300));
+		}
+
+		long start = System.currentTimeMillis();
+		Integer count1 = list.stream().filter(e -> Objects.equals(e.getStatus(), 200)).collect(Collectors.summingInt((t) -> t.getCount()));
+		Integer count2 = list.stream().filter(e -> Objects.equals(e.getStatus(), 300)).collect(Collectors.summingInt((t) -> t.getCount()));
+		Integer count3 = list.stream().filter(e -> Objects.equals(e.getStatus(), 600)).collect(Collectors.summingInt((t) -> t.getCount()));
+		long end = System.currentTimeMillis();
+		System.out.println(count1);
+		System.out.println(count2);
+		System.out.println(count3);
+		System.out.println("cost:" + (end - start) + " ms");
+	}
 
 }

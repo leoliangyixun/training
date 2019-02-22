@@ -8,10 +8,21 @@
   
   <artifactId>spirng-boot-activiti</artifactId>
   <dependencies>
-	<dependency>
-	    <groupId>com.h2database</groupId>
-	    <artifactId>h2</artifactId>
-	</dependency>
+      <!-- https://mvnrepository.com/artifact/org.activiti/activiti-spring-boot-starter-basic -->
+      <dependency>
+          <groupId>org.activiti</groupId>
+          <artifactId>activiti-spring-boot-starter-basic</artifactId>
+          <version>5.22.0</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+      <dependency>
+          <groupId>com.h2database</groupId>
+          <artifactId>h2</artifactId>
+          <version>1.4.196</version>
+          <scope>test</scope>
+      </dependency>
+
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-test</artifactId>

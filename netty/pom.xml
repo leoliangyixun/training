@@ -6,7 +6,7 @@
 		<version>1.5.8.RELEASE</version>
 	</parent>
     <artifactId>netty</artifactId>
-    	<properties>
+    <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.version>0.0.1-SNAPSHOT</project.version>
 		<java.version>1.8</java.version>
