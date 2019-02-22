@@ -1,1 +1,2 @@
-it is a training example
+# training
+training project
