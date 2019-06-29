@@ -11,30 +11,51 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<hujiang-framework.version>2.1.5-RELEASE</hujiang-framework.version>
+		<hujiang-framework.version>2.1.8-RELEASE</hujiang-framework.version>
+		<qingniao-facade.version>201906131800-SNAPSHOT</qingniao-facade.version>
+		<baize-facade.version>201906131800-SNAPSHOT</baize-facade.version>
 	</properties>
     <dependencies>
-  			<dependency>
-				<groupId>com.hujiang.basic.framework</groupId>
-				<artifactId>hujiang-framework-rest</artifactId>
-				<version>${hujiang-framework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.hujiang.basic.framework</groupId>
-				<artifactId>hujiang-framework-model</artifactId>
-				<version>${hujiang-framework.version}</version>
-			</dependency>
-			<dependency>
+		<dependency>
 			<groupId>com.hujiang.basic.framework</groupId>
-				<artifactId>hujiang-framework-core</artifactId>
-				<version>${hujiang-framework.version}</version>
-			</dependency>
-			<dependency>
+			<artifactId>hujiang-framework-rest</artifactId>
+			<version>${hujiang-framework.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>com.hujiang.basic.framework</groupId>
-				<artifactId>hujiang-framework-common</artifactId>
-				<version>${hujiang-framework.version}</version>
-			</dependency>
-
+			<artifactId>hujiang-framework-model</artifactId>
+			<version>${hujiang-framework.version}</version>
+		</dependency>
+		<dependency>
+		<groupId>com.hujiang.basic.framework</groupId>
+			<artifactId>hujiang-framework-core</artifactId>
+			<version>${hujiang-framework.version}</version>
+		</dependency>
+		<dependency>
+		<groupId>com.hujiang.basic.framework</groupId>
+			<artifactId>hujiang-framework-common</artifactId>
+			<version>${hujiang-framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hujiang.notifycenter</groupId>
+			<artifactId>notifycenter-common</artifactId>
+			<version>0.0.8-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hujiang.notifycenter</groupId>
+			<artifactId>qingniao-facade</artifactId>
+			<version>${qingniao-facade.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hujiang.notifycenter</groupId>
+			<artifactId>baize-facade</artifactId>
+			<version>${baize-facade.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.1</version>
+		</dependency>
     <dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-orm</artifactId>
@@ -73,18 +94,19 @@
 	  	<artifactId>commons-lang3</artifactId>
   	</dependency>
   	<dependency>
-		<groupId>org.apache.commons</groupId>
-		<artifactId>commons-collections4</artifactId>
-		<version>4.0</version>
-	</dependency>
-  	<dependency>
 		<groupId>commons-collections</groupId>
 		<artifactId>commons-collections</artifactId>
     </dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-		</dependency>
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-collections4</artifactId>
+		<version>4.1</version>
+	</dependency>
+
+	<dependency>
+		<groupId>commons-io</groupId>
+		<artifactId>commons-io</artifactId>
+	</dependency>
 	  <dependency>
 		  <groupId>com.fasterxml.jackson.core</groupId>
 		  <artifactId>jackson-core</artifactId>
@@ -164,6 +186,13 @@
 			<artifactId>JavaEWAH</artifactId>
 			<version>1.1.6</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.1</version>
+		</dependency>
+
+
 
 	</dependencies>
 </project>

@@ -1,8 +1,11 @@
 package test;
 
+import com.hujiang.basic.framework.core.sercurity.MD5;
 import com.hujiang.basic.framework.core.util.JsonUtil;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.training.Helper;
 import com.training.Utils;
 
 import lombok.AllArgsConstructor;
@@ -10,22 +13,35 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StreamUtils;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -33,6 +49,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TestUtils {
@@ -710,8 +727,62 @@ public class TestUtils {
 
 
     @Test
-    public void test_JsonUtil() {
+    public void test_JsonUtil_md5() {
+        String s1 = "{\"keyword1\":{\"color\":\"#173177\",\"value\":\"巧克力\"},\"keyword2\":{\"color\":\"#173177\",\"value\":\"39.8元\"},\"remark\":{\"color\":\"#173177\",\"value\":\"20190225_172534_478360\"},\"first\":{\"color\":\"#173177\",\"value\":\"恭喜你购买成功！20190225_172534_478360.\"}}";
+        String s2 = "{\"keyword1\":{\"color\":\"#173177\",\"value\":\"巧克力\"},\"keyword2\":{\"color\":\"#173177\",\"value\":\"39.8元\"},\"remark\":{\"color\":\"#173177\",\"value\":\"20190225_172425_525081\"},\"first\":{\"color\":\"#173177\",\"value\":\"恭喜你购买成功！20190225_172425_525081.\"}}";
+        String s3 = "{\"keyword1\":{\"color\":\"#173177\",\"value\":\"巧克力\"},\"keyword2\":{\"color\":\"#173177\",\"value\":\"39.8元\"},\"remark\":{\"color\":\"#173177\",\"value\":\"20190225_172241_401753\"},\"first\":{\"color\":\"#173177\",\"value\":\"恭喜你购买成功！20190225_172241_401753.\"}}";
+        System.out.println(MD5.encryptMD5(s1));
+        System.out.println(MD5.encryptMD5(s2));
+        System.out.println(MD5.encryptMD5(s3));
+    }
+
+    @Test
+    public void testComparator() {
+        List<Integer> list = Lists.newArrayList(1,3,5,2,4,9,6,7,8);
+        List<Integer> list1 =list.stream().sorted(Comparator.comparingInt((o) -> o)).collect(Collectors.toList());
+        List<Integer> list2 =list.stream().sorted((o1, o2) -> {
+            if (o1 > o2) {
+                return 1;
+            } else if (o1 < o2) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }).collect(Collectors.toList());
+
+        System.out.println(list1);
+        System.out.println(list2);
 
     }
+
+    @Data
+    @AllArgsConstructor
+    public static class Template {
+        private String title;
+        private Integer order;
+        private Boolean isMust;
+
+        @Override
+        public String toString() {
+            return JsonUtil.object2JSON(this);
+        }
+    }
+
+    @Test
+    public void testComparator2() {
+        List<Template> list = Lists.newArrayList(
+            new Template("必发", 1, true),
+            new Template("必发", 4, true),
+            new Template("补发", 2, false),
+            new Template("补发", 3, false)
+        );
+
+        List<Template> list1 = list.stream()
+            .sorted((o1, o2) -> Integer.compare(o1.getOrder(), o2.getOrder()))
+            .sorted((o1, o2) -> Boolean.compare(o2.getIsMust(), o1.getIsMust()))
+            .collect(Collectors.toList());
+        System.out.println(list1);
+    }
+
 
 }

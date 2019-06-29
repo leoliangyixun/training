@@ -367,4 +367,10 @@ public class TestDate {
         System.out.println(d);
 
     }
+
+    @Test
+    public void testTimestamp2Date() {
+        System.out.println(new Date(1560877667338L));
+        System.out.println(new Date(1560877678663L));
+    }
 }

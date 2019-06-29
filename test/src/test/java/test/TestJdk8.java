@@ -13,27 +13,36 @@ import com.training.Utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -212,12 +221,22 @@ public class TestJdk8 {
 
 		public User() {
 		}
+
+		public User(String name, Integer age) {
+			this.name = name;
+			this.age = age;
+		}
 		
 		public User(Integer id, String name, Integer age) {
 			this.id = id;
 			this.name = name;
 			this.age = age;
+		}
 
+		public User(String name, Integer age, Date birthday) {
+			this.name = name;
+			this.age = age;
+			this.birthday = birthday;
 		}
 
 		public User(Integer id, String name, Integer age, String area, boolean isDefault, Date birthday) {
@@ -1350,6 +1369,210 @@ public class TestJdk8 {
 		System.out.println(count2);
 		System.out.println(count3);
 		System.out.println("cost:" + (end - start) + " ms");
+	}
+
+
+	@Test
+	public void test_collect_reducing1() {
+		List<User> list = Lists.newArrayList(new User("xxx", 10),new User("xxx", 20),new User("xxx", 30));
+		Integer count = list.stream().collect(Collectors.reducing(0, (e) -> e.getAge(), (x, y) -> x + y));
+		Integer count1 = list.stream().map((e) -> e.getAge()).reduce(0, (x, y) -> x + y);
+		Integer count2 = list.stream().mapToInt(User::getAge).sum();
+		System.out.println(count);
+		System.out.println(count1);
+		System.out.println(count2);
+	}
+
+	@Test
+	public void test_collect_reducing2() {
+		List<User> list = Lists.newArrayList(new User("xxx", 10),new User("xxx", 20),new User("xxx", 30));
+		List<Integer> counts = list.stream().reduce(Lists.newArrayList(), (u, t) -> {
+			u.add(t.getAge());
+			return u;
+		}, (u, t) -> {
+			u.addAll(t);
+			return u;
+		});
+
+		Integer count = list.stream().collect(() -> 0, (x, y) -> x = x + y.getAge(), (x, y) -> x = x + y);
+		System.out.println(counts);
+		System.out.println(count);
+
+	}
+
+	@Test
+	public void test_multi_groupingBy() {
+		Date birthday1 =LocalDateTime.parse("2019-5-20 00:30:30", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")).toDate();
+		Date birthday2 =LocalDateTime.parse("2019-5-20 01:30:30", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")).toDate();
+		Date birthday3 =LocalDateTime.parse("2019-5-20 02:30:30", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")).toDate();
+		Date birthday4 =LocalDateTime.parse("2019-5-21 03:30:30", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")).toDate();
+		Date birthday5 =LocalDateTime.parse("2019-5-21 04:30:30", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")).toDate();
+		List<User> list = Lists.newArrayList(
+			new User("xxx", 10, birthday1),
+			new User("yyy", 20, birthday2),
+			new User("zzz", 30, birthday3),
+			new User("mmm", 18, birthday4),
+			new User("nnn", 26, birthday5)
+		);
+
+		DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
+		Map<String, Map<Integer, List<User>>> collect = list.stream()
+			.collect(Collectors.groupingBy(
+				(e) -> FORMATTER.print(new LocalDateTime(e.getBirthday())),
+				Collectors.groupingBy((e) -> new LocalDateTime(e.getBirthday()).getHourOfDay(), Collectors.toList())
+			));
+
+		System.out.println(JsonUtil.object2JSON(collect));
+	}
+
+
+	@Test
+	public void test_stream_reduce_2_param() {
+		Stream.of(1, 2, 3, 4)
+			.reduce(0,
+				(acc, item) -> {
+
+					System.out.println("acc : " + acc);
+					System.out.println("item: " + item);
+					System.out.println("BiFunction");
+					return acc;
+				});
+
+
+	}
+
+	@Data
+	@AllArgsConstructor
+	public static class Count {
+		private Integer count;
+		private List<Count> counts;
+	}
+
+	@Test
+	public void test_stream_reduce_3_param() {
+		List<Count> list = Lists.newArrayList(
+			new Count(1, Lists.newArrayList(new Count(10, null), new Count(11, null), new Count(12, null))),
+			new Count(2, Lists.newArrayList(new Count(20, null), new Count(21, null), new Count(22, null))),
+			new Count(3, Lists.newArrayList(new Count(30, null), new Count(32, null), new Count(32, null))),
+			new Count(4, Lists.newArrayList(new Count(40, null), new Count(42, null), new Count(42, null))),
+			new Count(5, Lists.newArrayList(new Count(50, null), new Count(52, null), new Count(52, null))),
+			new Count(6, Lists.newArrayList(new Count(60, null), new Count(61, null), new Count(62, null)))
+		);
+
+		List<Integer> list1 = list.stream().reduce(new ArrayList<>(), (t, u) -> {
+			t.add(u.getCount());
+			t.addAll(u.getCounts().stream().collect(Collectors.mapping((e) -> e.getCount(), Collectors.toList())));
+			return t;
+		}, (t, u) -> t);
+		System.out.println(list1);
+
+		List<Integer> list2 = list.parallelStream().reduce(new ArrayList<>(), (t, u) -> {
+			t.add(u.getCount());
+			t.addAll(u.getCounts().stream().collect(Collectors.mapping((e) -> e.getCount(), Collectors.toList())));
+			return t;
+		}, (t, u) -> t);
+		System.out.println(list2);
+
+	}
+
+	@Test
+	public void test_stream_reduce_3_param_2() {
+		//第三个参数只会在多线程的环境下才起作用
+		List<Integer> list = Lists.newArrayList(1, 2, 3, 4)
+			//.parallelStream()
+			.stream()
+			.reduce(new ArrayList<>(),
+				(acc, item) -> {
+					acc.add(item);
+					//System.out.println("acc : " + acc);
+					//System.out.println("item: " + item);
+					//System.out.println("BiFunction");
+					return acc;
+				}, (acc, item) -> {
+					System.out.println("BinaryOperator");
+					acc.addAll(item);
+					System.out.println("acc : " + acc);
+					System.out.println("item: " + item);
+					return acc;
+				});
+
+		System.out.println("list:" + list);
+	}
+
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class DataItemPo {
+		private String msgType;
+		private String type;
+		private String value;
+		private Date date;
+		private int sendCount;
+		private int successCount;
+		private int failCount;
+	}
+
+	@Test
+	public void test_toMap() {
+		List<DataItemPo> list = Lists.newArrayList(
+			new DataItemPo("sms", "hourly", "1", new Date(), 10, 10, 0),
+			new DataItemPo("sms", "hourly", "2", new Date(), 10, 10, 0),
+			new DataItemPo("sms", "hourly", "3", new Date(), 10, 10, 0),
+			new DataItemPo("sms", "hourly", "4", new Date(), 10, 10, 0),
+			new DataItemPo("wechat", "hourly", "1", new Date(), 10, 10, 0),
+			new DataItemPo("wechat", "hourly", "2", new Date(), 10, 10, 0),
+			new DataItemPo("wechat", "hourly", "3", new Date(), 10, 10, 0),
+			new DataItemPo("wechat", "hourly", "4", new Date(), 10, 10, 0),
+			new DataItemPo("apppush", "hourly", "1", new Date(), 10, 10, 0),
+			new DataItemPo("apppush", "hourly", "2", new Date(), 10, 10, 0),
+			new DataItemPo("apppush", "hourly", "3", new Date(), 10, 10, 0),
+			new DataItemPo("apppush", "hourly", "4", new Date(), 10, 10, 0),
+			new DataItemPo("mail", "hourly", "1", new Date(), 10, 10, 0),
+			new DataItemPo("mail", "hourly", "2", new Date(), 10, 10, 0),
+			new DataItemPo("mail", "hourly", "3", new Date(), 10, 10, 0),
+			new DataItemPo("mail", "hourly", "4", new Date(), 10, 10, 0)
+		);
+
+		Map<String, TreeMap<Integer, DataItemPo>> map1 = list.stream().collect(Collectors.groupingBy(
+			(e) -> e.getMsgType(),
+			Collectors.toMap((k) -> Integer.valueOf(k.getValue()), (v) -> v, (t, u) -> {
+				System.out.println(t + ":" + u);
+				return u;
+			}, () -> Maps.newTreeMap(Comparator.comparingInt(o -> o)))
+			)
+		);
+
+		Map<String, HashMap<Integer, DataItemPo>> map2 = list.stream().collect(Collectors.groupingBy(
+			(e) -> e.getMsgType(),
+			Collectors.toMap((k) -> Integer.valueOf(k.getValue()), (v) -> v, (t, u) -> {
+				System.out.println(t + ":" + u);
+				return u;
+			}, () -> Maps.newHashMap())
+			)
+		);
+
+
+		System.out.println(JsonUtil.object2JSON(map1));
+		System.out.println(JsonUtil.object2JSON(map2));
+
+	}
+
+
+	@Test
+	public void test_reduce() {
+		List<DataItemPo> list = Lists.newArrayList(
+			new DataItemPo("sms", "daily", "2019-06-05", new Date(), 10, 10, 0),
+			new DataItemPo("sms", "daily", "2019-06-05", new Date(), 10, 10, 0),
+			new DataItemPo("wechat", "daily", "2019-06-05", new Date(), 20, 10, 10),
+			new DataItemPo("apppush", "daily", "2019-06-05", new Date(), 30, 10, 20),
+			new DataItemPo("mail", "daily", "2019-06-05", new Date(), 40, 10, 30)
+		);
+
+		Map<String, Integer> map = list.stream().collect(Collectors.groupingBy((e) -> e.getMsgType(),
+			Collectors.mapping((e) -> e.getSendCount(), Collectors.reducing(0, (t1, t2) -> t1 + t2))));
+
+		System.out.println(map);
+
 	}
 
 }

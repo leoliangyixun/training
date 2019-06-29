@@ -385,9 +385,9 @@ public abstract class IntrospectedTable {
     }
 
     /**
-     * Calculates the package for the current table.
+     * Calculates the package for the curr table.
      *
-     * @return the package for the SqlMap for the current table
+     * @return the package for the SqlMap for the curr table
      */
     public String getIbatis2SqlMapPackage() {
         return internalAttributes

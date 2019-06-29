@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- status=debug 可以查看log4j的装配过程 -->
+<configuration status="OFF" monitorInterval="1800">
+	<properties>
+		<property name="LOG_PATH">/home</property>
+		<property name="project_name">spring-boot-test</property>
+		<property name="pattern">[%level] [%date{yyyy-MM-dd HH:mm:ss,SSS}] [%logger] [%thread] [] [%X{requestId}] [%X{serverIp}] %msg%n</property>
+	</properties>
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT" follow="true">
+			<PatternLayout pattern="${pattern}" />
+		</Console>
+
+	</appenders>
+	<loggers>
+		<!-- 3rdparty Loggers -->
+		<Logger name="org.springframework" level="error" />
+		<Logger name="com.google" level="error" />
+		<Logger name="net.rubyeye" level="error" />
+		<Logger name="org.hibernate" level="error" />
+		<Logger name="com.alibaba.dubbo" level="error" />
+		<Logger name="org.mybatis" level="debug" />
+		<Logger name="org.apache" level="error" />
+		<Logger name="io.undertow" level="error"/>
+		<Logger name="springfox.documentation" level="error" />
+		<Root level="DEBUG">
+			<appender-ref ref="Console" />
+		</Root>
+	</loggers>
+
+</configuration>

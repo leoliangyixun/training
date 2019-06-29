@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -507,6 +508,53 @@ public class TestCollection {
             .filter(e -> StringUtils.isNotEmpty(e.getUserDomain()))
             .map(e -> e.getUserDomain())
             .collect(Collectors.toSet());
+    }
+
+    @Test
+    public void test_set_clear() {
+        Set<User> s = new HashSet<>();
+        s.add(new User(1, "hj"));
+        s.add(new User(2, "hj"));
+        s.add(new User(3, "hj"));
+        System.out.println(s);
+        s.clear();
+        System.out.println(s);
+    }
+
+    @Test
+    public void test_sub_list() {
+        List<Integer> list = Lists.newArrayList(1, 2, 3);
+        System.out.println(list.subList(1,3));
+    }
+
+    @Test
+    public void test_Null_List() {
+        List<Integer> list = Lists.newArrayList(null, null, null);
+        System.out.println(CollectionUtils.isNotEmpty(list));
+    }
+
+    @Test
+    public void test_multi_collection_union() {
+        Set<Long> set1 = Sets.newHashSet(1L,2L,3L);
+        Set<Long> set2 = Sets.newHashSet(4L,5L,6L);
+        Set<Long> set3 = Sets.newHashSet(7L,8L,9L);
+        Set<Long> set4 = Sets.newHashSet(7L,8L,9L);
+
+        Set<Long> set = Sets.newHashSet(CollectionUtils.union(CollectionUtils.union(CollectionUtils.union(set1, set2), set3), set4));
+        System.out.println(set);
+
+        Iterable<Long> it = IterableUtils.chainedIterable(set1, set2, set3, set4);
+        System.out.println(it);
+        set = Sets.newHashSet(it);
+        System.out.println(set);
+
+    }
+
+    @Test
+    public void test_two_list_equal() {
+        List<User> list1 = Lists.newArrayList(new User(1, "hj"),new User(1, "hj"),new User(1, "hj"));
+        List<User> list2 = Lists.newArrayList(new User(1, "hj"),new User(1, "hj"),new User(1, "hj"));
+        System.out.println(Objects.equals(list1, list2));
     }
 
 }

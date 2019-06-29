@@ -14,8 +14,10 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by yangkai on 2017/6/21.
@@ -144,7 +146,53 @@ public class TestJoda {
         System.out.println(lt2);
         System.out.println(now.isAfter(lt1));
         System.out.println(now.isBefore(lt2));
+    }
+
+    @Test
+    public void test11() {
+        Date now = new Date();
+        Date last = new Date();
+        int days = Days.daysBetween(new LocalDateTime(now), new LocalDateTime(last).plusDays(180)).getDays();
+        LocalDateTime ldt = new LocalDateTime(now);
+        int hour = ldt.getHourOfDay();
+        System.out.println(hour);
 
     }
+
+    @Test
+    public void test12() {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime ldt = LocalDateTime.parse("2019-5-21 00:30:30", formatter);
+        System.out.println(ldt.getHourOfDay());
+
+        //ldt = new LocalDateTime(new Date());
+        System.out.println(ldt.getHourOfDay());
+        System.out.println(ldt.getSecondOfMinute());
+
+    }
+
+    @Test
+    public void test13() {
+        //DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        //DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        //LocalDateTime ldt = new LocalDateTime(new Date());
+        LocalDateTime ldt = LocalDateTime.parse("2019-5-09 01:30:30", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+        System.out.println(formatter.print(ldt));
+    }
+
+    @Test
+    public void test14() {
+        //DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        //DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+        //LocalDateTime ldt = new LocalDateTime(new Date());
+        LocalDateTime ldt = LocalDateTime.parse("2019-5-09", DateTimeFormat.forPattern("yyyy-MM-dd"));
+        System.out.println(formatter.print(ldt));
+        Date date = ldt.toDate();
+        //Date date = ldt.toDate(TimeZone.getTimeZone(ZoneId.systemDefault()));
+        System.out.println(date);
+    }
+
 
 }

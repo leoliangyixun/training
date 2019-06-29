@@ -3,20 +3,12 @@
  */
 package test;
 
-import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import com.hujiang.basic.framework.core.util.JsonUtil;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.hujiang.basic.framework.core.util.JsonUtil;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +19,23 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
+
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
+import java.util.Set;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author yangkai
@@ -882,5 +891,89 @@ public class TestString {
         //System.out.println(str.substring(0, 3000));
         System.out.println(StringUtils.substring(str, 0, 3));
     }
+
+    @Test
+    public void test_trim()  {
+        String str = " +61 ' 400000000";
+        System.out.println(str);
+        System.out.println(StringUtils.deleteWhitespace(str));
+    }
+
+    @Test
+    public void test_split_null_str() {
+        //String s = "xxxxxx:1-:-1,2,3:4,5,6";
+        //String s = "xxxxxx:1-1,2,3:4,5,6-:";
+        //String s = "xxxxxx:1-:4-2:7,8,9";
+        String s ="[8e9fb01f3ff1b13f:208]-[:1,2,3]-[1,2:]";
+        String[] arr = StringUtils.split(s, "-");
+        System.out.println(arr);
+    }
+
+    @Test
+    public void test_wechat_template_extract() {
+/*        String str1 = "{{first.DATA}}\n发布时间：{{keyword1.DATA}}\n学生姓名：{{keyword2.DATA}}\n作业科目：{{keyword3.DATA}}\n发布老师：{{keyword4.DATA}}\n作业详情：{{keyword5.DATA}}\n{{remark.DATA}}";
+        String[] content = StringUtils.split(str1, "\n");
+        String str2 ="张小丽家长您好！今天的作业如下【市第七小学】\r\n发布时间：2015-07-28  13:58\r\n学生姓名：张小丽\r\n作业科目：语文\r\n发布老师：王小斌【一年级/（8）班】\r\n作业详情：预习第5课的内容，学习书写本课生字\r\n请家长督促孩子按时完成！";
+        String[] example = StringUtils.split(str2, "\r\n");*/
+
+        String str1 = "{{first.DATA}}\n预约课程：{{keyword1.DATA}}\n支付金额：{{keyword2.DATA}}\n课程说明：{{keyword3.DATA}}\n友情提示：{{keyword4.DATA}}\n{{remark.DATA}}";
+        String[] content = StringUtils.split(str1, "\n");
+        String str2 ="您的订单【MK170912221572】已经支付成功，请您准时参加课程\r\n预约课程：流瑜伽\r\n支付金额：69.00\r\n课程说明：为安全考虑，未满14周岁请勿进入\r\n友情提示：请按预约人数上课，如果上课未能出示约课信息，会被请出教室。如果违反以上原则2次，则会被我们加入黑名单\r\n如有疑问请致电：13817964423";
+        String[] example = StringUtils.split(str2, "\r\n");
+
+        WxData data = new WxData();
+        data.setFirst(new Content(null, example[0], null));
+        if(content.length - 2 == 5) {
+            data.setKeyword1(new Content(StringUtils.split(content[1], "：")[0], StringUtils.split(example[1], "：")[1], null));
+            data.setKeyword2(new Content(StringUtils.split(content[2], "：")[0], StringUtils.split(example[2], "：")[1], null));
+            data.setKeyword3(new Content(StringUtils.split(content[3], "：")[0], StringUtils.split(example[3], "：")[1], null));
+            data.setKeyword4(new Content(StringUtils.split(content[4], "：")[0], StringUtils.split(example[4], "：")[1], null));
+            data.setKeyword5(new Content(StringUtils.split(content[5], "：")[0], StringUtils.split(example[5], "：")[1], null));
+        } else if (content.length - 2 == 4) {
+            data.setKeyword1(new Content(StringUtils.split(content[1], "：")[0], StringUtils.split(example[1], "：")[1], null));
+            data.setKeyword2(new Content(StringUtils.split(content[2], "：")[0], StringUtils.split(example[2], "：")[1], null));
+            data.setKeyword3(new Content(StringUtils.split(content[3], "：")[0], StringUtils.split(example[3], "：")[1], null));
+            data.setKeyword4(new Content(StringUtils.split(content[4], "：")[0], StringUtils.split(example[4], "：")[1], null));
+        } else if (content.length - 2 == 3) {
+            data.setKeyword1(new Content(StringUtils.split(content[1], "：")[0], StringUtils.split(example[1], "：")[1], null));
+            data.setKeyword2(new Content(StringUtils.split(content[2], "：")[0], StringUtils.split(example[2], "：")[1], null));
+            data.setKeyword3(new Content(StringUtils.split(content[3], "：")[0], StringUtils.split(example[3], "：")[1], null));
+        } else if (content.length - 2 == 2) {
+            data.setKeyword1(new Content(StringUtils.split(content[1], "：")[0], StringUtils.split(example[1], "：")[1], null));
+            data.setKeyword2(new Content(StringUtils.split(content[2], "：")[0], StringUtils.split(example[2], "：")[1], null));
+        } else if (content.length - 2 == 1) {
+            data.setKeyword1(new Content(StringUtils.split(content[1], "：")[0], StringUtils.split(example[1], "：")[1], null));
+        }
+
+        data.setRemark(new Content(null, example[example.length - 1], null));
+
+        System.out.println(data);
+
+
+    }
+
+
+    @Data
+    public static class WxData {
+        private Content first;
+        private Content keyword1;
+        private Content keyword2;
+        private Content keyword3;
+        private Content keyword4;
+        private Content keyword5;
+        private Content remark;
+
+        //private List<Keyword> keywords;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Content {
+        private String title;
+        private String value;
+        private String color;
+    }
+
 
 }

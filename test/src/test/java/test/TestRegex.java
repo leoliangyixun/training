@@ -24,4 +24,9 @@ public class TestRegex {
         }
 
     }
+
+    @Test
+    public void test2() {
+        System.out.println(StringUtils.replacePattern("你好，{0}, (0){{xxx}}, {name}, {{{age}}}, {\"name\": \"yk\"}", "\\{(?!\\{)[^}]+\\}(?!\\})", "{{$0}}"));
+    }
 }
