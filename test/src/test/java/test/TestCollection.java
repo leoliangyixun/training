@@ -557,4 +557,11 @@ public class TestCollection {
         System.out.println(Objects.equals(list1, list2));
     }
 
+    @Test
+    public void test_list_size_and_count() {
+        List<User> list = Lists.newArrayList(new User(1, "hj"),new User(1, "hj"),new User(1, "hj"));
+        System.out.println(list.size());
+        System.out.println(list.stream().count());
+    }
+
 }

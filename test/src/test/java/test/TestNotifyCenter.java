@@ -1,6 +1,7 @@
 package test;
 
 import com.hujiang.basic.framework.core.util.IpUtil;
+import com.hujiang.notifycenter.beacon.client.SmsMsgClient;
 import com.hujiang.notifycenter.qingniao.constants.MsgType;
 import com.hujiang.notifycenter.qingniao.model.dto.result.SendResultSet;
 
@@ -3504,6 +3505,11 @@ public class TestNotifyCenter {
         System.out.println(Utils.md5(s5));
         System.out.println(Utils.md5(s6));
         System.out.println(Utils.md5(s7));
+    }
+
+    @Test
+    public void test_beacon_client() {
+
     }
 
 }

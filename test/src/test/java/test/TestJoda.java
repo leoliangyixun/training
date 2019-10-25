@@ -194,5 +194,71 @@ public class TestJoda {
         System.out.println(date);
     }
 
+    @Test
+    public void test15() {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        DateTime dt = DateTime.parse("2015-12-21 23:22:45", formatter);
+        //System.out.println(dateTime.toDate());
+        //System.out.println(dateTime.toString("yyyy-MM-dd HH:mm:ss"));
+        dt.withMinuteOfHour(1);
+        dt.withSecondOfMinute(1);
+       // System.out.println(dt.toDate());
+        System.out.println(dt.toString("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Test
+    public void test16() {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime ldt1 = LocalDateTime.parse("2015-12-21 00:22:45", formatter);
+
+        LocalDateTime ldt2 = new LocalDateTime(ldt1)
+            //.withHourOfDay(5)
+            .withMinuteOfHour(0)
+            .withSecondOfMinute(0);
+        System.out.println(ldt2.toString("yyyy-MM-dd HH:mm:ss"));
+
+        LocalDateTime ldt3 = new LocalDateTime(new Date());
+        System.out.println(ldt3.toString("yyyy-MM-dd HH:mm:ss"));
+
+    }
+
+    @Test
+    public void test17() {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+        LocalDateTime ldt1 = LocalDateTime.parse("2015-12-21", formatter);
+
+        LocalDateTime ldt2 = new LocalDateTime(ldt1)
+            .withHourOfDay(5)
+            .withMinuteOfHour(0)
+            .withSecondOfMinute(0);
+        System.out.println(ldt2.toString("yyyy-MM-dd-HH-mm-ss"));
+    }
+
+
+    @Test
+    public void test18() {
+        LocalDateTime from = LocalDateTime.parse("2019-07-15 00:00:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime to = LocalDateTime.parse("2019-07-17 23:59:59", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime time = LocalDateTime.parse("2019-07-18 00:00:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+        long t1 = from.toDate().getTime();
+        long t2 = to.toDate().getTime();
+        long t3 = time.toDate().getTime();
+        System.out.println(t1);
+        System.out.println(t2);
+        System.out.println(t3);
+
+
+        System.out.println((t2 - t1) /  (60 * 60 * 1000));
+        System.out.println((t3 - t1) /  (60 * 60 * 1000));
+        System.out.println(t2 - t1);
+        System.out.println(t3 - t1);
+        System.out.println(t3 - t2);
+    }
+
+    @Test
+    public void test_datetime() {
+        DateTime dt = new DateTime();
+    }
+
 
 }

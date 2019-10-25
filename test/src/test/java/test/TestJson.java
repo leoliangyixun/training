@@ -3,8 +3,11 @@
  */
 package test;
 
+import com.hujiang.basic.framework.core.util.JsonUtil;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +18,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jglue.fluentjson.JsonBuilderFactory;
@@ -23,6 +27,7 @@ import org.junit.Test;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
@@ -1060,6 +1065,23 @@ public class TestJson {
         System.out.println(s3);
     }
 
-    
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Student {
+        private String name;
+        private Integer age;
+        private long phone;
+        private Date date;
+    }
+
+    @Test
+    public void test2JsonWithoutGetter() {
+        Student s = new Student("yk", 18, 13554576965L, new Date());
+        String json1 = JsonUtil.object2JSON(s, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
+        System.out.println(json1);
+        String json2 = JsonUtil.object2JSON(s, SerializerFeature.WriteMapNullValue);
+        System.out.println(json2);
+    }
 }

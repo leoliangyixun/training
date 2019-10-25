@@ -6,6 +6,7 @@ package test;
 import com.hujiang.basic.framework.core.util.DateUtil;
 import com.hujiang.basic.framework.core.util.JsonUtil;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -1431,14 +1432,11 @@ public class TestJdk8 {
 		Stream.of(1, 2, 3, 4)
 			.reduce(0,
 				(acc, item) -> {
-
 					System.out.println("acc : " + acc);
 					System.out.println("item: " + item);
 					System.out.println("BiFunction");
 					return acc;
 				});
-
-
 	}
 
 	@Data
@@ -1559,7 +1557,7 @@ public class TestJdk8 {
 
 
 	@Test
-	public void test_reduce() {
+	public void test_collectors_reducing() {
 		List<DataItemPo> list = Lists.newArrayList(
 			new DataItemPo("sms", "daily", "2019-06-05", new Date(), 10, 10, 0),
 			new DataItemPo("sms", "daily", "2019-06-05", new Date(), 10, 10, 0),
@@ -1572,6 +1570,35 @@ public class TestJdk8 {
 			Collectors.mapping((e) -> e.getSendCount(), Collectors.reducing(0, (t1, t2) -> t1 + t2))));
 
 		System.out.println(map);
+
+	}
+
+	@Test
+	public void test_stream() {
+		LongStream.range(0, 24).forEachOrdered(i -> System.out.println(i));
+		LongStream.range(0, 24).forEach(i -> System.out.println(i));
+	}
+
+	@Test
+	public void test_stream_peek() {
+		Map<Integer, String> map = ImmutableMap.<Integer, String> builder().put(1, "test1").put(2, "test2").put(3, "test3").build();
+		map.entrySet().stream().peek((e) -> {
+			System.out.println(e.getKey() + ":" + e.getValue());
+		}).forEachOrdered((e) -> System.out.println(e));
+	}
+
+	@Test
+	public void test_stream_1() {
+		Map<Integer, String> dict = new HashMap<>();
+		dict.put(1, "yk");
+		dict.put(2, "leo");
+		Set<Integer> s = Sets.newHashSet(3,4,5);
+		Set<String> set = s.stream().map(dict::get).filter(Objects::nonNull).collect(Collectors.toSet());
+		System.out.println(set);
+	}
+
+	@Test
+	public void test_stream_reduce() {
 
 	}
 

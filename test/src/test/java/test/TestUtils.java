@@ -506,7 +506,7 @@ public class TestUtils {
 
     @Test
     public void testPasswordDecode() {
-        System.out.println(Utils.passwordDecode("JpXerYTqhOlmvoB8Y6ShF53QBdwSNLFaFseUewOnDFK9yEX4C7nb9QzQHK9EJvSdLMgZ0gA7Dytcvc9OgUD9Cw=="));
+        System.out.println(Utils.passwordDecode("A6avXDiRt50fQJELXfQhv8S7ww1cF+9tpvQBqblHP24IKVvx+LcxSIk/8sJPDXoCOWmQvUGavQUHYHqxy+zRDw=="));
     }
 
     @Test
@@ -606,7 +606,7 @@ public class TestUtils {
     }
 
     @Test
-    public void testGenApnsSign() {
+    public void testGenAPNsSign_qa_depressed() {
        // System.out.println(Utils.md5("0cbf23ace99a4956b6bd5c057fe3ab16" + "&" +1L + "&" + "385280f04c954a8582bd451822b78719"));
        // System.out.println(Utils.md5("cde5ca2b01e44802bcc14071c39c0efe" + "&" +1L + "&" + "dbec5cb6f0ab46d6be4affc30a66a6dc"));
        // System.out.println(Utils.md5("0978c0545c6d8f6bfccde1b5aa063884" + "&" +1L + "&" + "36b1b6c624cb421c87da2dd8b6fe7e34"));
@@ -624,15 +624,13 @@ public class TestUtils {
     }
 
     @Test
-    public void testGenApnsSign2() {
-         //System.out.println(Utils.md5("0cbf23ace99a4956b6bd5c057fe3ab16" + "&" +1L + "&" + "385280f04c954a8582bd451822b78719"));
-         //System.out.println(Utils.md5("cde5ca2b01e44802bcc14071c39c0efe" + "&" +1L + "&" + "dbec5cb6f0ab46d6be4affc30a66a6dc"));
-         //System.out.println(Utils.md5("0978c0545c6d8f6bfccde1b5aa063884" + "&" +1L + "&" + "36b1b6c624cb421c87da2dd8b6fe7e34"));
-         //System.out.println(Utils.md5("0bc51a63c5084edab9f72eb6d94284e5" + "&" +1L + "&" + "700b600b0a0a43c9ac1095b0354a2cb9"));
-         //System.out.println(Utils.md5("4ef13115e9e244b7ad2631fa6a38712a" + "&" +1L + "&" + "bbd574392def474abc366d6ddc7d84bf"));
-         //System.out.println(Utils.md5("2be85c9c1e614273b617852d94c5dc61" + "&" +1L + "&" + "7e338d98db2e4bb1bde9f8e557cff30f"));
-         //System.out.println(Utils.md5("71c8b4d984e8406387d7dc7adab37384" + "&" +1L + "&" + "8de4277c0d93405aa8b01c3e82036864"));
-         System.out.println(Utils.md5("4ef13115e9e244b7ad2631fa6a38712a" + "&" +1L + "&" + "bbd574392def474abc366d6ddc7d84bf"));
+    public void testGenAPNsSign_QA() {
+        //cctalk
+        System.out.println(Utils.md5("71c8b4d984e8406387d7dc7adab37384" + "&" +1L + "&" + "8de4277c0d93405aa8b01c3e82036864"));
+    }
+
+    @Test
+    public void testGenAPNsSign_PROD() {
 
     }
 
@@ -782,6 +780,11 @@ public class TestUtils {
             .sorted((o1, o2) -> Boolean.compare(o2.getIsMust(), o1.getIsMust()))
             .collect(Collectors.toList());
         System.out.println(list1);
+    }
+
+    @Test
+    public void testGenNotifyCenterV2Sign_Class_PROD() {
+        System.out.println(Utils.md5("hj-nc-app-key=10D7btwYC1XB473323&hj-nc-random-str=yk&hj-nc-app-secret=$apr1$chDUXf$KrH7YUzRp0Fh2eeqL7zN5m"));
     }
 
 

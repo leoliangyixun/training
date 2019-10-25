@@ -3,6 +3,7 @@ package test;
 import org.junit.Test;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -50,6 +51,16 @@ public class TestJdk8Date {
         System.out.println(hour);
         System.out.println(second);
 
+    }
+
+    @Test
+    public void test_day_starttime_and_endtime() {
+        LocalDate now = LocalDate.now();
+        LocalDateTime start = LocalDateTime.of(now, LocalTime.MIN);
+        LocalDateTime end = LocalDateTime.of(now.plusDays(1), LocalTime.MAX);
+
+        System.out.println(start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        System.out.println(end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
     }
 
 }
