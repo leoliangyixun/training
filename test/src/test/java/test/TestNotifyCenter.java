@@ -1,9 +1,9 @@
+/*
 package test;
 
 import com.hujiang.basic.framework.core.util.IpUtil;
 import com.hujiang.notifycenter.beacon.client.SmsMsgClient;
-import com.hujiang.notifycenter.qingniao.constants.MsgType;
-import com.hujiang.notifycenter.qingniao.model.dto.result.SendResultSet;
+import com.hujiang.notifycenter.wechat.support.model.dto.SendResultSet;
 
 import com.google.common.collect.Lists;
 import com.training.Helper;
@@ -12,6 +12,8 @@ import com.training.Utils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
+
+import test.TestJdk8.MsgType;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -28,12 +30,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+*/
 /**
  * @author yangkai
  * @date 2019-03-29
  * @email yangkai@hujiang.com
  * @description
- */
+ *//*
+
 public class TestNotifyCenter {
 
     @Test
@@ -1118,6 +1122,7 @@ public class TestNotifyCenter {
             System.out.println(str + ":" + dict.get(Integer.valueOf(str)));
         }
 
+*/
 /*        List<Integer> list = Stream.of(all).map(v -> {
             Integer id = null;
             try {
@@ -1139,7 +1144,8 @@ public class TestNotifyCenter {
             }
             return id;
         }).collect(Collectors.toList());
-        System.out.println(StringUtils.join(list, ","));*/
+        System.out.println(StringUtils.join(list, ","));*//*
+
 
     }
 
@@ -3513,3 +3519,4 @@ public class TestNotifyCenter {
     }
 
 }
+*/

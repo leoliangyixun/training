@@ -6,6 +6,8 @@ package test;
 import com.hujiang.basic.framework.core.util.DateUtil;
 import com.hujiang.basic.framework.core.util.JsonUtil;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -14,7 +16,6 @@ import com.training.Utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -26,8 +27,10 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -36,14 +39,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -1598,8 +1598,127 @@ public class TestJdk8 {
 	}
 
 	@Test
-	public void test_stream_reduce() {
+	public void test_stream_map() {
+		String s = "你已成功帮助好友177user3151完成助攻\n"
+			+ "\n"
+			+ "\uD83D\uDD25 「畅销原版实体书」你也可以领！\n"
+			+ ">> 查看福利活动详情 <<\n"
+			+ "\n"
+			+ "活动规则：\n"
+			+ "1、【邀请3个】好友扫码助力\n"
+			+ "可获得「3本小说配套精读课程」\n"
+			+ "\n"
+			+ "2、【邀请25个】好友扫码助力\n"
+			+ "可包邮得「58元原版实体书」（任选一本）\n"
+			+ "\n"
+			+ "3、【排行榜前3名】\n"
+			+ "可获得「58元实体书（任选一本）+阅读必备文具套装」\n"
+			+ "\n"
+			+ "仅限100人！\n"
+			+ "活动结束时间：2019.9.23 23:59\n"
+			+ "\n"
+			+ "\uD83D\uDC49<a href=\"https://qamc.hujiang.com/sn/phb/305\">点此查看【助力进度+排行榜】 >></a>\n"
+			+ "----------\n"
+			+ "\uD83D\uDC47快将下方【带有你头像的海报】分享给好友扫码关注～";
+		//List<String> list = Lists.newArrayList("1","2","3");
+		List<String> list = Lists.newArrayList("1",null,"3");
+		//List<String> list = null;
+		List<Integer> ids = list.stream().map(e -> {
+			System.out.println(e);
+			e.toString();
+			Integer id = Integer.valueOf(e);
+			return id;
+
+		}).collect(Collectors.toList());
+		System.out.println(ids);
 
 	}
+
+	@Test
+	public void testDoubleGroupingBy() {
+		List<DataItem> list = Lists.newArrayList(
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-02", DateUtil.toDate("2020-02-02", "yyyy-MM-dd"), 2),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-03", DateUtil.toDate("2020-02-03", "yyyy-MM-dd"), 3),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-04", DateUtil.toDate("2020-02-04", "yyyy-MM-dd"), 4),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-05", DateUtil.toDate("2020-02-05", "yyyy-MM-dd"), 5),
+			new DataItem("test1", MsgType.wechat, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.wechat, Type.daily,"2020-02-02", DateUtil.toDate("2020-02-02", "yyyy-MM-dd"), 2),
+			new DataItem("test1", MsgType.wechat, Type.daily,"2020-02-03", DateUtil.toDate("2020-02-03", "yyyy-MM-dd"), 3),
+			new DataItem("test1", MsgType.apppush, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.mail, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.mail, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1)
+		);
+
+		Map<MsgType, Map<Date, Integer>> map = list.stream().collect(Collectors.groupingBy((e) -> e.getMsgType(),
+			Collectors.groupingBy((e) -> e.getDate(), Collectors.mapping((e) -> e.getCount(), Collectors.reducing(0, (t1, t2) -> t1 + t2)))
+		));
+
+		System.out.println(JSON.toJSONString(map, SerializerFeature.WriteDateUseDateFormat));
+	}
+
+	@Test
+	public void testDoubleGroupingBy2() {
+		List<DataItem> list = Lists.newArrayList(
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-02", DateUtil.toDate("2020-02-02", "yyyy-MM-dd"), 2),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-03", DateUtil.toDate("2020-02-03", "yyyy-MM-dd"), 3),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-04", DateUtil.toDate("2020-02-04", "yyyy-MM-dd"), 4),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-05", DateUtil.toDate("2020-02-05", "yyyy-MM-dd"), 5),
+			new DataItem("test1", MsgType.wechat, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.wechat, Type.daily,"2020-02-02", DateUtil.toDate("2020-02-02", "yyyy-MM-dd"), 2),
+			new DataItem("test1", MsgType.wechat, Type.daily,"2020-02-03", DateUtil.toDate("2020-02-03", "yyyy-MM-dd"), 3),
+			new DataItem("test1", MsgType.apppush, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.mail, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.mail, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1)
+		);
+
+		Map<Date, Map<MsgType, Integer>> map = list.stream().collect(Collectors.groupingBy((e) -> e.getDate(),
+			Collectors.groupingBy((e) -> e.getMsgType(), Collectors.mapping((e) -> e.getCount(), Collectors.reducing(0, (t1, t2) -> t1 + t2)))
+		));
+
+		System.out.println(JSON.toJSONString(map, SerializerFeature.WriteDateUseDateFormat));
+	}
+
+
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public class DataItem  {
+		private String appKey;
+		private MsgType msgType;
+		private Type type;
+		private String value;
+		private Date date;
+		private int count;
+	}
+
+	public enum MsgType {
+		sms, //短信推送
+		wechat, //微信推送
+		apppush, //邮件推送
+		mail,//邮件推送
+		;
+	}
+
+	public enum Type {
+		hourly,
+		hourly_notice,
+		hourly_ad,
+		hourly_vcode,
+		hourly_ios,
+		hourly_android,
+		hourly_template,
+		daily,
+		daily_notice,
+		daily_ad,
+		daily_vcode,
+		daily_ios,
+		daily_android,
+		daily_template,
+		;
+	}
+
+
 
 }

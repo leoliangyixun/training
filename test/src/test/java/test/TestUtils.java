@@ -5,7 +5,6 @@ import com.hujiang.basic.framework.core.util.JsonUtil;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.training.Helper;
 import com.training.Utils;
 
 import lombok.AllArgsConstructor;
@@ -13,30 +12,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StreamUtils;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
@@ -275,11 +266,394 @@ public class TestUtils {
     }
 
     @Test
+    public void testGenDeviceInfo_Schema() {
+        String[] years = new String[] {"2020", "2021", "2022"};
+        for (String year : years) {
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "";
+                System.out.println(sql);
+                System.out.println();
+            }
+
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "";
+                System.out.println(sql);
+                System.out.println();
+            }
+        }
+    }
+
+    @Test
+    public void testGenAPNs_Schema() {
+        String[] years = new String[] {"2020", "2021", "2022"};
+        for (String year : years) {
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "CREATE TABLE `push_task_ccschool_"+year + month+"` (\n"
+                    + "  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n"
+                    + "  `msg_id` bigint(20) NOT NULL COMMENT '消息ID',\n"
+                    + "  `app_id` varchar(32) NOT NULL COMMENT '应用ID',\n"
+                    + "  `audience_type` varchar(32) DEFAULT NULL COMMENT '推送类型(all, tag, alisa, user, device, token)',\n"
+                    + "  `payload` json NOT NULL COMMENT '请求体',\n"
+                    + "  `audience` json NOT NULL COMMENT '接收者',\n"
+                    + "  `notification` json NOT NULL COMMENT '通知体',\n"
+                    + "  `platform` varchar(200) NOT NULL COMMENT '平台',\n"
+                    + "  `options` json DEFAULT NULL COMMENT '可选参数',\n"
+                    + "  `status` int(11) NOT NULL COMMENT '消息状态(1创建，2处理中，3失败，4结束且部分成功，5成功)',\n"
+                    + "  `total_count` int(11) NOT NULL COMMENT '消息总量',\n"
+                    + "  `stage` varchar(1000) DEFAULT NULL COMMENT '消息状态详情',\n"
+                    + "  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间，字段变化时自动更新时间',\n"
+                    + "  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间，记录插入时自动插入时间',\n"
+                    + "  PRIMARY KEY (`id`),\n"
+                    + "  KEY `idx_msg_id` (`msg_id`) USING BTREE,\n"
+                    + "  KEY `idx_app_id` (`app_id`) USING BTREE\n"
+                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+                System.out.println(sql);
+                System.out.println();
+            }
+
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "CREATE TABLE `push_task_cctalk_"+year + month+"` (\n"
+                    + "  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n"
+                    + "  `msg_id` bigint(20) NOT NULL COMMENT '消息ID',\n"
+                    + "  `app_id` varchar(32) NOT NULL COMMENT '应用ID',\n"
+                    + "  `audience_type` varchar(32) DEFAULT NULL COMMENT '推送类型(all, tag, alisa, user, device, token)',\n"
+                    + "  `payload` json NOT NULL COMMENT '请求体',\n"
+                    + "  `audience` json NOT NULL COMMENT '接收者',\n"
+                    + "  `notification` json NOT NULL COMMENT '通知体',\n"
+                    + "  `platform` varchar(200) NOT NULL COMMENT '平台',\n"
+                    + "  `options` json DEFAULT NULL COMMENT '可选参数',\n"
+                    + "  `status` int(11) NOT NULL COMMENT '消息状态(1创建，2处理中，3失败，4结束且部分成功，5成功)',\n"
+                    + "  `total_count` int(11) NOT NULL COMMENT '消息总量',\n"
+                    + "  `stage` varchar(1000) DEFAULT NULL COMMENT '消息状态详情',\n"
+                    + "  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间，字段变化时自动更新时间',\n"
+                    + "  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间，记录插入时自动插入时间',\n"
+                    + "  PRIMARY KEY (`id`),\n"
+                    + "  KEY `idx_msg_id` (`msg_id`) USING BTREE,\n"
+                    + "  KEY `idx_app_id` (`app_id`) USING BTREE\n"
+                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+                System.out.println(sql);
+                System.out.println();
+            }
+
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "CREATE TABLE `push_task_class_"+year + month+"` (\n"
+                    + "  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n"
+                    + "  `msg_id` bigint(20) NOT NULL COMMENT '消息ID',\n"
+                    + "  `app_id` varchar(32) NOT NULL COMMENT '应用ID',\n"
+                    + "  `audience_type` varchar(32) DEFAULT NULL COMMENT '推送类型(all, tag, alisa, user, device, token)',\n"
+                    + "  `payload` json NOT NULL COMMENT '请求体',\n"
+                    + "  `audience` json NOT NULL COMMENT '接收者',\n"
+                    + "  `notification` json NOT NULL COMMENT '通知体',\n"
+                    + "  `platform` varchar(200) NOT NULL COMMENT '平台',\n"
+                    + "  `options` json DEFAULT NULL COMMENT '可选参数',\n"
+                    + "  `status` int(11) NOT NULL COMMENT '消息状态(1创建，2处理中，3失败，4结束且部分成功，5成功)',\n"
+                    + "  `total_count` int(11) NOT NULL COMMENT '消息总量',\n"
+                    + "  `stage` varchar(1000) DEFAULT NULL COMMENT '消息状态详情',\n"
+                    + "  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间，字段变化时自动更新时间',\n"
+                    + "  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间，记录插入时自动插入时间',\n"
+                    + "  PRIMARY KEY (`id`),\n"
+                    + "  KEY `idx_msg_id` (`msg_id`) USING BTREE,\n"
+                    + "  KEY `idx_app_id` (`app_id`) USING BTREE\n"
+                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+                System.out.println(sql);
+                System.out.println();
+            }
+
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "CREATE TABLE `push_task_hjcichang_"+year + month+"` (\n"
+                    + "  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n"
+                    + "  `msg_id` bigint(20) NOT NULL COMMENT '消息ID',\n"
+                    + "  `app_id` varchar(32) NOT NULL COMMENT '应用ID',\n"
+                    + "  `audience_type` varchar(32) DEFAULT NULL COMMENT '推送类型(all, tag, alisa, user, device, token)',\n"
+                    + "  `payload` json NOT NULL COMMENT '请求体',\n"
+                    + "  `audience` json NOT NULL COMMENT '接收者',\n"
+                    + "  `notification` json NOT NULL COMMENT '通知体',\n"
+                    + "  `platform` varchar(200) NOT NULL COMMENT '平台',\n"
+                    + "  `options` json DEFAULT NULL COMMENT '可选参数',\n"
+                    + "  `status` int(11) NOT NULL COMMENT '消息状态(1创建，2处理中，3失败，4结束且部分成功，5成功)',\n"
+                    + "  `total_count` int(11) NOT NULL COMMENT '消息总量',\n"
+                    + "  `stage` varchar(1000) DEFAULT NULL COMMENT '消息状态详情',\n"
+                    + "  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间，字段变化时自动更新时间',\n"
+                    + "  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间，记录插入时自动插入时间',\n"
+                    + "  PRIMARY KEY (`id`),\n"
+                    + "  KEY `idx_msg_id` (`msg_id`) USING BTREE,\n"
+                    + "  KEY `idx_app_id` (`app_id`) USING BTREE\n"
+                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+                System.out.println(sql);
+                System.out.println();
+            }
+
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "CREATE TABLE `push_task_hjdict_"+year + month+"` (\n"
+                    + "  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n"
+                    + "  `msg_id` bigint(20) NOT NULL COMMENT '消息ID',\n"
+                    + "  `app_id` varchar(32) NOT NULL COMMENT '应用ID',\n"
+                    + "  `audience_type` varchar(32) DEFAULT NULL COMMENT '推送类型(all, tag, alisa, user, device, token)',\n"
+                    + "  `payload` json NOT NULL COMMENT '请求体',\n"
+                    + "  `audience` json NOT NULL COMMENT '接收者',\n"
+                    + "  `notification` json NOT NULL COMMENT '通知体',\n"
+                    + "  `platform` varchar(200) NOT NULL COMMENT '平台',\n"
+                    + "  `options` json DEFAULT NULL COMMENT '可选参数',\n"
+                    + "  `status` int(11) NOT NULL COMMENT '消息状态(1创建，2处理中，3失败，4结束且部分成功，5成功)',\n"
+                    + "  `total_count` int(11) NOT NULL COMMENT '消息总量',\n"
+                    + "  `stage` varchar(1000) DEFAULT NULL COMMENT '消息状态详情',\n"
+                    + "  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间，字段变化时自动更新时间',\n"
+                    + "  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间，记录插入时自动插入时间',\n"
+                    + "  PRIMARY KEY (`id`),\n"
+                    + "  KEY `idx_msg_id` (`msg_id`) USING BTREE,\n"
+                    + "  KEY `idx_app_id` (`app_id`) USING BTREE\n"
+                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+                System.out.println(sql);
+                System.out.println();
+            }
+
+        }
+    }
+
+    @Test
+    public void testGenWeChat_Schema() {
+        String[] years = new String[] {"2020", "2021", "2022"};
+        for (String year : years) {
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "CREATE TABLE `send_record_"+year+month+"` (\n"
+                    + "  `id` int(11) NOT NULL AUTO_INCREMENT,\n"
+                    + "  `batch_id` varchar(100) NOT NULL  COMMENT '批次号',\n"
+                    + "  `send_type` varchar(16) NOT NULL COMMENT 'tmpl - 微信模板消息, custom - 微信客服消息, group - 微信群发消息, applet - 微信小程序模板消息',\n"
+                    + "  `msg_type` varchar(16) NOT NULL COMMENT 'mb - 微信模板消息, kf - 微信客服消息, mass - 微信群发消息, applet - 微信小程序模板消息',\n"
+                    + "  `wechat_app_id` varchar(50) NOT NULL  COMMENT '服务号ID',\n"
+                    + "  `data` json NOT NULL COMMENT '推送内容',\n"
+                    + "  `status` int(5) NOT NULL DEFAULT '0' COMMENT '发送状态',\n"
+                    + "  `app_key` varchar(128) NULL DEFAULT NULL COMMENT '调用方应用key（适用于2.0）',\n"
+                    + "  `app_id` varchar(128) NULL DEFAULT NULL COMMENT '调用方应用id（适用于1.0）',\n"
+                    + "  `receive_time` timestamp NULL DEFAULT NULL COMMENT '消息接收时间',\n"
+                    + "  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n"
+                    + "  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n"
+                    + "  PRIMARY KEY (`id`),\n"
+                    + "  KEY `idx_bid` (`batch_id`),\n"
+                    + "  KEY `idx_ct` (`create_time`)\n"
+                    + ") ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;";
+                System.out.println(sql);
+                System.out.println();
+            }
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "CREATE TABLE `AppletTemplateMessageSendHistory_"+year + month+"` (\n"
+                    + "  `Id` int(11) NOT NULL AUTO_INCREMENT,\n"
+                    + "  `Topic` varchar(50) NOT NULL,\n"
+                    + "  `TemplateId` varchar(500) NOT NULL,\n"
+                    + "  `ToUser` varchar(500) NOT NULL,\n"
+                    + "  `MsgId` bigint(20) DEFAULT NULL,\n"
+                    + "  `Result` bit(1) DEFAULT NULL,\n"
+                    + "  `ErrCode` int(11) DEFAULT NULL,\n"
+                    + "  `ErrMsg` varchar(500) DEFAULT NULL,\n"
+                    + "  `PushDateTime` datetime DEFAULT NULL,\n"
+                    + "  `BatchID` varchar(100) DEFAULT NULL,\n"
+                    + "  `WechatAppID` varchar(50) NOT NULL DEFAULT '',\n"
+                    + "  `InitiatorID` int(11) DEFAULT NULL,\n"
+                    + "  `Initiator` varchar(50) NOT NULL DEFAULT '',\n"
+                    + "  PRIMARY KEY (`Id`),\n"
+                    + "  KEY `idx_wid` (`WechatAppID`) USING BTREE,\n"
+                    + "  KEY `idx_bid_pdt` (`BatchID`,`PushDateTime`) USING BTREE,\n"
+                    + "  KEY `idx_pdt` (`PushDateTime`) USING BTREE\n"
+                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+                System.out.println(sql);
+                System.out.println();
+            }
+
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "CREATE TABLE `CustomMessageSendHistory_"+year + month+"` (\n"
+                    + "  `Id` int(11) NOT NULL AUTO_INCREMENT,\n"
+                    + "  `Topic` varchar(50) NOT NULL,\n"
+                    + "  `TemplateId` varchar(500) NOT NULL,\n"
+                    + "  `ToUser` varchar(500) NOT NULL,\n"
+                    + "  `MsgId` bigint(20) DEFAULT NULL,\n"
+                    + "  `Result` bit(1) DEFAULT NULL,\n"
+                    + "  `ErrCode` int(11) DEFAULT NULL,\n"
+                    + "  `ErrMsg` varchar(500) DEFAULT NULL,\n"
+                    + "  `PushDateTime` datetime DEFAULT NULL,\n"
+                    + "  `BatchID` varchar(100) DEFAULT NULL,\n"
+                    + "  `WechatAppID` varchar(50) NOT NULL DEFAULT '',\n"
+                    + "  `InitiatorID` int(11) DEFAULT NULL,\n"
+                    + "  `Initiator` varchar(50) NOT NULL DEFAULT '',\n"
+                    + "  PRIMARY KEY (`Id`),\n"
+                    + "  KEY `idx_wid` (`WechatAppID`) USING BTREE,\n"
+                    + "  KEY `idx_bid_pdt` (`BatchID`,`PushDateTime`) USING BTREE,\n"
+                    + "  KEY `idx_pdt` (`PushDateTime`) USING BTREE\n"
+                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+                System.out.println(sql);
+                System.out.println();
+            }
+
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "CREATE TABLE `GroupMessageSendHistory_"+year+month+"` (\n"
+                    + "  `Id` int(11) NOT NULL AUTO_INCREMENT,\n"
+                    + "  `Topic` varchar(50) NOT NULL,\n"
+                    + "  `ToUser` varchar(500) DEFAULT NULL,\n"
+                    + "  `TagId` int(11) DEFAULT NULL,\n"
+                    + "  `MsgId` bigint(20) DEFAULT NULL,\n"
+                    + "  `MsgDataId` bigint(20) DEFAULT NULL,\n"
+                    + "  `MsgType` varchar(50) DEFAULT NULL,\n"
+                    + "  `SendType` varchar(50) DEFAULT NULL,\n"
+                    + "  `Result` bit(1) DEFAULT NULL,\n"
+                    + "  `ErrCode` int(11) DEFAULT NULL,\n"
+                    + "  `ErrMsg` varchar(500) DEFAULT NULL,\n"
+                    + "  `PushDateTime` datetime DEFAULT NULL,\n"
+                    + "  `BatchID` varchar(100) DEFAULT NULL,\n"
+                    + "  `WechatAppID` varchar(50) NOT NULL DEFAULT '',\n"
+                    + "  `InitiatorID` int(11) DEFAULT NULL,\n"
+                    + "  `Initiator` varchar(50) NOT NULL DEFAULT '',\n"
+                    + "  PRIMARY KEY (`Id`),\n"
+                    + "  KEY `idx_wid` (`WechatAppID`) USING BTREE,\n"
+                    + "  KEY `idx_bid_pdt` (`BatchID`,`PushDateTime`) USING BTREE,\n"
+                    + "  KEY `idx_pdt` (`PushDateTime`) USING BTREE\n"
+                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+                System.out.println(sql);
+                System.out.println();
+            }
+
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "CREATE TABLE `SendHistory_"+year + month+"` (\n"
+                    + "  `Id` int(11) NOT NULL AUTO_INCREMENT,\n"
+                    + "  `Topic` varchar(50) NOT NULL,\n"
+                    + "  `TemplateId` varchar(500) NOT NULL,\n"
+                    + "  `ToUser` varchar(500) NOT NULL,\n"
+                    + "  `MsgId` bigint(20) DEFAULT NULL,\n"
+                    + "  `Result` bit(1) DEFAULT NULL,\n"
+                    + "  `ErrCode` int(11) DEFAULT NULL,\n"
+                    + "  `ErrMsg` varchar(500) DEFAULT NULL,\n"
+                    + "  `PushDateTime` datetime DEFAULT NULL,\n"
+                    + "  `BatchID` varchar(100) DEFAULT NULL,\n"
+                    + "  `WechatAppID` varchar(50) NOT NULL DEFAULT '',\n"
+                    + "  `InitiatorID` int(11) DEFAULT NULL,\n"
+                    + "  `Initiator` varchar(50) NOT NULL DEFAULT '',\n"
+                    + "  `OpenId` varchar(64) DEFAULT NULL,\n"
+                    + "  `Data` varchar(3000) DEFAULT NULL,\n"
+                    + "  PRIMARY KEY (`Id`),\n"
+                    + "  KEY `idx_wid` (`WechatAppID`) USING BTREE,\n"
+                    + "  KEY `idx_bid_pdt` (`BatchID`,`PushDateTime`) USING BTREE,\n"
+                    + "  KEY `idx_pdt` (`PushDateTime`) USING BTREE\n"
+                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+                System.out.println(sql);
+                System.out.println();
+            }
+        }
+    }
+
+    @Test
+    public void testGenAppPush_Schema() {
+        String[] years = new String[] {"2020", "2021", "2022"};
+        for (String year : years) {
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "CREATE TABLE `sendhistory_"+year + month +"` (\n"
+                    + "  `ID` int(11) NOT NULL AUTO_INCREMENT,\n"
+                    + "  `BatchID` varchar(50) DEFAULT NULL,\n"
+                    + "  `SerialNumber` varchar(50) DEFAULT NULL,\n"
+                    + "  `Topic` varchar(20) DEFAULT NULL,\n"
+                    + "  `Platform` varchar(20) DEFAULT NULL,\n"
+                    + "  `Payload` varchar(200) DEFAULT NULL,\n"
+                    + "  `Audience` longtext,\n"
+                    + "  `PostTime` datetime NOT NULL,\n"
+                    + "  `State` varchar(4096) DEFAULT NULL,\n"
+                    + "  `AppName` varchar(50) DEFAULT NULL,\n"
+                    + "  PRIMARY KEY (`ID`),\n"
+                    + "  KEY `idx_bid` (`BatchID`),\n"
+                    + "  KEY `idx_pt` (`PostTime`)\n"
+                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+                System.out.println(sql);
+                System.out.println();
+            }
+
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "CREATE TABLE `sendresult_"+year + month+"` (\n"
+                    + "  `ID` int(11) NOT NULL AUTO_INCREMENT,\n"
+                    + "  `BatchID` varchar(100) DEFAULT NULL,\n"
+                    + "  `SerialNumber` varchar(100) DEFAULT NULL,\n"
+                    + "  `SendChannel` varchar(100) DEFAULT NULL,\n"
+                    + "  `SendTime` datetime DEFAULT NULL,\n"
+                    + "  `IsSuccess` bit(1) DEFAULT NULL,\n"
+                    + "  `ReturnID` varchar(50) DEFAULT NULL,\n"
+                    + "  `ReturnMessage` varchar(200) DEFAULT NULL,\n"
+                    + "  `AppName` varchar(50) DEFAULT NULL,\n"
+                    + "  `SendHistoryID` int(11) DEFAULT NULL,\n"
+                    + "  `AudienceSum` int(11) DEFAULT NULL,\n"
+                    + "  `Platform` varchar(20) DEFAULT NULL,\n"
+                    + "  PRIMARY KEY (`ID`),\n"
+                    + "  KEY `idx_bid` (`BatchID`),\n"
+                    + "  KEY `idx_st` (`SendTime`)\n"
+                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+                System.out.println(sql);
+                System.out.println();
+            }
+        }
+    }
+
+    @Test
+    public void testGenTemplate_V1_Schema() {
+        String[] years = new String[] {"2020", "2021", "2022"};
+        for (String year : years) {
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "CREATE TABLE `sendhistory_" + year + month + "` (\n"
+                    + "  `id` int(11) NOT NULL AUTO_INCREMENT,\n"
+                    + "  `AppName` varchar(64) NOT NULL,\n"
+                    + "  `ToUser` text,\n"
+                    + "  `SendType` tinyint(2) NOT NULL,\n"
+                    + "  `Phone` text,\n"
+                    + "  `Mail` varchar(64) DEFAULT NULL,\n"
+                    + "  `TemplateId` int(11) NOT NULL,\n"
+                    + "  `ParaAction` varchar(1024) NOT NULL,\n"
+                    + "  `ExpireTime` datetime NOT NULL,\n"
+                    + "  `ScheduledTime` datetime NOT NULL,\n"
+                    + "  `BatchId` varchar(64) NOT NULL,\n"
+                    + "  `CreateTime` datetime NOT NULL,\n"
+                    + "  `UpdateTime` datetime NOT NULL,\n"
+                    + "  `CreateUser` varchar(64) DEFAULT NULL,\n"
+                    + "  `UpdateUser` varchar(64) DEFAULT NULL,\n"
+                    + "  `Status` tinyint(2) NOT NULL,\n"
+                    + "  `StatusChange` varchar(4096) NOT NULL,\n"
+                    + "  PRIMARY KEY (`id`),\n"
+                    + "  KEY `idx_ct` (`CreateTime`) USING BTREE,\n"
+                    + "  KEY `idx_bid` (`BatchId`) USING BTREE\n"
+                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+                System.out.println(sql);
+                System.out.println();
+            }
+        }
+    }
+
+    @Test
+    public void testGenMail_Schema() {
+        String[] years = new String[] {"2018"};
+        for (String year : years) {
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "";
+                System.out.println(sql);
+                System.out.println();
+            }
+
+        }
+    }
+    @Test
     public void testGenWechat_Schema() {
-        String year = "2018";
-        for (int i = 1; i <= 12; i++) {
-            String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
-            String sql = "DROP TABLE IF EXISTS `AppletTemplateMessageSendHistory_" + year + month + "`;\n" +
+        String[] years = new String[] {"2018"};
+        for (String year : years) {
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "DROP TABLE IF EXISTS `AppletTemplateMessageSendHistory_" + year + month + "`;\n" +
                     "CREATE TABLE `AppletTemplateMessageSendHistory_" + year + month + "` (\n" +
                     "  `Id` int(11) NOT NULL AUTO_INCREMENT,\n" +
                     "  `Topic` varchar(50) NOT NULL,\n" +
@@ -299,14 +673,14 @@ public class TestUtils {
                     "   KEY `IX_AppletTemplateMessageSendHistory_bid_pdt` (`BatchID`,`PushDateTime`) USING BTREE,\n" +
                     "   KEY `IX_AppletTemplateMessageSendHistory_pdt` (`PushDateTime`) USING BTREE\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-            System.out.println(sql);
-            System.out.println();
-        }
+                System.out.println(sql);
+                System.out.println();
+            }
 
 
-        for (int i = 1; i <= 12; i++) {
-            String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
-            String sql = "DROP TABLE IF EXISTS `GroupMessageSendHistory_" + year + month + "`;\n" +
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "DROP TABLE IF EXISTS `GroupMessageSendHistory_" + year + month + "`;\n" +
                     "CREATE TABLE `GroupMessageSendHistory_" + year + month + "` (\n" +
                     "  `Id` int(11) NOT NULL AUTO_INCREMENT,\n" +
                     "  `Topic` varchar(50) NOT NULL,\n" +
@@ -326,13 +700,13 @@ public class TestUtils {
                     "   KEY `IX_GroupMessageSendHistory_bid_pdt` (`BatchID`,`PushDateTime`) USING BTREE,\n" +
                     "   KEY `IX_GroupMessageSendHistory_pdt` (`PushDateTime`) USING BTREE\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-            System.out.println(sql);
-            System.out.println();
-        }
+                System.out.println(sql);
+                System.out.println();
+            }
 
-        for (int i = 1; i <= 12; i++) {
-            String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
-            String sql = "DROP TABLE IF EXISTS `SendHistory_" + year + month + "`;\n" +
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "DROP TABLE IF EXISTS `SendHistory_" + year + month + "`;\n" +
                     "CREATE TABLE `SendHistory_" + year + month + "` (\n" +
                     "  `Id` int(11) NOT NULL AUTO_INCREMENT,\n" +
                     "  `Topic` varchar(50) NOT NULL,\n" +
@@ -352,13 +726,13 @@ public class TestUtils {
                     "   KEY `IX_SendHistory_bid_pdt` (`BatchID`,`PushDateTime`) USING BTREE,\n" +
                     "   KEY `IX_SendHistory_pdt` (`PushDateTime`) USING BTREE\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-            System.out.println(sql);
-            System.out.println();
-        }
+                System.out.println(sql);
+                System.out.println();
+            }
 
-        for (int i = 1; i <= 12; i++) {
-            String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
-            String sql = "DROP TABLE IF EXISTS `CustomMessageSendHistory_" + year + month + "`;\n" +
+            for (int i = 1; i <= 12; i++) {
+                String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                String sql = "DROP TABLE IF EXISTS `CustomMessageSendHistory_" + year + month + "`;\n" +
                     "CREATE TABLE `CustomMessageSendHistory_" + year + month + "` (\n" +
                     "  `Id` int(11) NOT NULL AUTO_INCREMENT,\n" +
                     "  `Topic` varchar(50) NOT NULL,\n" +
@@ -378,8 +752,9 @@ public class TestUtils {
                     "   KEY `IX_CustomMessageSendHistory_bid_pdt` (`BatchID`,`PushDateTime`) USING BTREE,\n" +
                     "   KEY `IX_CustomMessageSendHistory_pdt` (`PushDateTime`) USING BTREE\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-            System.out.println(sql);
-            System.out.println();
+                System.out.println(sql);
+                System.out.println();
+            }
         }
     }
 
@@ -506,7 +881,7 @@ public class TestUtils {
 
     @Test
     public void testPasswordDecode() {
-        System.out.println(Utils.passwordDecode("A6avXDiRt50fQJELXfQhv8S7ww1cF+9tpvQBqblHP24IKVvx+LcxSIk/8sJPDXoCOWmQvUGavQUHYHqxy+zRDw=="));
+        System.out.println(Utils.passwordDecode("LyzYAGUV44HCI+fBTy5CqCkM7w5Sv/YiRgHfxVHkKwtuL5s2e/I3SRy2O7chx15YBLJtqp0+JSdQQsyJlB7JzA=="));
     }
 
     @Test
@@ -626,7 +1001,9 @@ public class TestUtils {
     @Test
     public void testGenAPNsSign_QA() {
         //cctalk
-        System.out.println(Utils.md5("71c8b4d984e8406387d7dc7adab37384" + "&" +1L + "&" + "8de4277c0d93405aa8b01c3e82036864"));
+        String appKey = "71c8b4d984e8406387d7dc7adab37384";
+        String appSecret = "8de4277c0d93405aa8b01c3e82036864";
+        System.out.println(Utils.md5(appKey + "&" +1L + "&" + appSecret));
     }
 
     @Test
@@ -685,11 +1062,7 @@ public class TestUtils {
 
     @Test
     public void testGenBeaconSign() {
-        String s1 = "hj-nc-app-key=3g9AQld3DVg828341&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$zWQi3T$78NOaoHrcsQcjXtZ41Qtj1";
-        String s2 = "hj-nc-app-key=3g9AQld3DVg828341&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$zWQi3T$78NOaoHrcsQcjXtZ41Qtj1";
-
-        System.out.println(Utils.md5(s1));
-        System.out.println(Utils.md5(s2));
+        System.out.println(Utils.md5("hj-nc-app-key=25JaloxCfDH2714539&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$qn4sGX$LBWPDyoj4J8Au2sQPI/S41"));
     }
 
     @Test
@@ -784,7 +1157,69 @@ public class TestUtils {
 
     @Test
     public void testGenNotifyCenterV2Sign_Class_PROD() {
-        System.out.println(Utils.md5("hj-nc-app-key=10D7btwYC1XB473323&hj-nc-random-str=yk&hj-nc-app-secret=$apr1$chDUXf$KrH7YUzRp0Fh2eeqL7zN5m"));
+        System.out.println(Utils.md5("hj-nc-app-key=10D7btwYC1XB473323&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$chDUXf$KrH7YUzRp0Fh2eeqL7zN5m"));
+    }
+
+    @Test
+    public void testGenNotifyCenterV2Sign_Class_QA() {
+        //网校
+        System.out.println(Utils.md5("hj-nc-app-key=20YxSeoXD4oA016266&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$eMIVA8$beIO4k3FZ5ctN7Y7atqqE1"));
+    }
+
+
+    @Test
+    public void testGenCCTalkYearAllDays_Schema() throws Exception {
+        String start = "2020_01_01";
+        String end = "2021_01_01";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd");
+        Date dBegin = sdf.parse(start);
+        Date dEnd = sdf.parse(end);
+        List<Date> lDate = findDates(dBegin, dEnd);
+        for (Date date : lDate) {
+            String prefix = sdf.format(date);
+            System.out.println("CREATE TABLE `push_task_send_history_cctalk_" + prefix + "` (\n"
+                + "  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n"
+                + "  `msg_id` bigint(20) NOT NULL COMMENT '消息ID',\n"
+                + "  `user_id` bigint(20) DEFAULT NULL COMMENT '用户ID',\n"
+                + "  `device_id` varchar(64) DEFAULT NULL COMMENT '设备ID',\n"
+                + "  `device_token` varchar(128) DEFAULT NULL COMMENT '设备推送token',\n"
+                + "  `app_id` varchar(32) DEFAULT NULL COMMENT '应用ID',\n"
+                + "  `app_category` varchar(32) DEFAULT NULL COMMENT '产线',\n"
+                + "  `app_name` varchar(32) DEFAULT NULL COMMENT '应用名称',\n"
+                + "  `audience_type` varchar(32) DEFAULT NULL COMMENT '推送类型(all, tag, alisa, user, device, token)',\n"
+                + "  `content` json DEFAULT NULL COMMENT '推送内容',\n"
+                + "  `success` tinyint(1) DEFAULT NULL COMMENT '发送结果（成功: 0, 失败: 1）',\n"
+                + "  `code` int(11) DEFAULT NULL COMMENT '返回码',\n"
+                + "  `msg` varchar(100) DEFAULT NULL COMMENT '返回码信息',\n"
+                + "  `result` json DEFAULT NULL COMMENT 'APNs返回信息',\n"
+                + "  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间，字段变化时自动更新时间',\n"
+                + "  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间，记录插入时自动插入时间',\n"
+                + "  PRIMARY KEY (`id`),\n"
+                + "  KEY `idx_msg_id` (`msg_id`) USING BTREE,\n"
+                + "  KEY `idx_user_id` (`user_id`) USING BTREE,\n"
+                + "  KEY `idx_device_id` (`device_id`) USING BTREE,\n"
+                + "  KEY `idx_ct` (`gmt_create`)\n"
+                + ") ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;\n");
+        }
+
+    }
+
+    public List<Date> findDates(Date dBegin, Date dEnd) {
+        List lDate = new ArrayList();
+        lDate.add(dBegin);
+        Calendar calBegin = Calendar.getInstance();
+        // 使用给定的 Date 设置此 Calendar 的时间
+        calBegin.setTime(dBegin);
+        Calendar calEnd = Calendar.getInstance();
+        // 使用给定的 Date 设置此 Calendar 的时间
+        calEnd.setTime(dEnd);
+        // 测试此日期是否在指定日期之后
+        while (dEnd.after(calBegin.getTime())) {
+            // 根据日历的规则，为给定的日历字段添加或减去指定的时间量
+            calBegin.add(Calendar.DAY_OF_MONTH, 1);
+            lDate.add(calBegin.getTime());
+        }
+        return lDate;
     }
 
 

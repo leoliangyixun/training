@@ -256,8 +256,20 @@ public class TestJoda {
     }
 
     @Test
-    public void test_datetime() {
-        DateTime dt = new DateTime();
+    public void test_datetimeformat() {
+        Date date = null;
+        DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
+        System.out.println(FORMATTER.print(new LocalDateTime(date)));
+        //System.out.println(LocalDateTime.parse("2019-05-21", FORMATTER).toDate());
+    }
+
+    @Test
+    public void testJavaDate2JodaDate () {
+        Date now = new Date();
+        DateTime dateTime = new DateTime(now);
+        Date date1 = dateTime.withTimeAtStartOfDay().toDate();
+        Date date2 = dateTime.plusDays(1).withTimeAtStartOfDay().toDate();
+        System.out.println();
     }
 
 
