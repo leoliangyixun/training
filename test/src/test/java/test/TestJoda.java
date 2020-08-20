@@ -256,8 +256,11 @@ public class TestJoda {
     }
 
     @Test
-    public void test_datetime() {
-        DateTime dt = new DateTime();
+    public void test_datetimeformat() {
+        Date date = null;
+        DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
+        System.out.println(FORMATTER.print(new LocalDateTime(date)));
+        //System.out.println(LocalDateTime.parse("2019-05-21", FORMATTER).toDate());
     }
 
 

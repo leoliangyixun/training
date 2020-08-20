@@ -11,7 +11,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<hujiang-framework.version>2.1.8-RELEASE</hujiang-framework.version>
+		<hujiang-framework.version>2.1.8.5-SNAPSHOT</hujiang-framework.version>
 		<qingniao-facade.version>201906131800-SNAPSHOT</qingniao-facade.version>
 		<baize-facade.version>201906131800-SNAPSHOT</baize-facade.version>
 	</properties>
@@ -196,6 +196,11 @@
 			<groupId>com.hujiang.notifycenter</groupId>
 			<artifactId>beacon-client</artifactId>
 			<version>201903111435-RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 
