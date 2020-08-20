@@ -403,5 +403,14 @@ public class TestDate {
 
     }
 
+    @Test
+    public void test_date_compare() throws Exception {
+        Date from = new Date();
+        Thread.sleep(100);
+        Date to = new Date();
+        System.out.println(to.after(from));
+
+    }
+
 
 }

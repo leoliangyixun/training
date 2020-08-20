@@ -3,8 +3,15 @@ package test;
 import com.hujiang.basic.framework.core.sercurity.MD5;
 import com.hujiang.basic.framework.core.util.JsonUtil;
 
+import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+<<<<<<< HEAD
+=======
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hashing;
+>>>>>>> 31846d5c09774d9a1e2b10931c3d9844b134cefd
 import com.training.Utils;
 
 import lombok.AllArgsConstructor;
@@ -882,6 +889,7 @@ public class TestUtils {
     @Test
     public void testPasswordDecode() {
         System.out.println(Utils.passwordDecode("LyzYAGUV44HCI+fBTy5CqCkM7w5Sv/YiRgHfxVHkKwtuL5s2e/I3SRy2O7chx15YBLJtqp0+JSdQQsyJlB7JzA=="));
+        System.out.println(Utils.passwordDecode("JpXerYTqhOlmvoB8Y6ShF53QBdwSNLFaFseUewOnDFK9yEX4C7nb9QzQHK9EJvSdLMgZ0gA7Dytcvc9OgUD9Cw=="));
     }
 
     @Test
@@ -1158,6 +1166,8 @@ public class TestUtils {
     @Test
     public void testGenNotifyCenterV2Sign_Class_PROD() {
         System.out.println(Utils.md5("hj-nc-app-key=10D7btwYC1XB473323&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$chDUXf$KrH7YUzRp0Fh2eeqL7zN5m"));
+
+        System.out.println(Utils.md5("hj-nc-app-key=10r28oprn2UV519684&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$i7A0cz$QV936nX7glEYezbT1olmM0"));
     }
 
     @Test
@@ -1220,6 +1230,101 @@ public class TestUtils {
             lDate.add(calBegin.getTime());
         }
         return lDate;
+    }
+
+    @Test
+    public void genTtsRequest4WX() {
+        String appId = "VIP";
+        String appSecret = "91DF02CD9BA8404E811B2D5AB2120AAC";
+        Long timestamp = new Date().getTime();
+        Long expireTime = timestamp + 60 * 60 * 1000L;
+        String batchId = appId + "-" + timestamp + "-" + "00001";
+        String sign = MD5.encryptMD5(appId + appSecret + batchId);
+
+        JSONObject params = new JSONObject();
+        params
+            .fluentPut("appId", appId)
+            .fluentPut("appSecret", appSecret)
+            .fluentPut("batchId", batchId)
+            .fluentPut("sign", sign)
+            .fluentPut("expireTime", expireTime)
+            .fluentPut("tmpParams", new JSONObject().fluentPut("phone", "13166016298"))
+            .fluentPut("voiceTmpId", "1");
+        System.out.println(params);
+    }
+
+    @Test
+    public void genTtsRequest4CC_QA() {
+        String appId = "cctalk";
+        String appSecret = "3B93AD70-68FC-48C0-876C-8F2BA7BE85E9";
+        Long timestamp = new Date().getTime();
+        Long expireTime = timestamp + 60 * 60 * 1000L;
+        String batchId = appId + "-" + timestamp + "-" + "00001";
+        String sign = MD5.encryptMD5(appId + appSecret + batchId);
+
+        JSONObject params = new JSONObject();
+        params
+            .fluentPut("appId", appId)
+            .fluentPut("appSecret", appSecret)
+            .fluentPut("batchId", batchId)
+            .fluentPut("sign", sign)
+            .fluentPut("expireTime", expireTime)
+            .fluentPut("tmpParams", new JSONObject().fluentPut("phone", "13166016298"))
+            .fluentPut("voiceTmpId", "1");
+        System.out.println(params);
+    }
+
+    @Test
+    public void genTtsRequest4CC_PROD() {
+        String appId = "cctalk";
+        String appSecret = "3B93AD70-68FC-48C0-876C-8F2BA7BE85E9";
+        Long timestamp = new Date().getTime();
+        Long expireTime = timestamp + 60 * 60 * 1000L;
+        String batchId = appId + "-" + timestamp + "-" + "00001";
+        String sign = MD5.encryptMD5(appId + appSecret + batchId);
+
+        JSONObject params = new JSONObject();
+        params
+            .fluentPut("appId", appId)
+            .fluentPut("appSecret", appSecret)
+            .fluentPut("batchId", batchId)
+            .fluentPut("sign", sign)
+            .fluentPut("expireTime", expireTime)
+            .fluentPut("tmpParams", new JSONObject().fluentPut("phone", "13166016298"))
+            .fluentPut("voiceTmpId", "3");
+        System.out.println(params);
+    }
+
+    @Test
+    public void genTtsRequest4CC_with_patams() {
+        String appId = "cctalk";
+        String appSecret = "3B93AD70-68FC-48C0-876C-8F2BA7BE85E9";
+        Long timestamp = new Date().getTime();
+        Long expireTime = timestamp + 60 * 60 * 1000L;
+        String batchId = appId + "-" + timestamp + "-" + "00001";
+        String sign = MD5.encryptMD5(appId + appSecret + batchId);
+
+        JSONObject params = new JSONObject();
+        params
+            .fluentPut("appId", appId)
+            .fluentPut("appSecret", appSecret)
+            .fluentPut("batchId", batchId)
+            .fluentPut("sign", sign)
+            .fluentPut("expireTime", expireTime)
+            .fluentPut("tmpParams", new JSONObject().fluentPut("phone", "13166016298").fluentPut("moduleParams", new JSONObject().fluentPut("name", "yangkai")))
+            .fluentPut("voiceTmpId", "1");
+        System.out.println(params);
+    }
+
+
+
+    @Test
+    public void test_md5() {
+        HashFunction md5 = Hashing.md5();
+        System.out.println(md5.hashString("yk", Charsets.UTF_8).toString());
+        System.out.println(MD5.encryptMD5("yk"));
+
+
     }
 
 
