@@ -7,11 +7,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-<<<<<<< HEAD
-=======
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
->>>>>>> 31846d5c09774d9a1e2b10931c3d9844b134cefd
 import com.training.Utils;
 
 import lombok.AllArgsConstructor;
@@ -112,6 +109,11 @@ public class TestUtils {
         long end = System.currentTimeMillis();
         System.out.println(md5);
         System.out.println((end - start) + " ms");
+    }
+
+    @Test
+    public void testMD5ForPhone() {
+        System.out.println(Utils.md5("18687014122"));
     }
 
     @Test
@@ -888,8 +890,9 @@ public class TestUtils {
 
     @Test
     public void testPasswordDecode() {
-        System.out.println(Utils.passwordDecode("LyzYAGUV44HCI+fBTy5CqCkM7w5Sv/YiRgHfxVHkKwtuL5s2e/I3SRy2O7chx15YBLJtqp0+JSdQQsyJlB7JzA=="));
-        System.out.println(Utils.passwordDecode("JpXerYTqhOlmvoB8Y6ShF53QBdwSNLFaFseUewOnDFK9yEX4C7nb9QzQHK9EJvSdLMgZ0gA7Dytcvc9OgUD9Cw=="));
+//        System.out.println(Utils.passwordDecode("LyzYAGUV44HCI+fBTy5CqCkM7w5Sv/YiRgHfxVHkKwtuL5s2e/I3SRy2O7chx15YBLJtqp0+JSdQQsyJlB7JzA=="));
+//        System.out.println(Utils.passwordDecode("JpXerYTqhOlmvoB8Y6ShF53QBdwSNLFaFseUewOnDFK9yEX4C7nb9QzQHK9EJvSdLMgZ0gA7Dytcvc9OgUD9Cw=="));
+        System.out.println(Utils.passwordDecode("fAX2nugHop5Mf6ki4KMXBMITnHLKHsODTxYS4lJC1JXE1q5S3yfvkE43+J2E0OuxfVWUmkQpDXF7T49UvBtzuw=="));
     }
 
     @Test
@@ -1016,7 +1019,10 @@ public class TestUtils {
 
     @Test
     public void testGenAPNsSign_PROD() {
-
+        //五十音图
+        String appKey = "497f3192a317dce8fd1faaa94f223012";
+        String appSecret = "8a8ee9facd0e71aba472013db43a558b";
+        System.out.println(Utils.md5(appKey + "&" +1L + "&" + appSecret));
     }
 
     @Test
@@ -1070,7 +1076,11 @@ public class TestUtils {
 
     @Test
     public void testGenBeaconSign() {
-        System.out.println(Utils.md5("hj-nc-app-key=25JaloxCfDH2714539&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$qn4sGX$LBWPDyoj4J8Au2sQPI/S41"));
+        //System.out.println(Utils.md5("hj-nc-app-key=7FF5R9ZaN4J711938&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$klyxTo$vBeZaeTgxVNFaOEoYE5h8/"));
+        //System.out.println(Utils.md5("hj-nc-app-key=18AYY21cXL8E974298&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$nCDV7a$HHXxJtHAtf6NwMFo9h10pd"));
+        //System.out.println(Utils.md5("hj-nc-app-key=20YxSeoXD4oA016266&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$eMIVA8$beIO4k3FZ5ctN7Y7atqqE1"));
+        //System.out.println(Utils.md5("hj-nc-app-key=8ivymWyUd12458844&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$tfSJPT$5df2FisgBeo5tkDMLfHkv1"));
+        System.out.println(Utils.md5("hj-nc-app-key=10nx62mh2XVc631923&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$hXRqFS$kAjtUSz81fv9sAXLibkDUh"));
     }
 
     @Test
@@ -1324,6 +1334,112 @@ public class TestUtils {
         System.out.println(md5.hashString("yk", Charsets.UTF_8).toString());
         System.out.println(MD5.encryptMD5("yk"));
 
+
+    }
+
+    @Test
+    public void testGenApnsPushTaskShardingTable() {
+        String[] apps = new String[] {"hjwushiyin"};
+        String[] years = new String[] {"2020", "2021", "2022"};
+        for (String app : apps) {
+            for (String year : years) {
+                for (int i = 1; i <= 12; i++) {
+                    String month = i <= 9 ? "0" + String.valueOf(i) : String.valueOf(i);
+                    String sql = "CREATE TABLE `push_task_"+app+"_" + year + month + "` (\n"
+                        + "  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n"
+                        + "  `msg_id` bigint(20) NOT NULL COMMENT '消息ID',\n"
+                        + "  `app_id` varchar(32) NOT NULL COMMENT '应用ID',\n"
+                        + "  `audience_type` varchar(32) DEFAULT NULL COMMENT '推送类型(all, tag, alisa, user, device, token)',\n"
+                        + "  `payload` json NOT NULL COMMENT '请求体',\n"
+                        + "  `audience` json NOT NULL COMMENT '接收者',\n"
+                        + "  `notification` json NOT NULL COMMENT '通知体',\n"
+                        + "  `platform` varchar(200) NOT NULL COMMENT '平台',\n"
+                        + "  `options` json DEFAULT NULL COMMENT '可选参数',\n"
+                        + "  `status` int(11) NOT NULL COMMENT '消息状态(1创建，2处理中，3失败，4结束且部分成功，5成功)',\n"
+                        + "  `total_count` int(11) NOT NULL COMMENT '消息总量',\n"
+                        + "  `stage` varchar(1000) DEFAULT NULL COMMENT '消息状态详情',\n"
+                        + "  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间，字段变化时自动更新时间',\n"
+                        + "  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间，记录插入时自动插入时间',\n"
+                        + "  PRIMARY KEY (`id`),\n"
+                        + "  KEY `idx_msg_id` (`msg_id`) USING BTREE,\n"
+                        + "  KEY `idx_app_id` (`app_id`) USING BTREE\n"
+                        + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+                    System.out.println(sql);
+                    System.out.println();
+                }
+            }
+        }
+
+    }
+
+
+    @Test
+    public void testGenWilsonDML() {
+        for (int i = 0 ;i< 128;i++) {
+            //System.out.println("ALTER TABLE `hj_wilson`.`inbox_message_"+i+"` \n" + "ADD COLUMN `abs_msg_app_id` int(11) NOT NULL COMMENT '应用ID' AFTER `msg_batch_id`;");
+
+            //System.out.println("update `hj_wilson`.`inbox_message` set abs_msg_app_id = 1024;");
+            System.out.println("delete from `hj_wilson`.`inbox_message_"+i+"` where inbox_msg_id > 0;");
+
+        }
+    }
+
+    @Test
+    public void testGenWilsonDDL() {
+        for (int i = 0 ;i< 128;i++) {
+            System.out.println("DROP TABLE IF EXISTS `inbox_message_"+i+"`;\n"
+                + "CREATE TABLE `inbox_message_"+i+"`\n"
+                + "(\n"
+                + "    `inbox_msg_id`   bigint(22) unsigned NOT NULL,\n"
+                + "    `msg_batch_id`   bigint(18)          NOT NULL COMMENT '批次号',\n"
+                + "    `abs_msg_app_id` int(11)  NOT NULL COMMENT 'message app id',\n"
+                + "    `msg_id`         bigint(22)          NOT NULL COMMENT 'message表主键',\n"
+                + "    `user_id`        int(11)             NOT NULL,\n"
+                + "    `status`         tinyint(1)          NOT NULL COMMENT '1. unread  2. read  3. deleted',\n"
+                + "    `created_at`     datetime DEFAULT CURRENT_TIMESTAMP,\n"
+                + "    `updated_at`     datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n"
+                + "    PRIMARY KEY (`inbox_msg_id`),\n"
+                + "    KEY `idx_m_id` (`msg_id`) USING BTREE,\n"
+                + "    KEY `idx_u_id` (`user_id`) USING BTREE\n"
+                + ") ENGINE = InnoDB\n"
+                + "  DEFAULT CHARSET = utf8mb4 COMMENT ='用户inbox消息';\n");
+        }
+    }
+
+
+    @Test
+    public void testWilsonDDL() {
+        for (int i = 0; i<128; i++) {
+            //System.out.println("ALTER TABLE `hj_wilson`.`inbox_message_"+i+"` \nADD COLUMN `sent_at` datetime(0) NULL COMMENT 'refer to message.sent_at' AFTER `status`;");
+            //System.out.println("delete from inbox_message_"+i+";");
+            System.out.println("ALTER TABLE `hj_wilson`.`inbox_message_"+i +"` \n"
+                + "ADD COLUMN `deliver_type` varchar(16) NOT NULL COMMENT '发送的消息类型，direct:单点，topic:批量发送，broadcast:全量发送' AFTER `abs_msg_app_id`;");
+        }
+    }
+
+    @Test
+    public void testWilsonSchema() {
+        for (int i = 0; i<128; i++) {
+            System.out.println("DROP TABLE IF EXISTS `inbox_message_"+i+"`;\n"
+                + "CREATE TABLE `inbox_message_"+i+"`\n"
+                + "(\n"
+                + "    `inbox_msg_id`   bigint(22) unsigned NOT NULL,\n"
+                + "    `msg_batch_id`   bigint(18)          NOT NULL COMMENT '批次号',\n"
+                + "    `abs_msg_app_id` int(11)             NOT NULL COMMENT 'message app id',\n"
+                + "    `deliver_type`   varchar(16) DEFAULT NULL COMMENT '发送的消息类型，direct:单点，topic:批量发送，broadcast:全量发送',\n"
+                + "    `msg_id`         bigint(22)          NOT NULL COMMENT 'message表主键',\n"
+                + "    `user_id`        int(11)             NOT NULL,\n"
+                + "    `status`         tinyint(1)          NOT NULL COMMENT '1. unread  2. read  3. deleted',\n"
+                + "    `sent_at`        datetime            NOT NULL COMMENT 'refer to message.sent_at',\n"
+                + "    `created_at`     datetime    DEFAULT CURRENT_TIMESTAMP,\n"
+                + "    `updated_at`     datetime    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n"
+                + "    PRIMARY KEY (`inbox_msg_id`),\n"
+                + "    KEY `idx_m_id` (`msg_id`) USING BTREE,\n"
+                + "    KEY `idx_u_id` (`user_id`) USING BTREE,\n"
+                + "    KEY `idx_s_a` (`sent_at`) USING BTREE\n"
+                + ") ENGINE = InnoDB\n"
+                + "  DEFAULT CHARSET = utf8mb4 COMMENT ='用户inbox消息';");
+        }
 
     }
 

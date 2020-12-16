@@ -976,4 +976,22 @@ public class TestString {
     }
 
 
+    @Test
+    public void testStringFmt() {
+        String str1 = String.format("hello, %s-%s", 1, "yk");
+        String str2 = String.format("hello, %d-%s", 1, "yk");
+        //String str3 = String.format("hello, %s-%s");
+        String str4 = String.format("hello, ", 1, "yk");
+        System.out.println(str1);
+        System.out.println(str2);
+        //System.out.println(str3);
+        System.out.println(str4);
+    }
+
+    @Test
+    public void testStringFmt2() {
+        System.out.println(String.format("%d-%s", "cc", "yk"));//报错
+    }
+
+
 }

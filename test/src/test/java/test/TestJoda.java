@@ -264,13 +264,32 @@ public class TestJoda {
     }
 
     @Test
-    public void testJavaDate2JodaDate () {
+    public void testJavaDate2JodaDate() {
         Date now = new Date();
         DateTime dateTime = new DateTime(now);
         Date date1 = dateTime.withTimeAtStartOfDay().toDate();
         Date date2 = dateTime.plusDays(1).withTimeAtStartOfDay().toDate();
-        System.out.println();
+        System.out.println(dateTime.dayOfMonth().withMaximumValue().plusDays(1).withTimeAtStartOfDay().toDate());
     }
 
+    @Test
+    public void testJavaDate2JodaDate2(){
+        System.out.println(DateTime.now().withDayOfMonth(1).withTimeAtStartOfDay().toDate());
+        System.out.println(DateTime.now().dayOfMonth().withMaximumValue().plusDays(1).withTimeAtStartOfDay().toDate());
+        System.out.println(DateTime.now().dayOfMonth().withMinimumValue().toDate());
+        System.out.println(DateTime.now().dayOfMonth().withMinimumValue().withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0).toDate());
+        System.out.println(DateTime.now().dayOfMonth().withMaximumValue().withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59).toDate());
+
+        System.out.println(DateTime.now().minusDays(1).withTimeAtStartOfDay().toDate());
+        System.out.println(DateTime.now().withDayOfMonth(1).withTimeAtStartOfDay().toDate());
+    }
+
+    @Test
+    public void testJavaDate2JodaDate3(){
+        Date now = new Date();
+        System.out.println(new DateTime(now).dayOfMonth().withMinimumValue().withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0).toDate());
+        System.out.println(new DateTime(now).dayOfMonth().withMaximumValue().withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59).toDate());
+
+    }
 
 }
