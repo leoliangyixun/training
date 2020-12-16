@@ -489,7 +489,7 @@ public class TestUtils {
 
     @Test
     public void testPasswordDecode() {
-        System.out.println(Utils.passwordDecode("JpXerYTqhOlmvoB8Y6ShF53QBdwSNLFaFseUewOnDFK9yEX4C7nb9QzQHK9EJvSdLMgZ0gA7Dytcvc9OgUD9Cw=="));
+        System.out.println(Utils.passwordDecode("Hk4QNQxjKLGwuC0xaloRBhmfzTjubPfai9gYO0wTjK0vJH9SJcSFwHRi115oSPg3V1FHF9uVNjA1vPNbkcj88Q=="));
     }
 
     @Test
@@ -710,8 +710,26 @@ public class TestUtils {
 
 
     @Test
-    public void test_JsonUtil() {
-
+    public void test_gen_wilson_schema() {
+        for (int i = 0; i < 128; i++) {
+            System.out.println("DROP TABLE IF EXISTS `inbox_message_" + i + "`;\n"
+                + "CREATE TABLE `inbox_message_" + i + "`\n"
+                + "(\n"
+                + "    `inbox_msg_id` bigint(22) unsigned NOT NULL,\n"
+                + "    `msg_batch_id` bigint(18)          NOT NULL COMMENT '批次号',\n"
+                + "    `msg_id`       bigint(22)          NOT NULL COMMENT 'message表主键',\n"
+                + "    `user_id`      int(11)             NOT NULL,\n"
+                + "    `status`       tinyint(1)          NOT NULL COMMENT '1. unread  2. read  3. deleted',\n"
+                + "    `created_at`   datetime DEFAULT CURRENT_TIMESTAMP,\n"
+                + "    `updated_at`   datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n"
+                + "    PRIMARY KEY (`inbox_msg_id`),\n"
+                + "    KEY `idx_a_b_id` (`msg_batch_id`) USING BTREE,\n"
+                + "    KEY `idx_m_id` (`msg_id`) USING BTREE,\n"
+                + "    KEY `idx_u_id` (`user_id`) USING BTREE\n"
+                + ") ENGINE = InnoDB\n"
+                + "    AUTO_INCREMENT = 1\n"
+                + "    DEFAULT CHARSET = utf8mb4 COMMENT ='用户消息';");
+        }
     }
 
 }

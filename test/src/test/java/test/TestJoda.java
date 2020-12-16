@@ -147,4 +147,14 @@ public class TestJoda {
 
     }
 
+    @Test
+    public void test2() {
+        Date date1 = DateTime.now().minusDays(1).withTimeAtStartOfDay().toDate();
+        Date date2 = DateTime.now().withDayOfMonth(1).withTimeAtStartOfDay().toDate();
+        Date date3 =DateTime.now().toDate();
+        System.out.println(DateUtil.toDateString(date1, "yyyy-MM-dd HH:mm:ss"));
+        System.out.println(DateUtil.toDateString(date2, "yyyy-MM-dd HH:mm:ss"));
+        System.out.println(DateUtil.toDateString(date3, "yyyy-MM-dd HH:mm:ss"));
+    }
+
 }

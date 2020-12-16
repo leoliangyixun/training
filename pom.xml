@@ -502,5 +502,6 @@
     <module>kafka</module>
       <module>hystrix</module>
       <module>orika</module>
+      <module>examples</module>
   </modules>
 </project>
