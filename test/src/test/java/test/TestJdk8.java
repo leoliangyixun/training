@@ -6,6 +6,9 @@ package test;
 import com.hujiang.basic.framework.core.util.DateUtil;
 import com.hujiang.basic.framework.core.util.JsonUtil;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -19,18 +22,25 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Random;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -212,12 +222,22 @@ public class TestJdk8 {
 
 		public User() {
 		}
+
+		public User(String name, Integer age) {
+			this.name = name;
+			this.age = age;
+		}
 		
 		public User(Integer id, String name, Integer age) {
 			this.id = id;
 			this.name = name;
 			this.age = age;
+		}
 
+		public User(String name, Integer age, Date birthday) {
+			this.name = name;
+			this.age = age;
+			this.birthday = birthday;
 		}
 
 		public User(Integer id, String name, Integer age, String area, boolean isDefault, Date birthday) {
@@ -1351,5 +1371,354 @@ public class TestJdk8 {
 		System.out.println(count3);
 		System.out.println("cost:" + (end - start) + " ms");
 	}
+
+
+	@Test
+	public void test_collect_reducing1() {
+		List<User> list = Lists.newArrayList(new User("xxx", 10),new User("xxx", 20),new User("xxx", 30));
+		Integer count = list.stream().collect(Collectors.reducing(0, (e) -> e.getAge(), (x, y) -> x + y));
+		Integer count1 = list.stream().map((e) -> e.getAge()).reduce(0, (x, y) -> x + y);
+		Integer count2 = list.stream().mapToInt(User::getAge).sum();
+		System.out.println(count);
+		System.out.println(count1);
+		System.out.println(count2);
+	}
+
+	@Test
+	public void test_collect_reducing2() {
+		List<User> list = Lists.newArrayList(new User("xxx", 10),new User("xxx", 20),new User("xxx", 30));
+		List<Integer> counts = list.stream().reduce(Lists.newArrayList(), (u, t) -> {
+			u.add(t.getAge());
+			return u;
+		}, (u, t) -> {
+			u.addAll(t);
+			return u;
+		});
+
+		Integer count = list.stream().collect(() -> 0, (x, y) -> x = x + y.getAge(), (x, y) -> x = x + y);
+		System.out.println(counts);
+		System.out.println(count);
+
+	}
+
+	@Test
+	public void test_multi_groupingBy() {
+		Date birthday1 =LocalDateTime.parse("2019-5-20 00:30:30", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")).toDate();
+		Date birthday2 =LocalDateTime.parse("2019-5-20 01:30:30", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")).toDate();
+		Date birthday3 =LocalDateTime.parse("2019-5-20 02:30:30", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")).toDate();
+		Date birthday4 =LocalDateTime.parse("2019-5-21 03:30:30", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")).toDate();
+		Date birthday5 =LocalDateTime.parse("2019-5-21 04:30:30", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")).toDate();
+		List<User> list = Lists.newArrayList(
+			new User("xxx", 10, birthday1),
+			new User("yyy", 20, birthday2),
+			new User("zzz", 30, birthday3),
+			new User("mmm", 18, birthday4),
+			new User("nnn", 26, birthday5)
+		);
+
+		DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
+		Map<String, Map<Integer, List<User>>> collect = list.stream()
+			.collect(Collectors.groupingBy(
+				(e) -> FORMATTER.print(new LocalDateTime(e.getBirthday())),
+				Collectors.groupingBy((e) -> new LocalDateTime(e.getBirthday()).getHourOfDay(), Collectors.toList())
+			));
+
+		System.out.println(JsonUtil.object2JSON(collect));
+	}
+
+
+	@Test
+	public void test_stream_reduce_2_param() {
+		Stream.of(1, 2, 3, 4)
+			.reduce(0,
+				(acc, item) -> {
+					System.out.println("acc : " + acc);
+					System.out.println("item: " + item);
+					System.out.println("BiFunction");
+					return acc;
+				});
+	}
+
+	@Data
+	@AllArgsConstructor
+	public static class Count {
+		private Integer count;
+		private List<Count> counts;
+	}
+
+	@Test
+	public void test_stream_reduce_3_param() {
+		List<Count> list = Lists.newArrayList(
+			new Count(1, Lists.newArrayList(new Count(10, null), new Count(11, null), new Count(12, null))),
+			new Count(2, Lists.newArrayList(new Count(20, null), new Count(21, null), new Count(22, null))),
+			new Count(3, Lists.newArrayList(new Count(30, null), new Count(32, null), new Count(32, null))),
+			new Count(4, Lists.newArrayList(new Count(40, null), new Count(42, null), new Count(42, null))),
+			new Count(5, Lists.newArrayList(new Count(50, null), new Count(52, null), new Count(52, null))),
+			new Count(6, Lists.newArrayList(new Count(60, null), new Count(61, null), new Count(62, null)))
+		);
+
+		List<Integer> list1 = list.stream().reduce(new ArrayList<>(), (t, u) -> {
+			t.add(u.getCount());
+			t.addAll(u.getCounts().stream().collect(Collectors.mapping((e) -> e.getCount(), Collectors.toList())));
+			return t;
+		}, (t, u) -> t);
+		System.out.println(list1);
+
+		List<Integer> list2 = list.parallelStream().reduce(new ArrayList<>(), (t, u) -> {
+			t.add(u.getCount());
+			t.addAll(u.getCounts().stream().collect(Collectors.mapping((e) -> e.getCount(), Collectors.toList())));
+			return t;
+		}, (t, u) -> t);
+		System.out.println(list2);
+
+	}
+
+	@Test
+	public void test_stream_reduce_3_param_2() {
+		//第三个参数只会在多线程的环境下才起作用
+		List<Integer> list = Lists.newArrayList(1, 2, 3, 4)
+			//.parallelStream()
+			.stream()
+			.reduce(new ArrayList<>(),
+				(acc, item) -> {
+					acc.add(item);
+					//System.out.println("acc : " + acc);
+					//System.out.println("item: " + item);
+					//System.out.println("BiFunction");
+					return acc;
+				}, (acc, item) -> {
+					System.out.println("BinaryOperator");
+					acc.addAll(item);
+					System.out.println("acc : " + acc);
+					System.out.println("item: " + item);
+					return acc;
+				});
+
+		System.out.println("list:" + list);
+	}
+
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class DataItemPo {
+		private String msgType;
+		private String type;
+		private String value;
+		private Date date;
+		private int sendCount;
+		private int successCount;
+		private int failCount;
+	}
+
+	@Test
+	public void test_toMap() {
+		List<DataItemPo> list = Lists.newArrayList(
+			new DataItemPo("sms", "hourly", "1", new Date(), 10, 10, 0),
+			new DataItemPo("sms", "hourly", "2", new Date(), 10, 10, 0),
+			new DataItemPo("sms", "hourly", "3", new Date(), 10, 10, 0),
+			new DataItemPo("sms", "hourly", "4", new Date(), 10, 10, 0),
+			new DataItemPo("wechat", "hourly", "1", new Date(), 10, 10, 0),
+			new DataItemPo("wechat", "hourly", "2", new Date(), 10, 10, 0),
+			new DataItemPo("wechat", "hourly", "3", new Date(), 10, 10, 0),
+			new DataItemPo("wechat", "hourly", "4", new Date(), 10, 10, 0),
+			new DataItemPo("apppush", "hourly", "1", new Date(), 10, 10, 0),
+			new DataItemPo("apppush", "hourly", "2", new Date(), 10, 10, 0),
+			new DataItemPo("apppush", "hourly", "3", new Date(), 10, 10, 0),
+			new DataItemPo("apppush", "hourly", "4", new Date(), 10, 10, 0),
+			new DataItemPo("mail", "hourly", "1", new Date(), 10, 10, 0),
+			new DataItemPo("mail", "hourly", "2", new Date(), 10, 10, 0),
+			new DataItemPo("mail", "hourly", "3", new Date(), 10, 10, 0),
+			new DataItemPo("mail", "hourly", "4", new Date(), 10, 10, 0)
+		);
+
+		Map<String, TreeMap<Integer, DataItemPo>> map1 = list.stream().collect(Collectors.groupingBy(
+			(e) -> e.getMsgType(),
+			Collectors.toMap((k) -> Integer.valueOf(k.getValue()), (v) -> v, (t, u) -> {
+				System.out.println(t + ":" + u);
+				return u;
+			}, () -> Maps.newTreeMap(Comparator.comparingInt(o -> o)))
+			)
+		);
+
+		Map<String, HashMap<Integer, DataItemPo>> map2 = list.stream().collect(Collectors.groupingBy(
+			(e) -> e.getMsgType(),
+			Collectors.toMap((k) -> Integer.valueOf(k.getValue()), (v) -> v, (t, u) -> {
+				System.out.println(t + ":" + u);
+				return u;
+			}, () -> Maps.newHashMap())
+			)
+		);
+
+
+		System.out.println(JsonUtil.object2JSON(map1));
+		System.out.println(JsonUtil.object2JSON(map2));
+
+	}
+
+
+	@Test
+	public void test_collectors_reducing() {
+		List<DataItemPo> list = Lists.newArrayList(
+			new DataItemPo("sms", "daily", "2019-06-05", new Date(), 10, 10, 0),
+			new DataItemPo("sms", "daily", "2019-06-05", new Date(), 10, 10, 0),
+			new DataItemPo("wechat", "daily", "2019-06-05", new Date(), 20, 10, 10),
+			new DataItemPo("apppush", "daily", "2019-06-05", new Date(), 30, 10, 20),
+			new DataItemPo("mail", "daily", "2019-06-05", new Date(), 40, 10, 30)
+		);
+
+		Map<String, Integer> map = list.stream().collect(Collectors.groupingBy((e) -> e.getMsgType(),
+			Collectors.mapping((e) -> e.getSendCount(), Collectors.reducing(0, (t1, t2) -> t1 + t2))));
+
+		System.out.println(map);
+
+	}
+
+	@Test
+	public void test_stream() {
+		LongStream.range(0, 24).forEachOrdered(i -> System.out.println(i));
+		LongStream.range(0, 24).forEach(i -> System.out.println(i));
+	}
+
+	@Test
+	public void test_stream_peek() {
+		Map<Integer, String> map = ImmutableMap.<Integer, String> builder().put(1, "test1").put(2, "test2").put(3, "test3").build();
+		map.entrySet().stream().peek((e) -> {
+			System.out.println(e.getKey() + ":" + e.getValue());
+		}).forEachOrdered((e) -> System.out.println(e));
+	}
+
+	@Test
+	public void test_stream_1() {
+		Map<Integer, String> dict = new HashMap<>();
+		dict.put(1, "yk");
+		dict.put(2, "leo");
+		Set<Integer> s = Sets.newHashSet(3,4,5);
+		Set<String> set = s.stream().map(dict::get).filter(Objects::nonNull).collect(Collectors.toSet());
+		System.out.println(set);
+	}
+
+	@Test
+	public void test_stream_map() {
+		String s = "你已成功帮助好友177user3151完成助攻\n"
+			+ "\n"
+			+ "\uD83D\uDD25 「畅销原版实体书」你也可以领！\n"
+			+ ">> 查看福利活动详情 <<\n"
+			+ "\n"
+			+ "活动规则：\n"
+			+ "1、【邀请3个】好友扫码助力\n"
+			+ "可获得「3本小说配套精读课程」\n"
+			+ "\n"
+			+ "2、【邀请25个】好友扫码助力\n"
+			+ "可包邮得「58元原版实体书」（任选一本）\n"
+			+ "\n"
+			+ "3、【排行榜前3名】\n"
+			+ "可获得「58元实体书（任选一本）+阅读必备文具套装」\n"
+			+ "\n"
+			+ "仅限100人！\n"
+			+ "活动结束时间：2019.9.23 23:59\n"
+			+ "\n"
+			+ "\uD83D\uDC49<a href=\"https://qamc.hujiang.com/sn/phb/305\">点此查看【助力进度+排行榜】 >></a>\n"
+			+ "----------\n"
+			+ "\uD83D\uDC47快将下方【带有你头像的海报】分享给好友扫码关注～";
+		//List<String> list = Lists.newArrayList("1","2","3");
+		List<String> list = Lists.newArrayList("1",null,"3");
+		//List<String> list = null;
+		List<Integer> ids = list.stream().map(e -> {
+			System.out.println(e);
+			e.toString();
+			Integer id = Integer.valueOf(e);
+			return id;
+
+		}).collect(Collectors.toList());
+		System.out.println(ids);
+
+	}
+
+	@Test
+	public void testDoubleGroupingBy() {
+		List<DataItem> list = Lists.newArrayList(
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-02", DateUtil.toDate("2020-02-02", "yyyy-MM-dd"), 2),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-03", DateUtil.toDate("2020-02-03", "yyyy-MM-dd"), 3),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-04", DateUtil.toDate("2020-02-04", "yyyy-MM-dd"), 4),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-05", DateUtil.toDate("2020-02-05", "yyyy-MM-dd"), 5),
+			new DataItem("test1", MsgType.wechat, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.wechat, Type.daily,"2020-02-02", DateUtil.toDate("2020-02-02", "yyyy-MM-dd"), 2),
+			new DataItem("test1", MsgType.wechat, Type.daily,"2020-02-03", DateUtil.toDate("2020-02-03", "yyyy-MM-dd"), 3),
+			new DataItem("test1", MsgType.apppush, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.mail, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.mail, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1)
+		);
+
+		Map<MsgType, Map<Date, Integer>> map = list.stream().collect(Collectors.groupingBy((e) -> e.getMsgType(),
+			Collectors.groupingBy((e) -> e.getDate(), Collectors.mapping((e) -> e.getCount(), Collectors.reducing(0, (t1, t2) -> t1 + t2)))
+		));
+
+		System.out.println(JSON.toJSONString(map, SerializerFeature.WriteDateUseDateFormat));
+	}
+
+	@Test
+	public void testDoubleGroupingBy2() {
+		List<DataItem> list = Lists.newArrayList(
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-02", DateUtil.toDate("2020-02-02", "yyyy-MM-dd"), 2),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-03", DateUtil.toDate("2020-02-03", "yyyy-MM-dd"), 3),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-04", DateUtil.toDate("2020-02-04", "yyyy-MM-dd"), 4),
+			new DataItem("test1", MsgType.sms, Type.daily,"2020-02-05", DateUtil.toDate("2020-02-05", "yyyy-MM-dd"), 5),
+			new DataItem("test1", MsgType.wechat, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.wechat, Type.daily,"2020-02-02", DateUtil.toDate("2020-02-02", "yyyy-MM-dd"), 2),
+			new DataItem("test1", MsgType.wechat, Type.daily,"2020-02-03", DateUtil.toDate("2020-02-03", "yyyy-MM-dd"), 3),
+			new DataItem("test1", MsgType.apppush, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.mail, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1),
+			new DataItem("test1", MsgType.mail, Type.daily,"2020-02-01", DateUtil.toDate("2020-02-01", "yyyy-MM-dd"), 1)
+		);
+
+		Map<Date, Map<MsgType, Integer>> map = list.stream().collect(Collectors.groupingBy((e) -> e.getDate(),
+			Collectors.groupingBy((e) -> e.getMsgType(), Collectors.mapping((e) -> e.getCount(), Collectors.reducing(0, (t1, t2) -> t1 + t2)))
+		));
+
+		System.out.println(JSON.toJSONString(map, SerializerFeature.WriteDateUseDateFormat));
+	}
+
+
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public class DataItem  {
+		private String appKey;
+		private MsgType msgType;
+		private Type type;
+		private String value;
+		private Date date;
+		private int count;
+	}
+
+	public enum MsgType {
+		sms, //短信推送
+		wechat, //微信推送
+		apppush, //邮件推送
+		mail,//邮件推送
+		;
+	}
+
+	public enum Type {
+		hourly,
+		hourly_notice,
+		hourly_ad,
+		hourly_vcode,
+		hourly_ios,
+		hourly_android,
+		hourly_template,
+		daily,
+		daily_notice,
+		daily_ad,
+		daily_vcode,
+		daily_ios,
+		daily_android,
+		daily_template,
+		;
+	}
+
+
 
 }

@@ -211,7 +211,7 @@ public class AvatarController extends BaseController {
 
             //验证token
             String currToken = SecurityHelper.md5(String.format("filelength=%s&once=%s&uid=%s%s", image.getSize(), once, uid, "www.hujiang.com@2016"));
-            log.info("origin token: {}, current token: {}, equals: {}, file size: {}", token, currToken, Objects.equals(token, currToken), image.getSize());
+            log.info("origin token: {}, curr token: {}, equals: {}, file size: {}", token, currToken, Objects.equals(token, currToken), image.getSize());
             if (!Objects.equals(token, currToken)) {
                 res = BaseRes.fail(HttpStatus.FORBIDDEN.value(), "access denied");
                 return new ResponseEntity<>(res, HttpStatus.OK);

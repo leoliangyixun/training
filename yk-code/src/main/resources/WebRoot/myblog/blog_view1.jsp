@@ -57,7 +57,7 @@
 				<%
 				List<BlogComment> blog_comment = (ArrayList<BlogComment>) session.getAttribute("blog_comment");
 				Map<Integer,List<BlogCommentReply>> blog_comment_reply_map=(HashMap<Integer,List<BlogCommentReply>>)session.getAttribute("blog_comment_reply_map");
-				List current_blog=null;//current blog
+				List current_blog=null;//curr blog
 				//out.println(bc);	
 				//out.println(bcr_map);
 				if(mark==Constants.BLOG_FOR_LATEST)

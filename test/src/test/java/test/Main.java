@@ -470,4 +470,12 @@ public class Main {
         System.out.println((-1 << (Integer.SIZE - 3)) | 0);
     }
 
+    @Test
+    public void test1001() {
+        System.out.println((float) 10 / 3);
+        System.out.println(10 / 3.0);
+        System.out.println(10 / 2.0);
+
+    }
+
 }

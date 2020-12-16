@@ -1,21 +1,33 @@
 package test;
 
+import com.hujiang.basic.framework.core.exception.SysException;
+import com.hujiang.basic.framework.core.util.JsonUtil;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.hujiang.basic.framework.core.exception.SysException;
-import com.hujiang.basic.framework.core.util.JsonUtil;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -119,22 +131,13 @@ public class TestCollection {
     @Test
     public void test4() {
         Map<Integer, Object> map = new HashMap<>();
-        map.put(1, new User(10, "cc"));
-        map.put(2, new User(12, "cc"));
+        map.put(1, new User(10, "test1","cc"));
+        map.put(2, new User(12, "test2", "cc"));
         System.out.println(JsonUtil.object2JSON(map));
     }
 
     @Test
     public void test5() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("1", new User(10, "cc"));
-        map.put("2", new User(12, "cc"));
-
-        System.out.println(JsonUtil.object2JSON(map));
-    }
-
-    @Test
-    public void test6() {
         //String json = "{1:{\"userDomain\":\"cc\",\"userId\":10},2:{\"userDomain\":\"cc\",\"userId\":12}}";
         String json = "{\"1\":{\"userDomain\":\"cc\",\"userId\":10},\"2\":{\"userDomain\":\"cc\",\"userId\":12}}";
         Map<String, Object> map = JsonUtil.json2Map(json);
@@ -146,11 +149,29 @@ public class TestCollection {
     @AllArgsConstructor
     public static class User {
         private Integer userId;
+        private String username;
         private String userDomain;
 
         @Override
         public String toString() {
-            return JsonUtil.object2JSON(this);
+            return new StringBuffer().append("userId:").append(userId).append("username:").append(username).append("userDomain:").append(userDomain).toString();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (!(o instanceof User)) {
+                return false;
+            }
+            User user = (User) o;
+            return username.equals(user.username);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(username);
         }
     }
 
@@ -507,6 +528,77 @@ public class TestCollection {
             .filter(e -> StringUtils.isNotEmpty(e.getUserDomain()))
             .map(e -> e.getUserDomain())
             .collect(Collectors.toSet());
+    }
+
+    @Test
+    public void test_set_clear() {
+        Set<User> s = new HashSet<>();
+        s.add(new User(1, "xx", "hj"));
+        s.add(new User(2, "xx", "hj"));
+        s.add(new User(3, "xx", "hj"));
+        System.out.println(s);
+        s.clear();
+        System.out.println(s);
+    }
+
+    @Test
+    public void test_sub_list() {
+        List<Integer> list = Lists.newArrayList(1, 2, 3);
+        System.out.println(list.subList(1,3));
+    }
+
+    @Test
+    public void test_Null_List() {
+        List<Integer> list = Lists.newArrayList(null, null, null);
+        System.out.println(CollectionUtils.isNotEmpty(list));
+    }
+
+    @Test
+    public void test_multi_collection_union() {
+        Set<Long> set1 = Sets.newHashSet(1L,2L,3L);
+        Set<Long> set2 = Sets.newHashSet(4L,5L,6L);
+        Set<Long> set3 = Sets.newHashSet(7L,8L,9L);
+        Set<Long> set4 = Sets.newHashSet(7L,8L,9L);
+
+        Set<Long> set = Sets.newHashSet(CollectionUtils.union(CollectionUtils.union(CollectionUtils.union(set1, set2), set3), set4));
+        System.out.println(set);
+
+        Iterable<Long> it = IterableUtils.chainedIterable(set1, set2, set3, set4);
+        System.out.println(it);
+        set = Sets.newHashSet(it);
+        System.out.println(set);
+
+    }
+
+    @Test
+    public void test_two_list_equal() {
+        List<User> list1 = Lists.newArrayList(new User(1, "xx", "hj"),new User(1, "xx", "hj"),new User(1, "xx", "hj"));
+        List<User> list2 = Lists.newArrayList(new User(1, "xx", "hj"),new User(1, "xx", "hj"),new User(1, "xx", "hj"));
+        System.out.println(Objects.equals(list1, list2));
+    }
+
+    @Test
+    public void test_list_size_and_count() {
+        List<User> list = Lists.newArrayList(new User(1, "xx", "hj"),new User(1, "xx", "hj"),new User(1, "xx", "hj"));
+        System.out.println(list.size());
+        System.out.println(list.stream().count());
+    }
+
+    @Test
+    public void test_removeAll() {
+        User user1 = new User(1, "xxx1", "cc");
+        User user2 = new User(1, "xxx2", "cc");
+        User user3 = new User(1, "xxx3", "cc");
+        User user4 = new User(1, "xxx4", "cc");
+        List<User> users = Lists.newArrayList(user1, user2, user3, user4);
+        List<User> users2 = Lists.newArrayList(user1, user2);
+        List<String> usernames = Lists.newArrayList("xxx1", "xxx2");
+        System.out.println(users);
+        boolean removed = users.removeAll(usernames);
+        System.out.println(removed);
+        System.out.println(users);
+
+
     }
 
 }

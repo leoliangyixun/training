@@ -1,5 +1,6 @@
 package test;
 
+import com.hujiang.basic.framework.core.sercurity.MD5;
 import com.hujiang.basic.framework.core.util.DateUtil;
 import com.hujiang.basic.framework.core.util.JsonUtil;
 
@@ -747,6 +748,13 @@ public class TestSE {
         Serializable d = 10000L;
         Long e = (Long) d;
         System.out.println(e);
+    }
+
+    @Test
+    public void test17() {
+        String key1 = StringUtils.join(new Object[]{"test", "name", null, "leoliangyixun@163.com", null}, ":");
+        System.out.println(key1);
+
     }
 
 }

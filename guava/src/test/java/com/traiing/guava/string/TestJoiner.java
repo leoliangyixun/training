@@ -17,6 +17,7 @@ public class TestJoiner {
     public void test() {
         String s = Joiner.on(":").join(new String[]{"1", "2", "3"});
         System.out.println(s);
+        Utils
         
     }
 

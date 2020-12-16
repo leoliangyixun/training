@@ -62,4 +62,21 @@ public class TestLong {
     public void test6() {
         System.out.println(0x7fffffffffffffffL);
     }
+
+    @Test
+    public void test_int_long_compare() {
+        int a = 10000;
+        long b = 10000L;
+        long c = 10001L;
+        Long d = 10001L;
+        Long e = new Long(10000);
+        Long f = new Long(10000);
+
+        System.out.println(a == b);
+        System.out.println(a == e);
+        System.out.println(b < c);
+        System.out.println(c == d);
+        System.out.println(d == e);
+        System.out.println(e == f);
+    }
 }

@@ -3,14 +3,14 @@
  */
 package test;
 
-import java.util.Arrays;
-import java.util.Date;
-
-import org.junit.Test;
-
 import com.hujiang.basic.framework.core.util.JsonUtil;
 
 import lombok.Data;
+
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.Date;
 
 /**
  * @author yangkai

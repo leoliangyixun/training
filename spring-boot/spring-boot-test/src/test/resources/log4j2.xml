@@ -4,6 +4,7 @@
 	<properties>
 		<property name="LOG_PATH">/home</property>
 		<property name="project_name">notifycenter-qingniao</property>
+		<property name="project_name">spring-boot-test</property>
 		<property name="pattern">[%level] [%date{yyyy-MM-dd HH:mm:ss,SSS}] [%logger] [%thread] [] [%X{requestId}] [%X{serverIp}] %msg%n</property>
 	</properties>
 	<appenders>
@@ -65,6 +66,8 @@
 			<appender-ref ref="LogstashFile" />
 			<appender-ref ref="RollingErrorFile" />
 			<appender-ref ref="RollingInfoFile" />
+		<Root level="DEBUG">
+			<appender-ref ref="Console" />
 		</Root>
 	</loggers>
 

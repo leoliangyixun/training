@@ -4,6 +4,8 @@
 package test;
 
 import com.hujiang.basic.framework.core.util.DateUtil;
+
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 
 import java.text.ParseException;
@@ -13,9 +15,11 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -367,4 +371,46 @@ public class TestDate {
         System.out.println(d);
 
     }
+
+    @Test
+    public void testTimestamp2Date() {
+        System.out.println(new Date(1560877667338L));
+        System.out.println(new Date(1560877678663L));
+    }
+
+    @Test
+    public void testTimestamp2Date2() {
+        Date date = new Date();
+        Date d1 = new Date(date.getTime() + 3000);
+        Date d2 = new Date(date.getTime() + 2000);
+        Date d3 = new Date(date.getTime() + 1000);
+        Date d4 = new Date(date.getTime() + 5000);
+        Date d5 = new Date(date.getTime() + 4000);
+        List<Date> list = Lists.newArrayList(d1, d2, d3,d4,d5);
+        System.out.println(list);
+        list.sort((e1, e2) ->
+            e2.compareTo(e1)
+        );
+        System.out.println(list);
+    }
+
+    @Test
+    public void test_date_util() {
+        Date from = DateUtil.toDate("2020-02-01", "yyyy-MM-dd");
+        Date to = DateUtil.toDate("2020-02-14", "yyyy-MM-dd");
+        System.out.println(from.getTime());
+        System.out.println(to.getTime());
+
+    }
+
+    @Test
+    public void test_date_compare() throws Exception {
+        Date from = new Date();
+        Thread.sleep(100);
+        Date to = new Date();
+        System.out.println(to.after(from));
+
+    }
+
+
 }
