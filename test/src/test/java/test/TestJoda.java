@@ -14,6 +14,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Locale;
@@ -289,6 +290,54 @@ public class TestJoda {
         Date now = new Date();
         System.out.println(new DateTime(now).dayOfMonth().withMinimumValue().withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0).toDate());
         System.out.println(new DateTime(now).dayOfMonth().withMaximumValue().withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59).toDate());
+
+    }
+
+
+    @Test
+    public void test_datetime1() {
+        DateTime now = DateTime.now();
+
+        DateTime startDt = now.minusHours(24).withMinuteOfHour(0).withSecondOfMinute(0);
+        DateTime endDt = now.withMinuteOfHour(0).withSecondOfMinute(0);
+        String s1 = endDt.toString("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
+        String s2 = startDt.toString("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
+        System.out.println(s1);
+        System.out.println(s2);
+
+        Date startDate = startDt.toDate();
+        Date endDate = endDt.toDate();
+        System.out.println(startDate);
+        System.out.println(endDate);
+
+
+
+    }
+
+    @Test
+    public void test_timestamp1() {
+        float maxHourOfCancel = 0.1f;
+        long maxHourOfCancelOfMilliseconds = new Float(maxHourOfCancel * 60 * 60 * 1000).longValue();
+        float maxHourOfCancelOfMillisecondsF = maxHourOfCancel * 60 * 60 * 1000;
+
+        Date beginTime = new Date();
+        Date cancelTime = new Date(beginTime.getTime() - maxHourOfCancelOfMilliseconds);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
+        System.out.println(formatter.format(beginTime));
+        System.out.println(formatter.format(cancelTime));
+        System.out.println(beginTime.getTime() - cancelTime.getTime());
+        System.out.println();
+
+    }
+
+    @Test
+    public void test_timestamp2() {
+        DateTime now = new DateTime(new Date());
+        Date beginTime = now.minusMinutes(30).withSecondOfMinute(0).withMillisOfSecond(0).toDate();
+        Date endTime =  now.withSecondOfMinute(0).withMillisOfSecond(0).toDate();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(formatter.format(beginTime));
+        System.out.println(formatter.format(endTime));
 
     }
 

@@ -1,4 +1,4 @@
-package com.kerwinyang.training.apns.controller;
+package com.kerwinyang.training.spring.cache.apns.controller;
 
 import org.junit.Before;
 import org.junit.Test;

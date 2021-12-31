@@ -1,2 +1,2 @@
-1.±àÒëMain.javaÎÄ¼ş£¨javac Main.java£©¡£
-2.ÔËĞĞMain.javaÎÄ¼ş£¨java Main£©¡£
+1.ï¿½ï¿½ï¿½ï¿½com.training.spring.cache.Main.javaï¿½Ä¼ï¿½ï¿½ï¿½javac com.training.spring.cache.Main.javaï¿½ï¿½ï¿½ï¿½
+2.ï¿½ï¿½ï¿½ï¿½com.training.spring.cache.Main.javaï¿½Ä¼ï¿½ï¿½ï¿½java com.training.spring.cache.Mainï¿½ï¿½ï¿½ï¿½

@@ -63,4 +63,11 @@ public class TestJdk8Date {
         System.out.println(end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
     }
 
+
+    @Test
+    public void test_day_starttime_and_endtime2() {
+        LocalDateTime.now();
+
+    }
+
 }

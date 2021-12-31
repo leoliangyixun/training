@@ -49,23 +49,23 @@ public class AddDraftBlog extends HttpServlet {
 		MyBlogService service=ServiceFactory.getMyBlogService(request);
 		
 		/*
-		 * ½«·¢±íµÄÎÄÕÂ²åÈëÊı¾İ¿â¡£
+		 * ???????????????????
 		 */
 		int count=service.addBlog(blog);;
 		/*
-		 * ¸üĞÂ²©¿Í¼¯ºÏ
+		 * ??????????
 		 */
 		//System.out.println("count:"+count);
 		if(count>0)
 		{
 			/*
-			 *ÕâÖÖ·½Ê½µÄĞ§ÂÊºÜµÍ¡£Ó¦¸ÃÉè·¨»ñÈ¡²åÈëºóÉú³ÉµÄÖ÷¼ü¡£
+			 *????????Ğ§?????????è·¨???????????????????
 			 */
 			List<Blog> draft_blog = service.getDraftBlog(loginuser);
 			session.setAttribute("draft_blog",draft_blog);
 			//List<Blog> draft_blog = (List<Blog>) session.getAttribute("draft_blog");
 			//draft_blog.add(blog);
-			//System.out.println("draft_blog£º"+draft_blog.size());
+			//System.out.println("draft_blog??"+draft_blog.size());
 //			int num=service.alterBlogNum(loginuser,Constants.BLOG_ADD_NUM);
 //			if(num>0)
 //			{
@@ -78,14 +78,14 @@ public class AddDraftBlog extends HttpServlet {
 			response.sendRedirect("include/error.jsp");
 		}
 		/*
-		 * ²âÊÔ´úÂë
+		 * ???????
 		 */
 		/*
-		System.out.println("ÓÃ»§Ãû£º"+loginuser);
-		System.out.println("²©ÎÄ±êÌâ£º"+blog_subject);
-		System.out.println("²©ÎÄ·ÖÀà£º"+blog_class);
-		System.out.println("²©ÎÄÄÚÈİ£º"+blog_content);
-		System.out.println("·¢±íÊ±¼ä£º"+blog_date);
+		System.out.println("???????"+loginuser);
+		System.out.println("???????"+blog_subject);
+		System.out.println("???????"+blog_class);
+		System.out.println("?????????"+blog_content);
+		System.out.println("???????"+blog_date);
 		*/
 	}
 

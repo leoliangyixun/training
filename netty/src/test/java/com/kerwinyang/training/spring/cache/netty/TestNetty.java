@@ -1,4 +1,4 @@
-package com.kerwinyang.training.netty;
+package com.kerwinyang.training.spring.cache.netty;
 
 import org.junit.Test;
 

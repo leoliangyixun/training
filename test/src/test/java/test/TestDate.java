@@ -5,7 +5,10 @@ package test;
 
 import com.hujiang.basic.framework.core.util.DateUtil;
 
+import com.google.common.collect.Sets;
+
 import org.assertj.core.util.Lists;
+import org.joda.time.DateTime;
 import org.junit.Test;
 
 import java.text.ParseException;
@@ -20,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -412,5 +416,44 @@ public class TestDate {
 
     }
 
+    @Test
+    public void test_date_opt1() throws Exception {
+        Date date1 = new Date();
+        Thread.sleep(10);
+        Date date2 = new Date();
+        Set<Long> list = Sets.newHashSet();
+        for (int i = 0; i < 20; i++) {
+//            new Thread(() -> {
+//                Date now1 = new DateTime(date1).withSecondOfMinute(0).toDate();
+//                Date fromTime = new DateTime(date1).withSecondOfMinute(0).minusMinutes(3).toDate();
+//                Date toTime = new DateTime(date1).withSecondOfMinute(0).plusMinutes(3).toDate();
+////                System.out.println(Thread.currentThread().getName() + ": " + Utils.dateFormat(now1, "yyyy-MM-dd HH:mm:ss"));
+////                System.out.println(Thread.currentThread().getName() + ": " + Utils.dateFormat(fromTime, "yyyy-MM-dd HH:mm:ss"));
+////                System.out.println(Thread.currentThread().getName() + ": " + Utils.dateFormat(toTime, "yyyy-MM-dd HH:mm:ss"));
+//                System.out.println(Thread.currentThread().getName() + ": " +now1.getTime());
+////                System.out.println(Thread.currentThread().getName() + ": " + Utils.md5Hex("test001" + fromTime.getTime() + toTime.getTime()));
+////                System.out.println(Thread.currentThread().getName() + ": " + Utils.md5Hex("test001" + fromTime.getTime() + toTime.getTime()));
+////                System.out.println(Thread.currentThread().getName() + ": " + Utils.md5Hex("test001" + fromTime.getTime() + toTime.getTime()));
+//            }).start();
+
+
+//            Date now1 = new DateTime(date1).withSecondOfMinute(0).toDate();
+//            Date now2 = new DateTime(date2).withSecondOfMinute(0).toDate();
+            Date now1 = new DateTime(date1).withSecondOfMinute(0).withMillisOfSecond(0).toDate();
+            Date now2 = new DateTime(date2).withSecondOfMinute(0).withMillisOfSecond(0).toDate();
+            list.add(now1.getTime());
+            list.add(now2.getTime());
+        }
+        System.out.println(list);
+
+    }
+
+    @Test
+    public void 计算下班时间() throws Exception {
+        String OnTimeString= "2021-12-30 11:34:14";
+        Date onTime = DateUtil.toDateTime(OnTimeString);
+        Date offTime = new DateTime(onTime).plusHours(8).plusMinutes(30).toDate();
+        System.out.println(DateUtil.toDateString(offTime, DateUtil.DEFAULT_DATETIME_PATTERN));
+    }
 
 }

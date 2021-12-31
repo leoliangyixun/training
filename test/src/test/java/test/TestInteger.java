@@ -140,7 +140,24 @@ public class TestInteger {
 
     @Test
     public void testIntegerEqual() {
-        System.out.println(1000 == 1000);
-        System.out.println(100 == 100);
+       // System.out.println(1000 == 1000);
+       // System.out.println(100 == 100);
+//        Integer a = 25;
+////        System.out.println(a.equals(25));
+//        int a = 1;
+//        Integer b = 1;
+//        Integer c = new Integer(1);
+//        System.out.println(a== b);
+//        System.out.println(a== c);
+//        System.out.println(b== c);
+
+        Integer a = 1000;
+        Integer b = new Integer(1000);
+
+        System.out.println(a == 1000);
+        System.out.println(b == 1000);
+        System.out.println(a == b);
+
+
     }
 }

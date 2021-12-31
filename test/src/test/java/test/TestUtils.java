@@ -792,7 +792,7 @@ public class TestUtils {
 
     @Test
     public void testMD5_password() {
-        System.out.println(Utils.md5("123465@123465"));
+        System.out.println(Utils.md5("123456"));
     }
 
 
@@ -892,7 +892,7 @@ public class TestUtils {
     public void testPasswordDecode() {
 //        System.out.println(Utils.passwordDecode("LyzYAGUV44HCI+fBTy5CqCkM7w5Sv/YiRgHfxVHkKwtuL5s2e/I3SRy2O7chx15YBLJtqp0+JSdQQsyJlB7JzA=="));
 //        System.out.println(Utils.passwordDecode("JpXerYTqhOlmvoB8Y6ShF53QBdwSNLFaFseUewOnDFK9yEX4C7nb9QzQHK9EJvSdLMgZ0gA7Dytcvc9OgUD9Cw=="));
-        System.out.println(Utils.passwordDecode("fAX2nugHop5Mf6ki4KMXBMITnHLKHsODTxYS4lJC1JXE1q5S3yfvkE43+J2E0OuxfVWUmkQpDXF7T49UvBtzuw=="));
+        System.out.println(Utils.passwordDecode("fJ4fu/kmCBd33Ut8sR7wYXczeTT0FtuN4bxgZ2FuDhYesTFiXAozhFZnwxO7BKTUcoQPoS1XPEY+AiEjuCHIBA=="));
     }
 
     @Test
@@ -1080,7 +1080,7 @@ public class TestUtils {
         //System.out.println(Utils.md5("hj-nc-app-key=18AYY21cXL8E974298&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$nCDV7a$HHXxJtHAtf6NwMFo9h10pd"));
         //System.out.println(Utils.md5("hj-nc-app-key=20YxSeoXD4oA016266&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$eMIVA8$beIO4k3FZ5ctN7Y7atqqE1"));
         //System.out.println(Utils.md5("hj-nc-app-key=8ivymWyUd12458844&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$tfSJPT$5df2FisgBeo5tkDMLfHkv1"));
-        System.out.println(Utils.md5("hj-nc-app-key=10nx62mh2XVc631923&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$hXRqFS$kAjtUSz81fv9sAXLibkDUh"));
+        System.out.println(Utils.md5("hj-nc-app-key=679f0VjOlDAnn138502&hj-nc-random-str=yangkai&hj-nc-app-secret=$apr1$CmTuzp$rnFHfHzliKXS2JyC3T4v2/"));
     }
 
     @Test

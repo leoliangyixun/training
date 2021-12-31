@@ -993,5 +993,38 @@ public class TestString {
         System.out.println(String.format("%d-%s", "cc", "yk"));//报错
     }
 
+    @Test
+    public void testLength() {
+        String str = "cookie:ClubAuth_DEV=39303134363030382e3635373239356134346137373939366235376538343439626165663638363939cookie:ClubAuth_DEV=39303134363030382e363537323935613434613737393936623537653834343962616566363836cookie:ClubAuth_DEV=39303134363030382e3635373239356134346137373939366235376538343439626165663638363939cookie:ClubAuth_DEV=39303134363030382e363537323935613434613737393936623537653834343962616566363836cookie:ClubAuth_DEV=39303134363030382e3635373239356134346137373939366235376538343439626165663638363939cookie:ClubAuth_DEV=39303134363030382e363537323935613434613737393936623537653834343962616566363836cookie:ClubAuth_DEV=39303134363030382e3635373239356134346137373939366235376538343439626165663638363939cookie:ClubAuth_DEV=39303134363030382e363537323935613434613737393936623537653834343962616566363831";
+        System.out.println(str.length());
+    }
 
+    @Test
+    public void testBoolean_to_Str() {
+        Boolean a = true;
+        System.out.println(a.toString());
+    }
+
+    @Test
+    public void testSplit100() {
+        String str = "1";
+        String[] ss = StringUtils.split(str, "|");
+        System.out.println(ss);
+    }
+
+    @Test
+    public void testReplaceAll() {
+        //String str = "  1 2 abc\n yy           ";
+        String str = "";
+        System.out.println(str);
+        System.out.println(str.replaceAll("\\s*", ""));
+    }
+
+    @Test
+    public void testStringJoin1() {
+       List<String> errorMsgs = Lists.newArrayList("111","222", "333");
+        String str = StringUtils
+            .join(errorMsgs, "\n");
+        System.out.println(str);
+    }
 }

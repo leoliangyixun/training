@@ -79,4 +79,9 @@ public class TestLong {
         System.out.println(d == e);
         System.out.println(e == f);
     }
+
+    @Test
+    public void test_max_long() {
+        System.out.println((Long.MAX_VALUE * 0.5)/60/60/24/365);
+    }
 }

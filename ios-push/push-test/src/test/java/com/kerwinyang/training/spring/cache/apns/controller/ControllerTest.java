@@ -1,7 +1,8 @@
-package com.kerwinyang.training.apns.controller;
+package com.kerwinyang.training.spring.cache.apns.controller;
 
 
-import com.kerwinyang.training.apns.config.ControllerConfig;
+import com.kerwinyang.training.spring.cache.apns.config.ControllerConfig;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

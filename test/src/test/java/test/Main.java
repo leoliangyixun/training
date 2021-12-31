@@ -478,4 +478,25 @@ public class Main {
 
     }
 
+
+
+    public static class CompletableFutureTest{
+
+    }
+
+
+    public static void main(String[] args) {
+
+
+
+        CompletableFutureTest test = new CompletableFutureTest();
+
+
+
+
+
+
+
+    }
+
 }

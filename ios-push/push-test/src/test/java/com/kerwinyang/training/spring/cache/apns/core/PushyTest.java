@@ -1,4 +1,4 @@
-package com.kerwinyang.training.apns.core;
+package com.kerwinyang.training.spring.cache.apns.core;
 
 import com.turo.pushy.apns.ApnsClient;
 import com.turo.pushy.apns.ApnsClientBuilder;

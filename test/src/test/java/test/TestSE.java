@@ -1,6 +1,5 @@
 package test;
 
-import com.hujiang.basic.framework.core.sercurity.MD5;
 import com.hujiang.basic.framework.core.util.DateUtil;
 import com.hujiang.basic.framework.core.util.JsonUtil;
 
@@ -9,6 +8,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.test.concurrent.TestLock.Source;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,25 +17,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Test;
+import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by yangkai on 2017/6/9.
@@ -59,7 +60,7 @@ public class TestSE {
         }
 
         public String clearSensitive() {
-           // Entity<T> obj = JsonUtil.deserialize(JsonUtil.serialize(this));
+            // Entity<T> obj = JsonUtil.deserialize(JsonUtil.serialize(this));
             return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
         }
 
@@ -70,7 +71,7 @@ public class TestSE {
     }
 
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper=true)
+    @EqualsAndHashCode(callSuper = true)
     public static class Employee extends Entity<String> {
 
         private static final long serialVersionUID = -4742391741835085542L;
@@ -97,7 +98,12 @@ public class TestSE {
 
     @Test
     public void test2() {
-        Object obj = new Object() {@Getter String username = "yk"; @Getter int age = 20;};
+        Object obj = new Object() {
+            @Getter
+            String username = "yk";
+            @Getter
+            int age = 20;
+        };
         System.out.println(JsonUtil.object2JSON(obj));
     }
 
@@ -106,21 +112,21 @@ public class TestSE {
     public void test_1() {
         int a = 1;
         Integer b = new Integer(1);
-        System.out.println(a==b);
+        System.out.println(a == b);
 
     }
 
     @Test
     public void test_2() {
-        Integer a =123456;
+        Integer a = 123456;
         Integer b = new Integer(123456);
-        System.out.println(a==b);
+        System.out.println(a == b);
     }
 
     @Test
     public void test_3() {
 
-        System.out.println( NumberUtils.toInt("1"));
+        System.out.println(NumberUtils.toInt("1"));
         System.out.println(Integer.parseInt("2"));
     }
 
@@ -154,6 +160,7 @@ public class TestSE {
     }
 
     public static class Calculator {
+
         public int add(Integer i) {
             return ++i;
         }
@@ -161,9 +168,9 @@ public class TestSE {
 
     @Test
     public void test4() {
-        int  a = 40;
-        System.out.println((float)a);
-        System.out.println(a/100.0);
+        int a = 40;
+        System.out.println((float) a);
+        System.out.println(a / 100.0);
 
     }
 
@@ -183,18 +190,18 @@ public class TestSE {
 /*	    Float f = new Float(100.00f);
 	    System.out.println(f.intValue());*/
         Integer a = 1020;
-        System.out.println(a.floatValue()/100);
+        System.out.println(a.floatValue() / 100);
     }
 
     @Test
-    public  void test5() {
+    public void test5() {
         Double a = 100.90;
         System.out.println(a.intValue());
 
     }
 
     @Test
-    public  void test6() {
+    public void test6() {
         float a = 0.99956936F;
         System.out.println(a >= 0.852F);
         System.out.println(Float.MAX_VALUE);
@@ -204,7 +211,7 @@ public class TestSE {
     }
 
     @Test
-    public  void test7() {
+    public void test7() {
         Integer a = new Integer(5200);
         int b = 5200;
         Integer c = 5200;
@@ -226,18 +233,22 @@ public class TestSE {
         int a = 500;
         int b = 200;
         long c = a - b;
-        long d = (long)(a - b);
+        long d = (long) (a - b);
         System.out.println(c);
         System.out.println(d);
     }
 
     public interface Res {
+
         Map<String, Object> map();
+
         Map<String, Object> map2();
+
         String json();
     }
 
     public abstract static class BaseRes implements Res {
+
         @JSONField(name = "access_token")
         private String accessToken;
         @JSONField(name = "refresh_token")
@@ -268,7 +279,7 @@ public class TestSE {
         @Override
         public Map<String, Object> map() {
             String json = JsonUtil.object2JSON(this);
-            return  JsonUtil.json2Map(json);
+            return JsonUtil.json2Map(json);
         }
 
         @Override
@@ -280,7 +291,7 @@ public class TestSE {
                 try {
                     mp.put(field.getName(), field.get(this));
                 } catch (Exception e) {
-                  e.printStackTrace();
+                    e.printStackTrace();
                 }
             }
 
@@ -317,7 +328,7 @@ public class TestSE {
         System.out.println("");
     }
 
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
     private User user = new User("annie", 27);
 
     @Test
@@ -331,6 +342,7 @@ public class TestSE {
     }
 
     public static class User {
+
         private String name;
         private int age;
 
@@ -367,7 +379,7 @@ public class TestSE {
     public void testUrl() throws Exception {
         //URL url = new URL("http://www.baidu.com");
         URL url = new URL("www.baidu.com");
-       // URL url = new URL("baidu.com/login");
+        // URL url = new URL("baidu.com/login");
 //        String file = url.getFile();
 //        System.out.println("file"+ file);
         Object content = url.getContent();
@@ -400,10 +412,12 @@ public class TestSE {
     @Data
     @NoArgsConstructor
     public static class Student {
+
         private int age;
         private String name;
         private String school;
-        public Student(int age){
+
+        public Student(int age) {
             this.age = age;
             this.name = build(age);
             this.school = "xx";
@@ -446,6 +460,7 @@ public class TestSE {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class People {
+
         private Integer userId;
         private String name;
         private People teacher;
@@ -476,19 +491,24 @@ public class TestSE {
         People[] peoples = new People[]{p1/*, p2, p3,p4, p5*/};
         //List<People> ss = Lists.newArrayList(p1, p2, p3);
 
-        System.out.println(JsonUtil.object2JSON(peoples, SerializerFeature.WriteDateUseDateFormat, SerializerFeature.WriteMapNullValue, SerializerFeature.DisableCircularReferenceDetect));
+        System.out.println(JsonUtil
+            .object2JSON(peoples, SerializerFeature.WriteDateUseDateFormat, SerializerFeature.WriteMapNullValue,
+                SerializerFeature.DisableCircularReferenceDetect));
         //System.out.println(JsonUtil.object2JSON(ss));
     }
 
     public interface Teachable {
+
         public void work();
     }
 
     public interface Programmable {
+
         public void program();
     }
 
     public class Programmer {
+
         public void work() {
             System.out.println("I am programming");
         }
@@ -508,10 +528,11 @@ public class TestSE {
         TeachableProgrammer tp = new TeachableProgrammer();
         tp.work();
     }
-    
-    
-    @Data 
+
+
+    @Data
     public static class Student2 {
+
         private String name;
 
         @Override
@@ -529,12 +550,12 @@ public class TestSE {
 
         public Student2(String name) {
             this.name = name;
-        } 
+        }
     }
-    
+
     @Test
     public void testHashCodeAndEqual() {
-        
+
         Student2 s1 = new Student2("yk");
         Student2 s2 = new Student2("yk");
         System.out.println(s1.hashCode());
@@ -542,7 +563,7 @@ public class TestSE {
 
         System.out.println(s1 == s2);
 
-        System.out.println( s1.equals(s2));
+        System.out.println(s1.equals(s2));
 
         Map<Student2, String> map = new HashMap<>();
         map.put(s1, "yk");
@@ -598,9 +619,9 @@ public class TestSE {
     public void test_ArrayIndexOutOfBoundsException2() {
         List<List<Integer>> list = Lists.newArrayList();
 
-        for (int i = 0; i< 100; i++) {
+        for (int i = 0; i < 100; i++) {
             List<Integer> l = Lists.newArrayList();
-            for (int j = 0; j< 1000000; j++) {
+            for (int j = 0; j < 1000000; j++) {
                 l.add(j);
             }
             list.add(l);
@@ -622,18 +643,22 @@ public class TestSE {
 
     @Data
     public static class Person {
+
         private Integer age;
         private String name;
         private Date birthday;
     }
 
     interface Notification {
+
         String getPayload();
+
         Person getPerson();
     }
 
 
     public static class SoaNotification implements Notification {
+
         @Setter
         private String payload;
         @Setter
@@ -682,12 +707,13 @@ public class TestSE {
 
     @Test
     public void test12() {
-        System.out.println(true ^ true^ true^ true);
-        System.out.println(false ^ false^ true^ false);
+        System.out.println(true ^ true ^ true ^ true);
+        System.out.println(false ^ false ^ true ^ false);
     }
 
     @Data
     public static class A {
+
         private Set<String> names;
 
         @Override
@@ -698,6 +724,7 @@ public class TestSE {
 
     @Data
     public static class B {
+
         private Set<String> names;
 
         @Override
@@ -733,7 +760,7 @@ public class TestSE {
     @Test
     public void test15() {
         String a = "1";
-        String b= "xx";
+        String b = "xx";
         Long c = 2L;
         Serializable d = 10000L;
         Long e = (Long) d;
@@ -743,7 +770,7 @@ public class TestSE {
     @Test
     public void test16() {
         String a = "1";
-        String b= "xx";
+        String b = "xx";
         Long c = 2L;
         Serializable d = 10000L;
         Long e = (Long) d;
@@ -757,4 +784,198 @@ public class TestSE {
 
     }
 
+    @Test
+    public void testIfElseIf() {
+        int i = 1;
+        List<Integer> list = Lists.newArrayList();
+        if (i < 100) {
+            list.add(100);
+        } else if (i < 50) {
+            list.add(50);
+        } else if (i < 10) {
+            list.add(10);
+        } else {
+            list.add(0);
+        }
+
+        System.out.println(list);
+
+    }
+
+    @Test
+    public void test_null_equal() {
+        Object a = null;
+        Object b = null;
+        System.out.println(Objects.equals(a, b));
+    }
+
+    @Test
+    public void test_运算符() {
+        int SHARED_SHIFT = 16;
+        int SHARED_UNIT = (1 << SHARED_SHIFT);
+        int MAX_COUNT = (1 << SHARED_SHIFT) - 1;
+        int EXCLUSIVE_MASK = (1 << SHARED_SHIFT) - 1;
+        System.out.println(SHARED_SHIFT);
+        System.out.println(SHARED_UNIT);
+        System.out.println(MAX_COUNT);
+        System.out.println(EXCLUSIVE_MASK);
+    }
+
+
+    @Test
+    public void test_运算符2() {
+        int LG_READERS = 7;
+        long RUNIT = 1L;
+        long WBIT = 1L << LG_READERS;
+        long RBITS = WBIT - 1L;
+        long RFULL = RBITS - 1L;
+        long ABITS = RBITS | WBIT;
+        long SBITS = ~RBITS;
+        System.out.println(Long.toBinaryString(WBIT));
+        System.out.println(Long.toBinaryString(RBITS));
+        System.out.println(Long.toBinaryString(RFULL));
+        System.out.println(Long.toBinaryString(ABITS));
+        System.out.println(Long.toBinaryString(SBITS));
+    }
+
+    @Test
+    public void test_运算符3() {
+        long a = -128L;
+        long b = 128L;
+        long c = -1L;
+        System.out.println(Long.toBinaryString(a));
+        System.out.println(Long.toBinaryString(b));
+        System.out.println(Long.toBinaryString(c));
+
+    }
+
+    @Test
+    public void test_运算符4() {
+
+        int a = -128;
+        int b = 128;
+        int c = -1;
+        System.out.println(Integer.toBinaryString(a));
+        System.out.println(Integer.toBinaryString(b));
+        System.out.println(Integer.toBinaryString(c));
+    }
+
+    @Test
+    public void test_if_elseif_else() {
+        int a = 0;
+        int b = 1;
+        long c = 100L;
+        String s1 = "test";
+
+        if (a != 0) {
+            System.out.println("a == 0");
+        } else if (b > 0) {
+            System.out.println("b > 0");
+        } else if (c == 100L) {
+            System.out.println("c ==100L");
+        } else if (Objects.equals(s1, "test")) {
+            System.out.println("s1 == test");
+        }
+
+
+    }
+
+    @Test
+    public void test_array() {
+        Object[] objs = new Object[10];
+        for (Object obj : objs) {
+            System.out.println(obj);
+        }
+
+        System.out.println(objs.length);
+    }
+
+
+    @Test
+    public void test_运算符5() {
+        int n  = 15;
+        int i = 100;
+        do {
+            System.out.println(n >>>=1);
+            i--;
+        } while (i > 0);
+    }
+
+
+    @Test
+    public void test_null_arr() {
+        Integer[] a  = new Integer[16];
+        System.out.println(a[0]);
+    }
+
+
+    @Test
+    public void test_break_multi_loop() {
+        int i = 0;
+        int j = 0;
+        while (true) {
+            while (true) {
+                if (i > 10) {
+                    break;
+                }
+                System.out.println("i="+i);
+                i++;
+            }
+            if (j > 20) {
+                break;
+            }
+            System.out.println("j="+j);
+            j++;
+        }
+    }
+
+    @Test
+    public void test_sub_list() {
+        int handoutPreviousNum = 3;
+        int handoutTotalNum = 4;
+        int beginIndex = 0;
+        List<List<Integer>> retList = new ArrayList<>();
+        int curIndex = 0;
+        int fetchNum = 0;
+        List<Integer> all = Lists.newArrayList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
+        List<Integer> curr = Lists.newArrayList(10,11,12);
+        int totalHandouts = all.size();
+        for (int num : curr) {
+            for (int i = 0 ; num< all.size(); i++) {
+                if (all.get(i) == num) {
+                    curIndex = i;//获取当前迭代讲义在总讲义中的下标
+                    beginIndex = curIndex - handoutPreviousNum < 0 ? 0 : curIndex - handoutPreviousNum;
+                    fetchNum = beginIndex + handoutTotalNum > totalHandouts ? totalHandouts - beginIndex : handoutTotalNum + 1;
+                    break;
+                }
+            }
+            List<Integer> filterList = all.subList(beginIndex, fetchNum);
+            if (!CollectionUtils.isEmpty(filterList)) {
+                retList.add(filterList);
+            }
+
+        }
+
+        System.out.println(retList);
+
+    }
+
+    @Test
+    public void test_double() {
+        double a = 1.0d;
+        double b = 0.9d;
+        System.out.println(a-b);
+    }
+
+    public boolean acquire(String str) {
+        return true;
+    }
+
+    public class SE {
+        public void see() {
+            acquire("hello");
+            //不能加this.
+            test_double();
+        }
+    }
 }

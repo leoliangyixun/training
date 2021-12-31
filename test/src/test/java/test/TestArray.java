@@ -6,7 +6,7 @@ import org.junit.Test;
 public class TestArray {
 
     @Test
-    public void testCollection3() {
+    public void testArr() {
         long[] a = {1L, 2L, 3L, 4L};
         Integer[] b = {1, 2, 3, 4};
         System.out.println(a.getClass().isArray());
@@ -21,5 +21,11 @@ public class TestArray {
             System.out.println("xxx");
         }
 
+    }
+
+    @Test
+    public void testArr1() {
+        Object[] items = new Object[5];
+        System.out.println(items.length);
     }
 }

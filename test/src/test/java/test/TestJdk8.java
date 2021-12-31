@@ -41,8 +41,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -1719,6 +1721,127 @@ public class TestJdk8 {
 		;
 	}
 
+	public void sleep(int t, TimeUnit u) {
+		try {
+			u.sleep(t);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 
+	@Test
+	public void test_CompletableFuture_1() {
+		CompletableFuture<String> f1 = CompletableFuture.supplyAsync(() -> {
+			int t1 = 1;
+			int t2 = 3;
+			sleep(t1, TimeUnit.SECONDS);
+			System.out.println("f1洗水壶");
+			sleep(t2, TimeUnit.SECONDS);
+			System.out.println("f1烧开水");
+			return t1 + t2;
+		}).thenApply((t) -> "f1花费" + t + "秒");
+
+		CompletableFuture<String> f2 = CompletableFuture.supplyAsync(() -> {
+			int t1 = 1;
+			int t2 = 1;
+			int t3 = 1;
+			sleep(t1, TimeUnit.SECONDS);
+			System.out.println("f2洗茶壶");
+			sleep(t2, TimeUnit.SECONDS);
+			System.out.println("f2洗茶杯");
+			sleep(t3, TimeUnit.SECONDS);
+			System.out.println("f2取茶叶");
+			return t1 + t2 + t3;
+		}).thenApply((t) -> "f2花费" + t + "秒");
+
+		CompletableFuture<String> f3 = f2.thenCombine(f1, (e1, e2) -> e1 + e2);
+		String result = f3.join();
+		System.out.println(result);
+	}
+
+	@Test
+	public void test_CompletableFuture_2() {
+		CompletableFuture<String> f1 = CompletableFuture.supplyAsync(() -> {
+			int t1 = 1;
+			int t2 = 3;
+			sleep(t1, TimeUnit.SECONDS);
+			System.out.println("f1洗水壶");
+			sleep(t2, TimeUnit.SECONDS);
+			System.out.println("f1烧开水");
+			return t1 + t2;
+		}).thenApply((t) -> "f1花费" + t + "秒");
+
+		CompletableFuture<String> f2 = CompletableFuture.supplyAsync(() -> {
+			int t1 = 1;
+			int t2 = 1;
+			int t3 = 1;
+			sleep(t1, TimeUnit.SECONDS);
+			System.out.println("f2洗茶壶");
+			sleep(t2, TimeUnit.SECONDS);
+			System.out.println("f2洗茶杯");
+			sleep(t3, TimeUnit.SECONDS);
+			System.out.println("f2取茶叶");
+			return t1 + t2 + t3;
+		}).thenApply((t) -> "f2花费" + t + "秒");
+
+		CompletableFuture<String> f3 = f2.thenCombine(f1, (e1, e2) -> e1 + e2);
+		String result = f3.join();
+		System.out.println(result);
+	}
+
+	@Test
+	public void test_comparator_int() {
+		List<Integer> list = Lists.newArrayList(1,10,5,8,6,7,2,3);
+		Integer max = list.stream().max(Comparator.comparingInt(e -> e)).orElse(null);
+		System.out.println(max);
+
+		List<User> users = Lists.newArrayList(new User("1", 18),new User("2", 28),new User("3", 16),new User("4", 99));
+		User oldestUser = users.stream().max(Comparator.comparingInt(e -> e.getAge())).orElse(null);
+		User yongestUser = users.stream().min(Comparator.comparingInt(e -> e.getAge())).orElse(null);
+		System.out.println(oldestUser.getAge());
+		System.out.println(yongestUser.getAge());
+	}
+
+	@Test
+	public void test_stream_reduce() {
+		List<List<Integer>> lists = Lists.newArrayList(Lists.newArrayList(1,2,3), Lists.newArrayList(4,5,6), Lists.newArrayList(7,8,9));
+		List<Integer> list = lists.stream().reduce(Lists.newArrayList(), (m, n) -> {
+			System.out.println(m);
+			System.out.println(n);
+			m.addAll(n);
+			return m;
+			//return n;
+		});
+		System.out.println(list);
+	}
+
+	@Test
+	public void test_list_distinct() {
+		List<ScheduleClassTourDto> list = Lists.newArrayList();
+		list.add(new ScheduleClassTourDto(1L,"001", 1, 1001L));
+		list.add(new ScheduleClassTourDto(1L,"001", 1, 1001L));
+		list.add(new ScheduleClassTourDto(2L,"002", 1, 1002L));
+		System.out.println(JsonUtil.object2JSON(list));
+		list = list.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() ->
+			new TreeSet<>(Comparator.comparing(
+				o -> o.getOrgId() + "-" +
+					o.getOrgCode() + "-" +
+					o.getScheduleId() + "-" +
+					o.getQuestionType()
+			))), ArrayList::new));
+		System.out.println(JsonUtil.object2JSON(list));
+	}
+
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class ScheduleClassTourDto{
+
+		private Long orgId;
+		private String orgCode;
+		private Integer questionType;
+		private Long scheduleId;
+
+	}
 
 }
