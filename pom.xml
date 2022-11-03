@@ -35,7 +35,7 @@
         <persistence-api.version>1.0</persistence-api.version>
         <hibernate-jpa-api.version>1.0.0.Final</hibernate-jpa-api.version>
         <metaq-client.version>1.4.6.2</metaq-client.version>
-        <commons-collections.version>3.2</commons-collections.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
 		<guava.version>18.0</guava.version>
 		<commons-httpclient.version>3.1</commons-httpclient.version>
 		<commons.lang.version>2.6</commons.lang.version>
